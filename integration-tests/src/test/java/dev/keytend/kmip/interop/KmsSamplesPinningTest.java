@@ -36,74 +36,61 @@ class KmsSamplesPinningTest {
       System.setProperty("project.root", Path.of("..").toAbsolutePath().normalize().toString());
   }
 
-  static final String REBUILT_IMAGE =
-      "layers:" + "1".repeat(64) + ":" + KmsSamplesIT.PYKMIP_BUILD.split(":")[2];
+  static final String ANOTHER_BUILD =
+      "files:" + "1".repeat(64) + ":" + KmsSamplesIT.PYKMIP_BUILD.split(":")[2];
 
-  /**
-   * {@code RootFS.Layers} of the qualified image, as recorded when it was qualified ({@code
-   * pykmip.layers.evidence} in integration/catalog/qualified-images.properties), not a copy.
-   */
-  static final java.util.List<String> QUALIFIED_LAYERS = recordedLayers();
+  private static final Path PROJECT =
+      Path.of(System.getProperty("project.root")).toAbsolutePath().normalize();
 
-  /** The layer evidence file named by the manifest. */
-  static Path layerEvidence() {
-    Path project = Path.of(System.getProperty("project.root")).toAbsolutePath().normalize();
+  /** integration/catalog/qualified-images.properties, where the pins are recorded. */
+  static java.util.Properties manifest() {
     var manifest = new java.util.Properties();
     try (var in =
         java.nio.file.Files.newInputStream(
-            project.resolve("integration/catalog/qualified-images.properties"))) {
+            PROJECT.resolve("integration/catalog/qualified-images.properties"))) {
       manifest.load(in);
     } catch (java.io.IOException e) {
       throw new java.io.UncheckedIOException(e);
     }
-    return project.resolve(manifest.getProperty("pykmip.layers.evidence"));
-  }
-
-  /** The {@code image_layers} array of {@link #layerEvidence()}, in order. */
-  static java.util.List<String> recordedLayers() {
-    try {
-      return jsonStrings(java.nio.file.Files.readString(layerEvidence()), "image_layers");
-    } catch (java.io.IOException e) {
-      throw new java.io.UncheckedIOException(e);
-    }
-  }
-
-  /** The strings of a flat JSON array field (enough for the layer record). */
-  static java.util.List<String> jsonStrings(String json, String field) {
-    var array =
-        java.util.regex.Pattern.compile("\"" + field + "\"\\s*:\\s*\\[([^\\]]*)\\]").matcher(json);
-    assertTrue(array.find(), field);
-    var item = java.util.regex.Pattern.compile("\"([^\"]*)\"").matcher(array.group(1));
-    var values = new java.util.ArrayList<String>();
-    while (item.find()) values.add(item.group(1));
-    return java.util.List.copyOf(values);
+    return manifest;
   }
 
   /**
-   * The PyKMIP pin is the qualified image's filesystem plus the fixture directory (which sets the
-   * entrypoint, command and environment); changing any layer, or the fixture, changes it.
+   * The file list of the qualified build, as integration/pykmip/build-identity.py --list printed it
+   * in that build's container ({@code pykmip.files.evidence} in the manifest), not a copy.
+   */
+  static String qualifiedFiles() throws java.io.IOException {
+    return java.nio.file.Files.readString(
+        PROJECT.resolve(manifest().getProperty("pykmip.files.evidence")));
+  }
+
+  static String sha256(String text) throws Exception {
+    return java.util.HexFormat.of()
+        .formatHex(
+            java.security.MessageDigest.getInstance("SHA-256")
+                .digest(text.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+  }
+
+  /**
+   * The PyKMIP pin is the qualified build's files plus the fixture directory (which holds
+   * server.py and sets the entrypoint, command and environment); changing any file, or the
+   * fixture, changes it.
    */
   @Test
-  void thePykmipPinIsTheQualifiedImagesLayers() throws Exception {
+  void thePykmipPinIsTheQualifiedBuildsFiles() throws Exception {
     String configuration =
-        CatalogContainersIT.digestDirectory(
-            java.nio.file.Path.of("..").resolve("integration/pykmip"));
+        CatalogContainersIT.digestDirectory(PROJECT.resolve("integration/pykmip"));
+    String files = qualifiedFiles();
     assertEquals(
-        KmsSamplesIT.PYKMIP_BUILD, KmsSamplesIT.layers(QUALIFIED_LAYERS) + ":" + configuration);
-    assertTrue(
-        java.nio.file.Files.readString(
-                java.nio.file.Path.of("../integration/catalog/qualified-images.properties"))
-            .contains("pykmip.configuration=" + configuration),
-        "the fixture is the qualified configuration");
-    String qualifiedLayers =
-        KmsSamplesIT.PYKMIP_BUILD.substring(0, KmsSamplesIT.PYKMIP_BUILD.lastIndexOf(':'));
-    assertEquals(qualifiedLayers, KmsSamplesIT.layers(QUALIFIED_LAYERS));
-    var changed = new java.util.ArrayList<>(QUALIFIED_LAYERS);
-    changed.set(changed.size() - 1, "sha256:" + "0".repeat(64)); // for example another server.py
-    assertNotEquals(qualifiedLayers, KmsSamplesIT.layers(changed));
-    assertNotEquals(
-        qualifiedLayers,
-        KmsSamplesIT.layers(QUALIFIED_LAYERS.subList(0, QUALIFIED_LAYERS.size() - 1)));
+        KmsSamplesIT.PYKMIP_BUILD, KmsSamplesIT.files(sha256(files)) + ":" + configuration);
+    assertEquals(configuration, manifest().getProperty("pykmip.configuration"), "the fixture");
+    assertEquals(sha256(files), manifest().getProperty("pykmip.files"));
+    assertTrue(files.startsWith("python 3.12.15\n"), files.lines().findFirst().orElse(""));
+    assertTrue(files.contains("\ndist pykmip-0.12.0.dev0\n"));
+    String engine = "(?m)^(kmip/services/server/engine\\.py  )[0-9a-f]{64}$";
+    assertTrue(java.util.regex.Pattern.compile(engine).matcher(files).find(), "PyKMIP's engine");
+    String changed = files.replaceFirst(engine, "$1" + "0".repeat(64));
+    assertNotEquals(KmsSamplesIT.files(sha256(files)), KmsSamplesIT.files(sha256(changed)));
   }
 
   @Test
@@ -122,7 +109,7 @@ class KmsSamplesPinningTest {
                           l.server().equals(server.getKey())
                               && l.sample().equals(cell.getKey())
                               && l.expected().equals(value)
-                              && l.identity().matches("(layers|binary):[0-9a-f]{64}:[0-9a-f]{64}"));
+                              && l.identity().matches("(files|binary):[0-9a-f]{64}:[0-9a-f]{64}"));
           assertTrue(
               sdk || pinned, server.getKey() + " " + version + " " + cell.getKey() + ": " + value);
         }
@@ -164,8 +151,9 @@ class KmsSamplesPinningTest {
   }
 
   /**
-   * A rebuilt server (other image layers for PyKMIP, another executable or fixture configuration
-   * for PQCToday) is expected to pass: a limitation it still has is a FAIL, not silently excused.
+   * Another server build (other installed files for PyKMIP, another executable for PQCToday, or
+   * another fixture configuration) is expected to pass: a limitation it still has is a FAIL, not
+   * silently excused.
    */
   @Test
   void aRebuiltServerTurnsItsLimitationsOff() {
@@ -174,7 +162,7 @@ class KmsSamplesPinningTest {
                 "A5 LifecycleRotation", ProtocolVersion.V1_4,
                 "A6 CertificateStorage", ProtocolVersion.V1_2)
             .entrySet()) {
-      String expected = KmsSamplesIT.expectation("pykmip", REBUILT_IMAGE, c.getValue(), c.getKey());
+      String expected = KmsSamplesIT.expectation("pykmip", ANOTHER_BUILD, c.getValue(), c.getKey());
       assertTrue(expected.startsWith("PASS (the "), c.getKey() + ": " + expected);
       assertTrue(expected.contains(KmsSamplesIT.PYKMIP_BUILD), expected);
       // The sample passing on the rebuilt server is what the rule now expects
@@ -183,13 +171,13 @@ class KmsSamplesPinningTest {
           Optional.empty(),
           KmsSamplesIT.mismatch(
               "pykmip",
-              REBUILT_IMAGE,
+              ANOTHER_BUILD,
               c.getValue(),
               new KmsSamplesIT.Outcome(c.getKey(), "PASS", "", "")));
       assertTrue(
           KmsSamplesIT.mismatch(
                   "pykmip",
-                  REBUILT_IMAGE,
+                  ANOTHER_BUILD,
                   c.getValue(),
                   new KmsSamplesIT.Outcome(c.getKey(), "SERVER_LIMITATION", "", ""))
               .isPresent());
@@ -197,7 +185,7 @@ class KmsSamplesPinningTest {
     assertEquals(
         Optional.empty(),
         KmsSamplesIT.limitation(
-            "pykmip", REBUILT_IMAGE, "A6 CertificateStorage", certificateFailure()));
+            "pykmip", ANOTHER_BUILD, "A6 CertificateStorage", certificateFailure()));
     String executable = KmsSamplesIT.PQCTODAY_BUILD.split(":")[1];
     for (String rebuilt :
         new String[] {
@@ -218,7 +206,7 @@ class KmsSamplesPinningTest {
         new KmsSamplesIT.Outcome(
             "A5 LifecycleRotation", "UNSUPPORTED", "Operation Not Supported", "rotate");
     assertTrue(
-        KmsSamplesIT.mismatch("pykmip", REBUILT_IMAGE, ProtocolVersion.V1_4, stillUnsupported)
+        KmsSamplesIT.mismatch("pykmip", ANOTHER_BUILD, ProtocolVersion.V1_4, stillUnsupported)
             .isPresent());
     assertTrue(
         KmsSamplesIT.mismatch(
@@ -233,17 +221,17 @@ class KmsSamplesPinningTest {
     assertEquals(
         "UNSUPPORTED:seal",
         KmsSamplesIT.expectation(
-            "pykmip", REBUILT_IMAGE, ProtocolVersion.V1_2, "A2 EnvelopeEncryption"));
+            "pykmip", ANOTHER_BUILD, ProtocolVersion.V1_2, "A2 EnvelopeEncryption"));
     assertEquals(
         "UNSUPPORTED:seal",
-        KmsSamplesIT.expectation("pykmip", REBUILT_IMAGE, ProtocolVersion.V1_2, "Q Quickstart"));
+        KmsSamplesIT.expectation("pykmip", ANOTHER_BUILD, ProtocolVersion.V1_2, "Q Quickstart"));
     assertEquals(
         "UNSUPPORTED:encrypt",
-        KmsSamplesIT.expectation("pykmip", REBUILT_IMAGE, ProtocolVersion.V1_2, "A3 RemoteAead"));
+        KmsSamplesIT.expectation("pykmip", ANOTHER_BUILD, ProtocolVersion.V1_2, "A3 RemoteAead"));
     // From 1.4, A2's non-extractable KEK is a limitation of the diagnosed build only.
     String rebuilt =
         KmsSamplesIT.expectation(
-            "pykmip", REBUILT_IMAGE, ProtocolVersion.V1_4, "A2 EnvelopeEncryption");
+            "pykmip", ANOTHER_BUILD, ProtocolVersion.V1_4, "A2 EnvelopeEncryption");
     assertTrue(rebuilt.startsWith("PASS (the SERVER_LIMITATION rule is off"), rebuilt);
   }
 

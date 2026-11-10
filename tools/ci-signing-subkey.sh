@@ -16,19 +16,21 @@
 # Add this repository's CI signing subkey to the release key and give it to the release
 # workflows (docs/releasing.md, "The release workflow").
 #
-#   tools/ci-signing-subkey.sh
+#   tools/ci-signing-subkey.sh [--subkey FINGERPRINT]
 #
 # For the key holder only: it needs the release key's primary secret in the default gpg keyring,
-# and gpg asks for its passphrase. It
+# and asks once for its passphrase. It
 #
-# 1. adds an Ed25519 signing subkey, valid for two years;
-# 2. exports that subkey's secret alone (the primary as a stub), without a passphrase, into a
-#    temporary directory, and stores it as the secret KEYTEND_SIGNING_KEY of
-#    keytend/keytend-kmip-java, with its fingerprint as the variable KEYTEND_SIGNING_SUBKEY;
+# 1. adds an Ed25519 signing subkey, valid for two years (--subkey: uses that existing signing
+#    subkey of the release key instead, such as one an earlier run added before it failed);
+# 2. copies that subkey's secret alone (the primary as a stub) into a temporary keyring, removes
+#    its passphrase there, checks that it signs with no passphrase, and stores it as the secret
+#    KEYTEND_SIGNING_KEY of keytend/keytend-kmip-java, with its fingerprint as the variable
+#    KEYTEND_SIGNING_SUBKEY;
 # 3. prints the commands that publish the updated public key on both keyservers.
 #
-# The exported secret never reaches the disk outside the temporary directory, which is removed
-# on exit. Publish the key before the workflow's first release: the release's signatures verify
+# The passphrase reaches gpg only through a pipe, never a command line. The secret without a
+# passphrase never reaches the disk outside the temporary directory, which is removed on exit. Publish the key before the workflow's first release: the release's signatures verify
 # only with the published key, and Central checks its signatures against keyserver.ubuntu.com
 # and keys.openpgp.org. The subkey is this repository's alone: if the secret leaks, revoke this
 # subkey only (docs/releasing.md, "The release key").
@@ -42,16 +44,52 @@ command -v gh >/dev/null || { echo "gh is needed to set the repository's secret"
 gpg --batch --with-colons --list-secret-keys "$PRIMARY" 2>/dev/null | awk -F: '$1 == "sec" && $15 !~ /#/ {ok = 1} END {exit !ok}' ||
   { echo "the release key's primary secret is not in this keyring" >&2; exit 1; }
 
-subkeys() { gpg --batch --with-colons --list-keys "$PRIMARY" | awk -F: '$1 == "sub" {s = 1; next} s && $1 == "fpr" {print $10; s = 0}'; }
-before=$(subkeys)
-gpg --quick-add-key "$PRIMARY" ed25519 sign 2y
-SUBKEY=$(comm -13 <(printf '%s\n' "$before" | sort) <(subkeys | sort))
-[ "$(printf '%s\n' "$SUBKEY" | grep -c .)" = 1 ] || { echo "could not find the new subkey" >&2; exit 1; }
-echo "new CI signing subkey: $SUBKEY"
+subkey=
+case "${1:-}" in
+  --subkey) [ $# = 2 ] || { echo "usage: $0 [--subkey FINGERPRINT]" >&2; exit 2; }; subkey=${2^^} ;;
+  '') ;;
+  *) echo "usage: $0 [--subkey FINGERPRINT]" >&2; exit 2 ;;
+esac
+
+read -rsp "Passphrase of the release key: " passphrase; echo
+# gpg with the passphrase on file descriptor 3; printf is a builtin, so it is on no command line.
+with_passphrase() { "$@" 3< <(printf '%s\n' "$passphrase"); }
+
+subkeys() { gpg --batch --with-colons --list-keys "$PRIMARY" | awk -F: '$1 == "sub" && $12 ~ /s/ && $2 !~ /[erd]/ {s = 1; next} $1 == "sub" {s = 0} s && $1 == "fpr" {print $10; s = 0}'; }
+if [ -n "$subkey" ]; then
+  subkeys | grep -qx "$subkey" || { echo "$subkey is not a valid signing subkey of $PRIMARY" >&2; exit 1; }
+  SUBKEY=$subkey
+else
+  before=$(subkeys)
+  with_passphrase gpg --batch --pinentry-mode loopback --passphrase-fd 3 --quick-add-key "$PRIMARY" ed25519 sign 2y
+  SUBKEY=$(comm -13 <(printf '%s\n' "$before" | sort) <(subkeys | sort))
+  [ "$(printf '%s\n' "$SUBKEY" | grep -c .)" = 1 ] || { echo "could not find the new subkey" >&2; exit 1; }
+  echo "new CI signing subkey: $SUBKEY"
+fi
 
 WORK=$(mktemp -d)
-trap 'rm -rf -- "$WORK"' EXIT
-gpg --armor --export-options export-reset-subkey-passwd --export-secret-subkeys "$SUBKEY!" > "$WORK/subkey.asc"
+trap 'gpgconf --homedir "$WORK/strip" --kill all 2>/dev/null; gpgconf --homedir "$WORK/ci" --kill all 2>/dev/null; rm -rf -- "$WORK"' EXIT
+mkdir -m 700 "$WORK/strip" "$WORK/ci"
+# GnuPG 2.1 and later cannot export a subkey without its passphrase: copy it into a keyring of
+# its own, change its passphrase there to none, and export it from there.
+with_passphrase gpg --batch --pinentry-mode loopback --passphrase-fd 3 --armor --export-secret-subkeys "$SUBKEY!" > "$WORK/protected.asc"
+gpg --homedir "$WORK/strip" --batch --quiet --import "$WORK/protected.asc"
+# passwd selects the subkey (key 1: the stub primary is the only other key); gpg reads the
+# commands and the old and new (empty) passphrase from stdin. It reports the stub primary as an
+# error and exits 2 even when the subkey's passphrase changed: the check below decides.
+printf 'key 1\npasswd\n%s\n\nsave\n' "$passphrase" |
+  gpg --homedir "$WORK/strip" --batch --pinentry-mode loopback --command-fd 0 --edit-key "$PRIMARY" >/dev/null 2>&1 || true
+unset passphrase
+gpg --homedir "$WORK/strip" --batch --pinentry-mode loopback --passphrase '' --armor --export-secret-subkeys "$SUBKEY!" > "$WORK/subkey.asc"
+# As the release workflow uses it: imported into an empty keyring, it signs with no passphrase.
+gpg --homedir "$WORK/ci" --batch --quiet --import "$WORK/subkey.asc"
+echo check > "$WORK/check"
+status=$(gpg --homedir "$WORK/ci" --batch --pinentry-mode error --local-user "$SUBKEY!" --detach-sign "$WORK/check" 2>/dev/null &&
+  gpg --homedir "$WORK/ci" --batch --status-fd 1 --verify "$WORK/check.sig" "$WORK/check" 2>/dev/null) || status=
+if ! grep -q "^\[GNUPG:\] VALIDSIG $SUBKEY " <<<"$status"; then
+  echo "the exported subkey does not sign without a passphrase; nothing was stored" >&2
+  exit 1
+fi
 gh secret set KEYTEND_SIGNING_KEY -R "$REPOSITORY" < "$WORK/subkey.asc"
 gh variable set KEYTEND_SIGNING_SUBKEY -R "$REPOSITORY" --body "$SUBKEY"
 gpg --show-keys --with-subkey-fingerprints <(gpg --armor --export "$PRIMARY")

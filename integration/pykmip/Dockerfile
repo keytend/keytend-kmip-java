@@ -13,13 +13,18 @@
 # limitations under the License.
 
 # Python 3.12 from UBI 9's own packages; python is linked to it for the entrypoint and the lab's
-# administrative commands.
+# administrative commands. Every input is pinned (the base image, Python, PyKMIP's commit and every
+# Python package), so a build on any machine installs the same files: the PyKMIP limitations the
+# tests pin are pinned to those files (build-identity.py), not to one machine's image layers.
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.8-1793862054@sha256:4b79c93106c14ad1c234907f83441ff0e4f8d24e78426a36e159098e9f7e6fa5
 ARG PYKMIP_COMMIT=481563735cc96eb9f7b363df3c24b2ea68b9353f
-RUN microdnf -y --setopt=install_weak_deps=0 install python3.12 python3.12-pip tar gzip && microdnf clean all \
- && ln -s /usr/bin/python3.12 /usr/local/bin/python
+RUN microdnf -y --setopt=install_weak_deps=0 install python3.12-3.12.15-1.el9_8 python3.12-pip-23.2.1-5.el9 tar gzip \
+ && microdnf clean all && ln -s /usr/bin/python3.12 /usr/local/bin/python
 RUN curl -fsSL https://codeload.github.com/OpenKMIP/PyKMIP/tar.gz/${PYKMIP_COMMIT} | tar xz -C /opt && mv /opt/PyKMIP-* /opt/pykmip
-RUN python -m pip install --no-cache-dir cryptography==50.0.2 SQLAlchemy==2.1.8 enum-compat==0.0.3 requests==2.34.2 six==1.17.0 && python -m pip install --no-cache-dir --no-deps /opt/pykmip
+RUN python -m pip install --no-cache-dir --no-deps certifi==2026.10.23 cffi==2.1.1 charset-normalizer==3.5.2 \
+      cryptography==50.0.2 enum-compat==0.0.3 idna==3.20 pycparser==3.12 requests==2.34.2 six==1.17.0 \
+      SQLAlchemy==2.1.8 typing_extensions==4.16.0 urllib3==2.8.0 \
+ && python -m pip check && python -m pip install --no-cache-dir --no-deps /opt/pykmip
 COPY server.py /opt/server.py
 EXPOSE 5696
 ENTRYPOINT ["python", "/opt/server.py"]

@@ -59,12 +59,13 @@ public final class InteropSuite {
 
   /**
    * The PyKMIP build ({@code integration/pykmip}) the PY-USAGE-LIMITS and PY-CONTACT-INFORMATION
-   * limitations were diagnosed on: the SHA-256 of its image's layer list and of the fixture
-   * sources, the identity of {@code KmsSamplesIT.PYKMIP_BUILD}.
+   * limitations were diagnosed on: the SHA-256 of its installed files ({@code
+   * integration/pykmip/build-identity.py}) and of the fixture sources, the identity of {@code
+   * KmsSamplesIT.PYKMIP_BUILD}.
    */
   static final String PYKMIP_BUILD =
-      "layers:b75ccb50552a827d6271b2eccbc796e6c90c6318be18ec6b8c56180d5cc67dd7"
-          + ":afbced4ad84a2ebfc597ce1dfeeca0193cf546a0536d557936b45074cc46bf1e";
+      "files:05c78a05c95a3ee0e7382e6eabe4f9f27f1e49c49ffe7aa9b92bc46eaa97eb8a"
+          + ":f3ab8a82f4bf8e1e7e9517fada0dd7ba13143af6bde35a749d2ec9e351449dba";
 
   /** The identity of a server whose build was not inspected; no pinned limitation matches it. */
   static final String UNVERIFIED = "unverified";

@@ -162,10 +162,14 @@ Once, by the release key's holder, with the primary key at hand:
 tools/ci-signing-subkey.sh
 ```
 
-It adds an Ed25519 signing subkey to the release key, valid for two years. It
-stores the subkey's secret, without a passphrase, as the repository secret
-`KEYTEND_SIGNING_KEY`, and its fingerprint as the variable
-`KEYTEND_SIGNING_SUBKEY`. Then publish the key on both keyservers, with the
+It asks once for the release key's passphrase and adds an Ed25519 signing
+subkey to the release key, valid for two years. It removes the passphrase from
+a copy of the subkey's secret in a temporary keyring, checks that the copy signs,
+and stores it as the repository secret `KEYTEND_SIGNING_KEY`, with its
+fingerprint as the variable `KEYTEND_SIGNING_SUBKEY`. The subkey in your own
+keyring keeps its passphrase. If a run stops after adding the subkey, run it
+again with `--subkey FINGERPRINT`, the fingerprint it printed, to use that
+subkey rather than add another. Then publish the key on both keyservers, with the
 commands it prints, before the first tag. The draft step and Central both
 verify against the published key. The subkey belongs to this repository alone.
 If the secret leaks, revoke that subkey ([the release key](#the-release-key)).

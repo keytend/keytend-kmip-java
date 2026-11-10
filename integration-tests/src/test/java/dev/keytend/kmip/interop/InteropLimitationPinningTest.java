@@ -155,7 +155,7 @@ class InteropLimitationPinningTest {
     assertFalse(
         InteropSuite.pykmipContactInformation(
             "pykmip",
-            "layers:" + "1".repeat(64) + ":" + InteropSuite.PYKMIP_BUILD.split(":")[2],
+            "files:" + "1".repeat(64) + ":" + InteropSuite.PYKMIP_BUILD.split(":")[2],
             ProtocolVersion.V1_4,
             refused),
         "another build");

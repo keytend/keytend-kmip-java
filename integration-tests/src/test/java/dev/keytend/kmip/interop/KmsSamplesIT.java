@@ -46,7 +46,7 @@ import org.testcontainers.utility.MountableFile;
  * Operation/Feature Not Supported, or the negotiated version lacks the feature), SERVER_LIMITATION
  * (a diagnosed server behavior, {@link #LIMITATIONS}) or FAIL, and compared with the
  * expected matrix {@link #EXPECTED}: any difference fails the build. The server-specific
- * expectations are pinned to the server build they were diagnosed on, so a rebuilt server with
+ * expectations are pinned to the server build they were diagnosed on, so a server build with
  * another identity is expected to pass every sample. Reports go to {@code
  * integration/reports/kms-samples-*.json}.
  */
@@ -77,14 +77,14 @@ class KmsSamplesIT {
   record Outcome(String sample, String outcome, String detail, String operation) {}
 
   /**
-   * The PyKMIP build (from {@code integration/pykmip}) the limitations below were diagnosed on:
-   * the filesystem of image {@code sha256:3900a0e8…}, the image of {@code
-   * integration/catalog/qualified-images.properties}. It is identified by the SHA-256 of the
-   * image's layer list ({@code RootFS.Layers}, one diff ID per line), not by the image ID:
-   * Testcontainers adds a LABEL to each build, so an image rebuilt from the same cached layers gets
-   * a new ID. Any change to the server's files (base image, packages, PyKMIP, {@code server.py})
-   * changes a layer and turns the rules off. The manifest records the same pin ({@code
-   * pykmip.layers}).
+   * The PyKMIP build (from {@code integration/pykmip}) the limitations below were diagnosed on,
+   * identified by its content: the SHA-256 of the list of the files pip installed, each with its
+   * SHA-256 ({@code integration/pykmip/build-identity.py}, run in the server's container; {@code
+   * integration/catalog/pykmip-files.txt} is the diagnosed build's list), and of the fixture
+   * sources, which hold {@code server.py} and the Dockerfile. Not the image ID nor its layers: each
+   * build gives the same files new times, so new layers. The Dockerfile pins every input, so a build
+   * on any machine has this identity; any change to Python, a package, PyKMIP or the fixture turns
+   * the rules off. The manifest records the same pin ({@code pykmip.files}).
    */
   static final String PYKMIP_BUILD = InteropSuite.PYKMIP_BUILD;
 
@@ -488,32 +488,37 @@ class KmsSamplesIT {
   /**
    * The build identity the {@link Limitation} rules (and the interop suites' pinned limitations,
    * {@link InteropSuite#PQCTODAY_BUILD}) are pinned to, read from the running server: executable
-   * and fixture configuration SHA-256 for PQCToday, image layers and fixture configuration for
+   * and fixture configuration SHA-256 for PQCToday, installed files and fixture configuration for
    * PyKMIP.
    */
   static String identity(String server, GenericContainer<?> container) throws Exception {
+    String configuration =
+        CatalogContainersIT.digestDirectory(ROOT.resolve("integration/" + server));
     if (server.equals("pqctoday")) {
       var checksum = container.execInContainer("sha256sum", "/usr/local/bin/pqctoday-kmip");
       assertEquals(0, checksum.getExitCode(), "Native binary checksum unavailable");
-      return "binary:"
-          + checksum.getStdout().trim().substring(0, 64)
-          + ":"
-          + CatalogContainersIT.digestDirectory(ROOT.resolve("integration/" + server));
+      return "binary:" + checksum.getStdout().trim().substring(0, 64) + ":" + configuration;
+    }
+    // The installed files are the build's content; the fixture directory digest covers the rest
+    // (server.py, and what the Dockerfile sets without a file: ENTRYPOINT, CMD, ENV).
+    if (server.equals("pykmip")) {
+      var digest =
+          container.execInContainer(
+              "python",
+              "-I",
+              "-c",
+              Files.readString(ROOT.resolve("integration/pykmip/build-identity.py")));
+      assertEquals(0, digest.getExitCode(), "PyKMIP build identity unavailable: " + digest);
+      return files(digest.getStdout().trim()) + ":" + configuration;
     }
     var image = container.getDockerClient().inspectImageCmd(container.getDockerImageName()).exec();
-    // The layers are the image's content; the fixture directory digest covers what the
-    // Dockerfile sets without a layer (ENTRYPOINT, CMD, ENV), as the PQCToday pin does.
-    if (server.equals("pykmip"))
-      return layers(image.getRootFS().getLayers())
-          + ":"
-          + CatalogContainersIT.digestDirectory(ROOT.resolve("integration/" + server));
     return image.getId();
   }
 
-  /** The {@link #PYKMIP_BUILD} form of an image's filesystem layer list. */
-  static String layers(List<String> diffIds) throws Exception {
-    assertFalse(diffIds == null || diffIds.isEmpty(), "Image layers unavailable");
-    return "layers:" + Catalog.layerDigest(diffIds);
+  /** The {@link #PYKMIP_BUILD} form of the SHA-256 of a build's file list. */
+  static String files(String listDigest) {
+    assertTrue(listDigest.matches("[0-9a-f]{64}"), "not a SHA-256: " + listDigest);
+    return "files:" + listDigest;
   }
 
   @Test

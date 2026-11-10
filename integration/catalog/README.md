@@ -32,7 +32,7 @@ results separately and never rewrites the manifest. To run the catalog and read 
 | `catalog.json` | the case manifest: 145 cases |
 | `server-inventory.json` | the servers the catalog runs against, and scope overlays |
 | `qualified-images.properties` | the exact local images the catalog and the samples were qualified on |
-| `pykmip-image-layers.json` | the layer list of the qualified PyKMIP image, behind its `layers:` pin |
+| `pykmip-files.txt` | the installed files of the qualified PyKMIP build, behind its `files:` pin |
 | `reference.py` | an independent Python KMIP probe, with no SDK encoding or decoding |
 | `generate-pki.sh` | a throwaway test PKI for the container and peer tests |
 
