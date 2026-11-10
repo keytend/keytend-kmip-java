@@ -35,6 +35,11 @@ on:
 permissions:
   contents: read
 
+# bash -eo pipefail: a failing command in a pipe fails the step.
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
@@ -82,7 +87,7 @@ jobs:
             17
       - name: The pinned keytend-kmip-server build
         run: |
-          pin=tools/kmip-server/pinned-image.properties
+          pin=$PWD/tools/kmip-server/pinned-image.properties
           prop() { sed -n "s/^$1=//p" "$pin"; }
           dir=$RUNNER_TEMP/server
           mkdir -p "$dir"

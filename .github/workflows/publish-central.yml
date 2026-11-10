@@ -47,6 +47,11 @@ on:
 permissions:
   contents: read
 
+# bash -eo pipefail: a failing command in a pipe fails the step.
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: publish-central
   cancel-in-progress: false
