@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-07T04:17:41.161606+00:00",
+  "client_source_sha256": "bdb6b3c7eb1d751c004238f6aff5b2c03ae9bebcc41347bbb9eb1d7333c3d716",
+  "comparison": "OASIS permitted variations for optional ResultMessage and consistently bound generated-object digests; other expected fields remain required",
+  "runtime": "Amazon Corretto 25.0.1",
+  "dedicated_fresh_containers": true,
+  "reports": [
+    {
+      "server": "pykmip",
+      "wire_version": "1.3",
+      "image_digest": "sha256:3900a0e87b92d711245687719b71cea4357aaab9d4eb1ff85ab085277f6ee709",
+      "report": "pykmip-oasis-1.3-jdk25.json",
+      "sha256": "3bc0fecd4d2522f5cf8856ff4ca7cc5a1c01e8cd49f3435b58700f35b00677ac",
+      "completed_at": "2026-11-07T04:17:24.475359+00:00"
+    },
+    {
+      "server": "pqctoday",
+      "wire_version": "3.0",
+      "image_digest": "sha256:24c1d87a09601b6bf588b5db1e729f4e0789e6d8156e2388529133a87466d5cd",
+      "report": "pqctoday-oasis-3.0-jdk25.json",
+      "sha256": "f599ebeecef60f52ae7b5ff889c368004cc3433478adbcbf0b111b7fccf8c438",
+      "completed_at": "2026-11-07T04:16:59.555406+00:00"
+    }
+  ]
+}

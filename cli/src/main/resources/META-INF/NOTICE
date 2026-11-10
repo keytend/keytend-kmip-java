@@ -1,0 +1,76 @@
+keytend-kmip
+Copyright 2026 Jeremiah Jordan
+
+This product includes data derived from OASIS KMIP specifications and original
+OASIS protocol test transcripts. The implementation is original Java code.
+
+OASIS specifications and test cases:
+Copyright (c) OASIS Open 2013, 2015, 2016, 2017, 2019, 2020, 2026.
+All Rights Reserved.
+
+The specification sources used by tools/generate_registry.py are listed in
+sdk/src/main/resources/dev/keytend/kmip/registry.json. Original test transcript
+sources and SHA-256 checksums are in sdk/src/test/resources/oasis/manifest.json.
+KMIP 3.0 is pinned to Specification CSD02 (7 May 2026) and Profiles CSD02
+(21 May 2026). It is a draft, not a final OASIS Standard.
+
+The OASIS copyright permission applicable to these materials states:
+
+This document and translations of it may be copied and furnished to others, and
+derivative works that comment on or otherwise explain it or assist in its
+implementation may be prepared, copied, published, and distributed, in whole or
+in part, without restriction of any kind, provided that the above copyright
+notice and this section are included on all such copies and derivative works.
+However, this document itself may not be modified in any way, including by
+removing the copyright notice or references to OASIS, except as needed for the
+purpose of developing any document or deliverable produced by an OASIS Technical
+Committee (in which case the rules applicable to copyrights, as set forth in
+the OASIS IPR Policy, must be followed) or as required to translate it into
+languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by
+OASIS or its successors or assigns.
+
+This document and the information contained herein is provided on an "AS IS"
+basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE
+ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS
+FOR A PARTICULAR PURPOSE.
+
+Bundled third-party code:
+The SDK JAR (keytend-kmip-VERSION.jar) and its -sources JAR bundle Caffeine
+3.3.1 (com.github.ben-manes.caffeine:caffeine, https://github.com/ben-manes/caffeine),
+relocated to the package dev.keytend.kmip.internal.shaded.caffeine. Relocation
+renames its packages, in its classes and its sources, and changes nothing else.
+- License: Apache-2.0. Its license text is META-INF/licenses/caffeine/LICENSE
+  in both JARs.
+- Copyright 2014, 2015, 2016, 2017, 2018, 2019, 2022, 2026 Ben Manes.
+  All Rights Reserved.
+- Its StripedBuffer is adapted from code written by Doug Lea with assistance
+  from members of JCP JSR-166 Expert Group and released to the public domain,
+  as explained at http://creativecommons.org/publicdomain/zero/1.0/
+- Its MpscGrowableArrayQueue is a copy of the one in JCTools 2.0
+  (https://github.com/JCTools/JCTools, Apache-2.0), by Nitsan Wakart.
+- Caffeine's JAR and source JAR carry no NOTICE file.
+
+Independent binary test oracle:
+sdk/src/test/resources/oracle.tsv records wire digests produced by OVH's
+kmip-go v0.9.2 (https://github.com/ovh/kmip-go), an independent implementation.
+No OVH implementation source is included in the Java SDK. The oracle driver is
+in tools/oracle, and uses the upstream Apache-2.0 licensed module.
+
+Integration-only servers are fetched and built separately. Their code is not
+linked into the SDK or distributed in its JAR:
+- OpenKMIP/PyKMIP: Apache-2.0.
+- pqctoday-org/pqctoday-hsm KMIP server: AGPL-3.0-only.
+- OpenKCM Krypton: Apache-2.0. The lab bootstrap adapts its integration fixture;
+  upstream copyright: SAP SE or an SAP affiliate company and Krypton contributors.
+  Upstream source and its original license are fetched into the test image.
+
+The interoperability catalog and its tests were created by the Keytend project.
+Original OASIS fixtures and third-party Maven wrapper files retain their original
+notices; this project does not relicense third-party works.
+
+The source distribution includes Apache Maven Wrapper scripts, developed by
+the Apache Software Foundation (https://www.apache.org/) under Apache-2.0.
+Their original ASF source notices are preserved.

@@ -1,0 +1,88 @@
+keytend-kmip-server 3.0 PASS Query capabilities
+keytend-kmip-server 3.0 PASS DiscoverVersions
+keytend-kmip-server 3.0 PASS Create AES with direct attributes
+keytend-kmip-server 3.0 PASS Get AES and key material
+keytend-kmip-server 3.0 PASS GetAttributes uses AttributeReference
+keytend-kmip-server 3.0 PASS GetAttributeList
+keytend-kmip-server 3.0 PASS Locate by name
+keytend-kmip-server 3.0 PASS Activate
+keytend-kmip-server 3.0 PASS AddAttribute
+keytend-kmip-server 3.0 PASS ModifyAttribute
+keytend-kmip-server 3.0 PASS SetAttribute
+keytend-kmip-server 3.0 PASS DeleteAttribute
+keytend-kmip-server 3.0 PASS AES-CBC agrees with JCE
+keytend-kmip-server 3.0 PASS AES-GCM with AAD and tag
+keytend-kmip-server 3.0 PASS Batch Get/GetAttributes
+keytend-kmip-server 3.0 PASS Export
+keytend-kmip-server 3.0 PASS Check usage
+keytend-kmip-server 3.0 PASS ObtainLease
+keytend-kmip-server 3.0 PASS Register portable builder
+keytend-kmip-server 3.0 PASS Import
+keytend-kmip-server 3.0 PASS ReKey
+keytend-kmip-server 3.0 PASS DeriveKey PBKDF2 agrees with JCE
+keytend-kmip-server 3.0 PASS CreateSplitKey/JoinSplitKey XOR
+keytend-kmip-server 3.0 PASS AdjustAttribute Deactivation Date
+keytend-kmip-server 3.0 PASS GetUsageAllocation
+keytend-kmip-server 3.0 PASS Archive/Recover
+keytend-kmip-server 3.0 UNSUPPORTED Interop Begin/End: Operation is not supported for this version
+keytend-kmip-server 3.0 UNSUPPORTED ReProvision: Operation is not supported for this version
+keytend-kmip-server 3.0 PASS DelegatedLogin delegating Query
+keytend-kmip-server 3.0 PASS Hash SHA256 agrees with JCA
+keytend-kmip-server 3.0 PASS HMAC and MACVerify agree with JCE
+keytend-kmip-server 3.0 FAIL Validate independent CA certificate: java.lang.AssertionError: Self-signed root validation
+keytend-kmip-server 3.0 UNSUPPORTED Certify public key: Certify without a Certificate Request is not supported
+keytend-kmip-server 3.0 PASS ReKeyKeyPair
+keytend-kmip-server 3.0 PASS RSA CreateKeyPair
+keytend-kmip-server 3.0 PASS RSA Sign/SignatureVerify against independently generated JCA keys
+keytend-kmip-server 3.0 PASS RNGRetrieve
+keytend-kmip-server 3.0 PASS RNGSeed
+keytend-kmip-server 3.0 PASS Log
+keytend-kmip-server 3.0 PASS PKCS11 initialize/get-info/finalize
+keytend-kmip-server 3.0 FAIL Login and Logout ticket: dev.keytend.kmip.client.KmipException: KMIP Login returned OperationFailed (1), reason PermissionDenied (0x0000000C) Login requires a password credential
+keytend-kmip-server 3.0 PASS SetEndpointRole
+keytend-kmip-server 3.0 PASS Ping
+keytend-kmip-server 3.0 PASS QueryAsynchronousRequests
+keytend-kmip-server 3.0 PASS GetConstraints
+keytend-kmip-server 3.0 PASS SetConstraints empty
+keytend-kmip-server 3.0 PASS SetDefaults empty
+keytend-kmip-server 3.0 PASS Process unknown token
+keytend-kmip-server 3.0 PASS Poll unknown token
+keytend-kmip-server 3.0 PASS Cancel unknown token
+keytend-kmip-server 3.0 FAIL CreateGroup and Obliterate: dev.keytend.kmip.client.KmipException: KMIP CreateGroup returned OperationFailed (1), reason PermissionDenied (0x0000000C) System Objects require a verified user credential in the request header
+keytend-kmip-server 3.0 FAIL CreateUser: dev.keytend.kmip.client.KmipException: KMIP CreateCredential returned OperationFailed (1), reason PermissionDenied (0x0000000C) System Objects require a verified user credential in the request header
+keytend-kmip-server 3.0 FAIL CreateCredential password: dev.keytend.kmip.client.KmipException: KMIP CreateCredential returned OperationFailed (1), reason PermissionDenied (0x0000000C) System Objects require a verified user credential in the request header
+keytend-kmip-server 3.0 PASS ML-KEM-768 Encapsulate/Decapsulate
+keytend-kmip-server 3.0 PASS Deactivate
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 PASS Destroy resource
+keytend-kmip-server 3.0 UNEXERCISED ReCertify: Covered by generic API and wire-model tests; no successful scenario in this run
+keytend-kmip-server 3.0 CALLBACK Notify: Covered by generic API and wire-model tests; no successful scenario in this run
+keytend-kmip-server 3.0 CALLBACK Put: Covered by generic API and wire-model tests; no successful scenario in this run
+keytend-kmip-server 3.0 UNEXERCISED Obliterate: Covered by generic API and wire-model tests; no successful scenario in this run
+keytend-kmip-server 3.0 UNEXERCISED CreateUser: Covered by generic API and wire-model tests; no successful scenario in this run
+Exception in thread "main" java.lang.AssertionError: 5 integration checks failed
+	at dev.keytend.kmip.interop.InteropApplication.main(InteropApplication.java:84)

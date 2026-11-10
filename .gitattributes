@@ -1,0 +1,3 @@
+# Stored-format fixtures are bytes, never text: no line-ending or diff handling.
+sdk/src/test/resources/formats/** binary
+sdk/src/test/resources/renewal-formats/** binary

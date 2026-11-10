@@ -1,0 +1,4665 @@
+{
+  "schema_version": "1.0",
+  "title": "KMIP Java client interoperability test catalog",
+  "as_of": "2026-10-23",
+  "status": "DEFINITIONS_ONLY",
+  "purpose": "Qualify the same Java client against multiple existing server products and explicit KMIP profiles.",
+  "required_protocol_versions": [
+    "1.1",
+    "1.2",
+    "1.3",
+    "1.4",
+    "2.0",
+    "2.1"
+  ],
+  "primary_transport": "Binary TTLV over mutually authenticated TLS",
+  "optional_transports": [
+    "HTTP JSON TTLV only if shipped as a separately qualified adapter"
+  ],
+  "runtime_candidates": [
+    "JDK11",
+    "JDK17",
+    "JDK21",
+    "JDK25"
+  ],
+  "runtime_rule": "Run only the explicitly supported product runtimes; server-inventory.json records which of these apply.",
+  "profiles": {
+    "READ_AES": "Get and metadata for independently provisioned AES keys; Query/DiscoverVersions or an explicit fixed profile.",
+    "MANAGE_AES": "READ_AES plus supported Create/Register, lifecycle and rotation required by the database.",
+    "TLS_EXPORT": "Get supported private-key and X.509 certificate objects, construct Java TLS credentials and complete a handshake.",
+    "WRAPPED_KEYS": "Explicitly supported wrapped Get/Register/Import and independently verified unwrap.",
+    "REMOTE_CRYPTO": "Explicitly supported Encrypt/Decrypt/Sign/Verify/MAC with independent cryptographic checks.",
+    "TLS_REMOTE": "Optional JCA/JSSE provider integration for a remote non-exportable signing key.",
+    "KRYPTON_READ": "TLS1.3 AES256 retrieval of administratively provisioned versioned keys."
+  },
+  "result_states": [
+    "NOT_RUN",
+    "PASS",
+    "FAIL_CLIENT",
+    "FAIL_SERVER",
+    "BLOCKED_ENV",
+    "UNSUPPORTED_SERVER",
+    "NOT_APPLICABLE"
+  ],
+  "classification_rules": [
+    "A required claimed profile with a missing capability fails qualification even if the server returns a well-formed unsupported response.",
+    "UNSUPPORTED_SERVER needs recorded versioned evidence; an unexpected failure never auto-updates the manifest.",
+    "A normal typed unsupported response may pass the negative-handling case while the corresponding positive feature remains unsupported.",
+    "Record the actual execution layer for every result. Controlled-peer and codec results are client-only evidence and never count as live vendor interoperability; split mixed-layer cases into separate execution records.",
+    "This file defines the cases. Results are kept in each run's records, never here."
+  ],
+  "servers": [
+    {
+      "id": "pykmip",
+      "name": "PyKMIP",
+      "pin": "0.11.0 package and v0.11.0 source",
+      "tier": "core",
+      "unverified_versions": [],
+      "absent_versions": [
+        "2.1"
+      ],
+      "access": "Apache 2.0; repeatable local development and CI",
+      "setup": "Install the pinned package in a Python 3.11 virtual environment; provide a CA, server certificate and client certificate with clientAuth EKU; configure port 5696 and run pykmip-server -f ./server.conf -l ./server.log.",
+      "baseline": "Binary TTLV with mTLS. Broad key and certificate objects. Existing create/register/get/attribute/lifecycle/sign/encrypt handlers; a version being accepted does not imply every operation is implemented.",
+      "limits": "No server handlers for ReKey, ReKeyKeyPair, Import, Export, AddAttribute, MACVerify or Check in the inspected tag. Use Register and Get for the basic import/export workflow. No 2.1.",
+      "fixture": "Two client CN identities; default ownership policy plus one explicit sharing policy. Use INFO logs and an ephemeral database. Disable neither certificate verification nor clientAuth identity checks.",
+      "emphasis": "Force each of the five wire versions; exercise Register/Get for AES, RSA/EC and X.509; compare same-owner and different-owner access; ensure unsupported operations become typed client errors.",
+      "sources": [
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "special": [
+        "SV-PY-01",
+        "SV-PY-02"
+      ],
+      "documented_versions": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4",
+        "2.0"
+      ],
+      "demonstrated_versions": [],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "krypton",
+      "name": "OpenKCM Krypton",
+      "pin": "5bcbd502746704d7d6d12241ccb0a6dcf8b78b8d",
+      "tier": "supplemental",
+      "unverified_versions": [
+        "1.1",
+        "1.2",
+        "1.3"
+      ],
+      "absent_versions": [
+        "2.0",
+        "2.1"
+      ],
+      "access": "Apache 2.0; backend licenses apply separately",
+      "setup": "Deploy required backend and enable its KMIP listener; provision and activate two tenants' AES256 key versions through its administrative API or CLI.",
+      "baseline": "Reviewed handlers implement raw symmetric Get and GetAttributes; the client certificate CN must match the tenant identity. TLS1.3 is required.",
+      "limits": "No general KMIP creation/lifecycle or certificate/private-key profile in the reviewed handler. Underlying library versions do not establish application interoperability.",
+      "fixture": "Known active and inactive UIDs using tenantID:keyID:keyVersion; two client identities; externally rotated and deactivated versions.",
+      "emphasis": "Read-only profile, opaque IDs with separators, TLS1.2 rejection, wrong tenant, inactive versions, duplicate/unknown attribute requests.",
+      "sources": [
+        "S38",
+        "S39",
+        "S40"
+      ],
+      "special": [
+        "SV-KR-01",
+        "SV-KR-02"
+      ],
+      "documented_versions": [
+        "1.4"
+      ],
+      "demonstrated_versions": [],
+      "execution_status": "NOT_RUN"
+    }
+  ],
+  "manifest_example": {
+    "server_id": "pykmip",
+    "server_version": "481563735cc96eb9f7b363df3c24b2ea68b9353f",
+    "image_digest": "SET_FROM_VERIFIED_IMAGE",
+    "endpoint": "kmip-test.example.invalid:5696",
+    "transport": "binary_ttlv_mtls",
+    "wire_version": "1.4",
+    "allowed_versions": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "2.0"
+    ],
+    "namespace": "run-specific",
+    "credential_ref": "CI_SECRET_REFERENCE_ONLY",
+    "trust_ref": "CI_TRUST_BUNDLE_REFERENCE",
+    "hostname_verification": true,
+    "tls_minimum": "1.2",
+    "identity": "owner_a",
+    "required_product_profiles": [
+      "READ_AES",
+      "MANAGE_AES",
+      "TLS_EXPORT"
+    ],
+    "documented_capabilities": [
+      "Create",
+      "Register",
+      "Get",
+      "GetAttributes",
+      "Certificate"
+    ],
+    "discovered_capabilities": null,
+    "verified_capabilities": null,
+    "known_unsupported": [],
+    "exceptions": [],
+    "client_commit": "SET_AT_EXECUTION",
+    "jdk": "SET_AT_EXECUTION",
+    "provider": "SET_AT_EXECUTION",
+    "server_configuration_hash": "SET_AT_EXECUTION",
+    "timeouts_ms": {
+      "connect": 2000,
+      "handshake": 3000,
+      "read": 3000,
+      "overall": 5000
+    },
+    "deadline_rule": "Overall deadline includes pool waits, retries and backoff and supersedes stage maxima.",
+    "limits": {
+      "response_bytes": 1048576,
+      "nesting_depth": 32,
+      "batch_items": 128
+    },
+    "limits_rule": "Test defaults; validate legitimate certificate/key payload sizes before release.",
+    "performance_budget": {
+      "get_p95_ms": null,
+      "get_p99_ms": null,
+      "startup_budget_ms": null
+    },
+    "performance_budget_rule": "Required qualification inputs; set from database SLOs before performance gate.",
+    "result": "NOT_RUN"
+  },
+  "test_count": 145,
+  "families": [
+    {
+      "id": "ENV",
+      "title": "Fixture readiness and evidence",
+      "purpose": "Establish a trustworthy fixture before attributing any failure to the client.",
+      "sources": [
+        "S07",
+        "S08"
+      ]
+    },
+    {
+      "id": "TLS",
+      "title": "TLS and certificate authentication",
+      "purpose": "Validate the transport used to retrieve secrets, independently of KMIP object semantics.",
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ]
+    },
+    {
+      "id": "WIRE",
+      "title": "Binary TTLV and parser boundaries",
+      "purpose": "Use independent vectors and a controlled TLS peer to test the client's decoder and encoder, not a vendor's resilience.",
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ]
+    },
+    {
+      "id": "VER",
+      "title": "Version negotiation and schema changes",
+      "purpose": "Each claimed version is a separate tested configuration; negotiation alone proves only one path.",
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ]
+    },
+    {
+      "id": "DISC",
+      "title": "Discovery attributes and object lookup",
+      "purpose": "Avoid assuming that metadata is ordered, object names are unique or Query is an authorization grant.",
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ]
+    },
+    {
+      "id": "KEY",
+      "title": "Symmetric keys and export policy",
+      "purpose": "Verify usable cryptographic material and policy outcomes, not merely a successful Get status.",
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ]
+    },
+    {
+      "id": "ASYM",
+      "title": "Private keys certificates and application TLS",
+      "purpose": "Keep application TLS key management distinct from the credentials used to connect to KMIP.",
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ]
+    },
+    {
+      "id": "LIFE",
+      "title": "Lifecycle rotation and authorization",
+      "purpose": "Read back state and material after changes; retrieval policy and lifecycle state are separate assertions.",
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ]
+    },
+    {
+      "id": "AUTH",
+      "title": "Authorization changes and sensitive material",
+      "purpose": "Exercise real effective policy, including restrictions that are distinct from object lifecycle state.",
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ]
+    },
+    {
+      "id": "CRYPTO",
+      "title": "Optional remote cryptographic operations",
+      "purpose": "Apply this family only to operations intentionally exposed by the Java client; verify cryptographic relationships independently.",
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ]
+    },
+    {
+      "id": "BATCH",
+      "title": "Batch processing and error mapping",
+      "purpose": "Validate partial outcomes and version-specific ordering without assuming every server supports every batch feature.",
+      "sources": [
+        "S04",
+        "S06"
+      ]
+    },
+    {
+      "id": "RETRY",
+      "title": "Timeouts cancellation and uncertain writes",
+      "purpose": "A transport failure after a write can leave an unknown outcome. Never replay mutations as if correlation IDs guaranteed deduplication.",
+      "sources": [
+        "S04",
+        "S06"
+      ]
+    },
+    {
+      "id": "DB",
+      "title": "Database encryption and recovery",
+      "purpose": "Test complete durable database behavior with the actual client integration, using synthetic data.",
+      "sources": []
+    },
+    {
+      "id": "JAVA",
+      "title": "Java API concurrency and resource behavior",
+      "purpose": "Qualify the runtimes and transports actually shipped, not just the default developer JDK.",
+      "sources": [
+        "S11"
+      ]
+    },
+    {
+      "id": "OBS",
+      "title": "Diagnostics secrets and support evidence",
+      "purpose": "Support diagnosis must remain useful without leaking private material.",
+      "sources": []
+    }
+  ],
+  "cases": [
+    {
+      "id": "ENV-01",
+      "family": "ENV",
+      "title": "Pin all build identities",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "all fixtures"
+      ],
+      "procedure": [
+        "Record server build, patch level, image digest, client commit, JDK/provider and configuration hash.",
+        "Restart controllable fixtures; for managed SaaS record service-reported build, observation time and effective configuration."
+      ],
+      "expected": [
+        "The tested build and configuration are traceable; service upgrades create a new result tuple."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ENV-02",
+      "family": "ENV",
+      "title": "Check entitlement and endpoint",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "all fixtures"
+      ],
+      "procedure": [
+        "Check license expiry, feature entitlement, clock, DNS and listener health using the management path.",
+        "Confirm the endpoint speaks binary KMIP rather than HTTP."
+      ],
+      "expected": [
+        "Missing access or wrong endpoint is BLOCKED_ENV, never a protocol pass."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ENV-03",
+      "family": "ENV",
+      "title": "Independent reference smoke",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "reference client"
+      ],
+      "procedure": [
+        "Create or pre-provision one fixture and retrieve it with an independent client.",
+        "Record its identity and expected capability."
+      ],
+      "expected": [
+        "Fixture validity is established without relying on the client under test."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ENV-04",
+      "family": "ENV",
+      "title": "Capability snapshot",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Query and DiscoverVersions where supported"
+      ],
+      "procedure": [
+        "Record documented, discovered and positively verified capabilities separately.",
+        "Compare against the reviewed target manifest."
+      ],
+      "expected": [
+        "Changes trigger review; an advertised feature failure cannot silently become a skip."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ENV-05",
+      "family": "ENV",
+      "title": "Namespace and cleanup",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "writable fixture"
+      ],
+      "procedure": [
+        "Allocate a unique run namespace and object registry.",
+        "Exercise cleanup on a small sample, including partial failure."
+      ],
+      "expected": [
+        "Only run-owned objects are removed; orphaned objects remain visible for investigation."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ENV-06",
+      "family": "ENV",
+      "title": "Time and persistence",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "preflight",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "owned fixture"
+      ],
+      "procedure": [
+        "Measure clock offset and restart the server after provisioning one key."
+      ],
+      "expected": [
+        "Date assertions use measured tolerance; the same UID still resolves as expected."
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-01",
+      "family": "TLS",
+      "title": "Valid mutual TLS",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client and server certificates"
+      ],
+      "procedure": [
+        "Connect with the correct trust anchor and client identity.",
+        "Execute one Get or Query."
+      ],
+      "expected": [
+        "Both peers authenticate; the operation is authorized for the configured principal; a Get returns the expected authorized fixture."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-02",
+      "family": "TLS",
+      "title": "Unknown server issuer",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Present an otherwise valid certificate from an untrusted CA."
+      ],
+      "expected": [
+        "Handshake fails before a KMIP request or secret is sent; no trust-all fallback."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-03",
+      "family": "TLS",
+      "title": "Wrong server name",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Present a trusted certificate whose SAN does not match the configured DNS name or IP."
+      ],
+      "expected": [
+        "Endpoint identity validation fails on every supported Java transport."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-04",
+      "family": "TLS",
+      "title": "Expired and future server certificate",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Test expired and not-yet-valid certificates with an otherwise valid chain."
+      ],
+      "expected": [
+        "Clear certificate error; retries do not bypass validation or extend the overall deadline."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-05",
+      "family": "TLS",
+      "title": "Missing and wrong client certificate",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "mTLS endpoint"
+      ],
+      "procedure": [
+        "Connect with no certificate, an untrusted certificate and a wrong private key."
+      ],
+      "expected": [
+        "No managed key is returned; client reports authentication/handshake failure accurately."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-06",
+      "family": "TLS",
+      "title": "Client certificate purpose",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "configurable fixture"
+      ],
+      "procedure": [
+        "Use a valid clientAuth certificate, then an inappropriate EKU or key-usage fixture."
+      ],
+      "expected": [
+        "Positive identity works; policy-required purpose failures do not cause anonymous fallback."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-07",
+      "family": "TLS",
+      "title": "Chain construction",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled PKI"
+      ],
+      "procedure": [
+        "Test root and intermediate trust, a missing intermediate, and an alternate valid chain."
+      ],
+      "expected": [
+        "Accepted chains match the configured trust policy; incomplete invalid chains fail clearly."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-08",
+      "family": "TLS",
+      "title": "TLS versions and cipher policy",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controllable listener"
+      ],
+      "procedure": [
+        "Run TLS1.2 and TLS1.3 when supported.",
+        "Force an incompatible or prohibited protocol/cipher."
+      ],
+      "expected": [
+        "Successful version is recorded; no fallback below configured minimum."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-09",
+      "family": "TLS",
+      "title": "Keystore and truststore loading",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Java credential files"
+      ],
+      "procedure": [
+        "Load PKCS12 and supported PEM/JKS inputs; use wrong password, wrong alias and multiple client aliases."
+      ],
+      "expected": [
+        "Correct identity is selected deterministically; configuration errors reveal no secrets."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-10",
+      "family": "TLS",
+      "title": "Session reuse and credential changes",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "pooled client"
+      ],
+      "procedure": [
+        "Reuse connections and sessions, rotate client credentials, then force a fresh handshake."
+      ],
+      "expected": [
+        "New authentication uses new credentials; old pool/session state cannot cross identities."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-11",
+      "family": "TLS",
+      "title": "Revocation policy",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "revocation-enabled owned fixture"
+      ],
+      "procedure": [
+        "Revoke a client or server certificate and test fresh connections with configured revocation handling."
+      ],
+      "expected": [
+        "Behavior matches the declared policy; established-session behavior is measured separately."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-12",
+      "family": "TLS",
+      "title": "Endpoint address changes",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "failover or DNS fixture"
+      ],
+      "procedure": [
+        "Reconnect through configured alternate names, IPv4/IPv6 and changed DNS records."
+      ],
+      "expected": [
+        "Name verification remains enabled; only explicitly configured trusted endpoints are contacted."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "TLS-13",
+      "family": "TLS",
+      "title": "Trust anchor rollover",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled PKI",
+        "credential reload"
+      ],
+      "procedure": [
+        "Add the replacement CA, move the server to the new chain, remove the retired CA and force fresh connections."
+      ],
+      "expected": [
+        "Intended overlap works; retired trust is no longer accepted after configured reload and session retirement."
+      ],
+      "sources": [
+        "S11",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-01",
+      "family": "WIRE",
+      "title": "Independent golden messages",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "official vectors"
+      ],
+      "procedure": [
+        "Decode applicable official request/response vectors; encode selected deterministic messages."
+      ],
+      "expected": [
+        "Parsed meaning and specified byte layout match the independent fixture."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-02",
+      "family": "WIRE",
+      "title": "Primitive values",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "codec harness"
+      ],
+      "procedure": [
+        "Exercise signed integers, long integers, enums, booleans, bytes, text, dates and big integers."
+      ],
+      "expected": [
+        "Values survive without sign, width, character-encoding or truncation errors."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-03",
+      "family": "WIRE",
+      "title": "Padding boundaries",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "codec harness"
+      ],
+      "procedure": [
+        "Use value lengths 0, 1, 7, 8, 9, 15, 16 and 17 plus nested structures."
+      ],
+      "expected": [
+        "Lengths and padding are handled exactly at each boundary."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-04",
+      "family": "WIRE",
+      "title": "UTF8 and opaque identifiers",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "codec harness"
+      ],
+      "procedure": [
+        "Exercise multibyte names, punctuation, long opaque IDs and invalid UTF8."
+      ],
+      "expected": [
+        "Valid bytes retain meaning; invalid text is rejected without coercing a UID."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-05",
+      "family": "WIRE",
+      "title": "Fragmented transport",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Split headers and bodies into one-byte and random-sized reads."
+      ],
+      "expected": [
+        "Exactly one complete message is reconstructed without hangs or data loss."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-06",
+      "family": "WIRE",
+      "title": "Adjacent messages",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Send consecutive valid responses and exercise connection reuse under the supported request model."
+      ],
+      "expected": [
+        "No bytes are lost, consumed by the wrong request or confused with TLS record boundaries."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-07",
+      "family": "WIRE",
+      "title": "Truncation at every boundary",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Close during the header, a nested item, payload and padding."
+      ],
+      "expected": [
+        "Bounded typed error; broken connection is evicted and partial keys are never returned."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-08",
+      "family": "WIRE",
+      "title": "Length overflow and allocation cap",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Declare oversized top-level and nested lengths and integer-overflow boundary values."
+      ],
+      "expected": [
+        "Rejection occurs before unbounded allocation or read; configured caps are enforced."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-09",
+      "family": "WIRE",
+      "title": "Depth and element count",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Exceed nesting, batch-item and aggregate-element limits independently."
+      ],
+      "expected": [
+        "Bounded memory/CPU and a controlled protocol error."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-10",
+      "family": "WIRE",
+      "title": "Malformed type or duplicate field",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Return illegal primitive widths, invalid types, duplicate mandatory singleton fields and a BatchCount inconsistent with the response's own items."
+      ],
+      "expected": [
+        "Invalid messages are rejected and the connection evicted; legal Stop responses with fewer items than the request remain valid."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-11",
+      "family": "WIRE",
+      "title": "Unknown optional information",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "version-specific schema"
+      ],
+      "procedure": [
+        "Add allowed noncritical metadata tags or enums and permitted attribute ordering; keep mandatory crypto semantics known."
+      ],
+      "expected": [
+        "Client safely handles optional data; unknown key algorithms, object types or required semantics are never defaulted."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-12",
+      "family": "WIRE",
+      "title": "Critical extension handling",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "extension-aware harness"
+      ],
+      "procedure": [
+        "Supply unknown noncritical and critical message extensions."
+      ],
+      "expected": [
+        "Optional data follows extension policy; unsupported critical semantics are never silently ignored."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-13",
+      "family": "WIRE",
+      "title": "Wrong response correlation",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled TLS peer"
+      ],
+      "procedure": [
+        "Return a wrong operation, batch identifier, persistent key UID or unexpected protocol header."
+      ],
+      "expected": [
+        "No unrelated response or key is delivered to the caller."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-14",
+      "family": "WIRE",
+      "title": "Secret-buffer ownership",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "codec and concurrency harness"
+      ],
+      "procedure": [
+        "Reuse transport buffers after returning a key; mutate caller buffers and exercise cancellation."
+      ],
+      "expected": [
+        "Key material is not corrupted, aliased across requests or exposed through retained diagnostics."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "WIRE-15",
+      "family": "WIRE",
+      "title": "Bounded parser fuzzing",
+      "priority": "P1",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "isolated decoder harness"
+      ],
+      "procedure": [
+        "Mutate valid and invalid seeded corpora under fixed time, memory and depth limits; persist every failing seed."
+      ],
+      "expected": [
+        "No crash, hang or uncontrolled allocation; every regression seed becomes a deterministic test."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S09",
+        "S10"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-01",
+      "family": "VER",
+      "title": "Force every required version",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "supported target intersection"
+      ],
+      "procedure": [
+        "Independently force 1.1, 1.2, 1.3, 1.4, 2.0 and 2.1 where the target supports them.",
+        "Run discovery and a real key workflow."
+      ],
+      "expected": [
+        "Each server/version/profile has its own result; unsupported pairs are explicitly classified."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-02",
+      "family": "VER",
+      "title": "Automatic highest common version",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "discovery support"
+      ],
+      "procedure": [
+        "Offer the configured permitted versions in varying order.",
+        "Verify the selected wire version by independent decode."
+      ],
+      "expected": [
+        "Selection stays within both capability sets and the configured minimum."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-03",
+      "family": "VER",
+      "title": "Fixed-version mode",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client fixed mode"
+      ],
+      "procedure": [
+        "Disable negotiation and connect with a chosen version."
+      ],
+      "expected": [
+        "No hidden version probing or fallback changes the requested version."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-04",
+      "family": "VER",
+      "title": "No common version",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled version fixture"
+      ],
+      "procedure": [
+        "Configure disjoint client/server allowed sets."
+      ],
+      "expected": [
+        "Explicit compatibility failure before a mutation; no infinite negotiation loop."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-05",
+      "family": "VER",
+      "title": "Discovery unavailable",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "fixed documented profile"
+      ],
+      "procedure": [
+        "Return unsupported or denied discovery, then supply an approved fixed-version configuration."
+      ],
+      "expected": [
+        "Fixed operation works only under explicit policy; client does not invent support."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-06",
+      "family": "VER",
+      "title": "Authentication is not version failure",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled TLS and server errors"
+      ],
+      "procedure": [
+        "Trigger bad trust, wrong client identity, denial and timeout during discovery."
+      ],
+      "expected": [
+        "No downgrade or alternate insecure transport is attempted for these failures."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-07",
+      "family": "VER",
+      "title": "Version-scoped attributes",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "each fixed version"
+      ],
+      "procedure": [
+        "Create/get the same semantic object using that version's correct attribute representation."
+      ],
+      "expected": [
+        "1.x and 2.x encodings are distinct and mapped to one consistent public API."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-08",
+      "family": "VER",
+      "title": "Version-scoped operations",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "selected operation catalog"
+      ],
+      "procedure": [
+        "Request an operation or attribute not valid in the selected version."
+      ],
+      "expected": [
+        "Local rejection or a precise supported error; no silent semantic substitution."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-09",
+      "family": "VER",
+      "title": "Two point zero and two point one",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "two 2.x fixtures where available"
+      ],
+      "procedure": [
+        "Run required workflows separately at 2.0 and 2.1, including typed UID and attribute cases."
+      ],
+      "expected": [
+        "Passing one minor version does not mark the other passed."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-10",
+      "family": "VER",
+      "title": "Per-endpoint capability cache",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "two different server profiles"
+      ],
+      "procedure": [
+        "Alternate endpoints and identities, restart or upgrade one endpoint, then renegotiate."
+      ],
+      "expected": [
+        "Cached support cannot leak between servers, versions, identities or stale deployments."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "VER-11",
+      "family": "VER",
+      "title": "Newer versions advertised",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled discovery response"
+      ],
+      "procedure": [
+        "Advertise a newer version beyond the client's implemented range."
+      ],
+      "expected": [
+        "Client selects an explicitly supported common version or fails clearly; never pretends to implement 3.0."
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-01",
+      "family": "DISC",
+      "title": "Query interpretation",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Query"
+      ],
+      "procedure": [
+        "Request supported operations and object types.",
+        "Include legal additional response fields."
+      ],
+      "expected": [
+        "Capabilities are represented without implying the current principal may perform every operation."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-02",
+      "family": "DISC",
+      "title": "Get selected and all attributes",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "GetAttributes"
+      ],
+      "procedure": [
+        "Read selected attributes and the version-specific all-attribute form."
+      ],
+      "expected": [
+        "Missing optional data is distinct from a malformed required field."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-03",
+      "family": "DISC",
+      "title": "Attribute set and indices",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "attribute support"
+      ],
+      "procedure": [
+        "Use repeated names, custom attributes and version-valid indexes."
+      ],
+      "expected": [
+        "Values and multiplicity are preserved; unsupported updates produce explicit outcomes."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-04",
+      "family": "DISC",
+      "title": "Locate exact and ambiguous names",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Locate or controlled peer"
+      ],
+      "procedure": [
+        "Exercise zero, one and multiple lookup matches using allowed nonunique filters or a controlled response where duplicate names are prohibited."
+      ],
+      "expected": [
+        "Zero and multiple matches are explicit; the client never silently picks the first key."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-05",
+      "family": "DISC",
+      "title": "Locate filters",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Locate"
+      ],
+      "procedure": [
+        "Combine name, type, algorithm and object-group filters the fixture supports."
+      ],
+      "expected": [
+        "Only objects matching the intended semantics are selected; filters are not silently discarded."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-06",
+      "family": "DISC",
+      "title": "Locate pagination",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "paginated fixture"
+      ],
+      "procedure": [
+        "Provision more objects than one configured response window; iterate pages with stable fixture state."
+      ],
+      "expected": [
+        "Complete enumeration, bounded iteration and no accidental omission or duplicate use."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-07",
+      "family": "DISC",
+      "title": "Opaque UID round trip",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Get"
+      ],
+      "procedure": [
+        "Retrieve IDs containing separators, non-UUID text and maximum permitted lengths."
+      ],
+      "expected": [
+        "No UUID parsing assumption or lossy normalization changes the identifier."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DISC-08",
+      "family": "DISC",
+      "title": "Metadata to key consistency",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled peer and real objects"
+      ],
+      "procedure": [
+        "Return or provision mismatched type, length, algorithm or object linkage."
+      ],
+      "expected": [
+        "Client detects unsafe mismatches before creating a usable database or TLS key."
+      ],
+      "sources": [
+        "S01",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-01",
+      "family": "KEY",
+      "title": "Retrieve known AES key",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Get",
+        "symmetric fixture"
+      ],
+      "procedure": [
+        "Provision a known synthetic AES key independently, retrieve it and perform a Java known-answer encryption/decryption."
+      ],
+      "expected": [
+        "Exact material, algorithm and length are correct; no plaintext material enters logs."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-02",
+      "family": "KEY",
+      "title": "Create then retrieve",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Create",
+        "Get"
+      ],
+      "procedure": [
+        "Create AES128 and AES256 where supported, record UID and attributes, then retrieve by exact UID."
+      ],
+      "expected": [
+        "A usable correctly sized key is returned; unsupported AES size is accurately classified."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-03",
+      "family": "KEY",
+      "title": "Register then retrieve",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Register",
+        "Get"
+      ],
+      "procedure": [
+        "Register an independently generated key, retrieve it with the same and an independent client."
+      ],
+      "expected": [
+        "Key bytes and policy metadata agree across implementations."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-04",
+      "family": "KEY",
+      "title": "Restart persistence",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Get",
+        "owned restart"
+      ],
+      "procedure": [
+        "Retrieve a key, restart server and Java process, then retrieve the exact UID again."
+      ],
+      "expected": [
+        "Material and object identity remain stable."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-05",
+      "family": "KEY",
+      "title": "Exportable and non-exportable keys",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "enforced export policy"
+      ],
+      "procedure": [
+        "Provision otherwise equivalent allowed and denied fixtures.",
+        "Request raw key retrieval using supported operations."
+      ],
+      "expected": [
+        "Allowed material works; denied export is a typed outcome and never triggers creation or weakening of policy."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-06",
+      "family": "KEY",
+      "title": "Wrong algorithm or key size",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled peer"
+      ],
+      "procedure": [
+        "Return wrong algorithm or inconsistent bit length for a requested database key."
+      ],
+      "expected": [
+        "Client rejects it before caching or encrypting any database data."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-07",
+      "family": "KEY",
+      "title": "Wrapped key retrieval",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "wrapped Get"
+      ],
+      "procedure": [
+        "Request supported wrapped formats, unwrap with an independent primitive and use the key."
+      ],
+      "expected": [
+        "Metadata, wrapping algorithm and recovered material match the intended fixture."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-08",
+      "family": "KEY",
+      "title": "Wrapped registration",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "wrapped Register or Import"
+      ],
+      "procedure": [
+        "Register wrapped material with explicit encoding settings, then retrieve/use it under policy."
+      ],
+      "expected": [
+        "No confusion between encoded KeyValue and raw material; independent result matches."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-09",
+      "family": "KEY",
+      "title": "Wrap integrity and KEK mismatch",
+      "priority": "P0",
+      "layer": "codec_harness",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "wrapping harness"
+      ],
+      "procedure": [
+        "Alter wrapped ciphertext or metadata, use the wrong KEK and exercise RFC3394/RFC5649 vectors."
+      ],
+      "expected": [
+        "Integrity failures never yield a usable key; no raw fallback is attempted."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-10",
+      "family": "KEY",
+      "title": "Get versus Export semantics",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Export capability"
+      ],
+      "procedure": [
+        "Execute each supported operation with explicit format/policy requests and compare semantic results."
+      ],
+      "expected": [
+        "The API does not substitute operations with different authorization or representation semantics."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "KEY-11",
+      "family": "KEY",
+      "title": "Raw and transparent symmetric formats",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "declared symmetric formats"
+      ],
+      "procedure": [
+        "Request Raw and TransparentSymmetricKey separately where supported; normalize and use returned material."
+      ],
+      "expected": [
+        "Equivalent permitted forms yield the correct key; unsupported forms fail explicitly without guessing."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-01",
+      "family": "ASYM",
+      "title": "RSA private key formats",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "RSA private Get"
+      ],
+      "procedure": [
+        "Retrieve supported PKCS8 and alternative declared formats and construct a Java PrivateKey."
+      ],
+      "expected": [
+        "A Java sign/verify check proves usable material; format conversion is explicit."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-02",
+      "family": "ASYM",
+      "title": "RSA public key formats",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "RSA public Get"
+      ],
+      "procedure": [
+        "Parse SPKI/X.509 public-key and other declared forms using the corresponding Java spec."
+      ],
+      "expected": [
+        "Public-key formats are not confused with X.509 certificate objects."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-03",
+      "family": "ASYM",
+      "title": "EC keys",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "EC support"
+      ],
+      "procedure": [
+        "Retrieve supported P256/P384 private and public keys; verify curve identity and sign/verify."
+      ],
+      "expected": [
+        "Curve, scalar and public point agree without silent algorithm substitution."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-04",
+      "family": "ASYM",
+      "title": "X509 certificate objects",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Certificate Get"
+      ],
+      "procedure": [
+        "Retrieve leaf and intermediate certificate objects; parse with Java CertificateFactory."
+      ],
+      "expected": [
+        "DER, subject/SAN, validity and key association match the independent fixture."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-05",
+      "family": "ASYM",
+      "title": "Certificate private-key pairing",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "private key and certificate"
+      ],
+      "procedure": [
+        "Build a Java SSLContext from retrieved material and complete a real application handshake."
+      ],
+      "expected": [
+        "The certificate and key actually match and the intended chain is presented."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-06",
+      "family": "ASYM",
+      "title": "Mismatched and expired application identity",
+      "priority": "P1",
+      "layer": "database_integration",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "application TLS harness"
+      ],
+      "procedure": [
+        "Combine the wrong key/cert or an expired leaf, and attempt the application handshake."
+      ],
+      "expected": [
+        "Misconfiguration is explicit; stale or unrelated credentials are not selected."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-07",
+      "family": "ASYM",
+      "title": "Certificate links and chains",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "supported links or explicit IDs"
+      ],
+      "procedure": [
+        "Follow only supported, validated links or configured IDs; include missing, cyclic and duplicate links."
+      ],
+      "expected": [
+        "Traversal is bounded and produces the intended chain; no cross-tenant traversal."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-08",
+      "family": "ASYM",
+      "title": "Keypair creation and registration",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "CreateKeyPair or Register"
+      ],
+      "procedure": [
+        "Create or register an RSA/EC pair, then use it across independent clients."
+      ],
+      "expected": [
+        "Public and private components, IDs and usage restrictions remain associated."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "ASYM-09",
+      "family": "ASYM",
+      "title": "Remote signing extension",
+      "priority": "P1",
+      "layer": "database_integration",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client explicitly offers JCA remote signing"
+      ],
+      "procedure": [
+        "Use a non-exportable key through the implemented JCA/JSSE signing provider and perform a handshake."
+      ],
+      "expected": [
+        "Only the complete provider integration earns remote TLS signing coverage; bare KMIP Sign is insufficient."
+      ],
+      "sources": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-01",
+      "family": "LIFE",
+      "title": "Activation transition",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Activate",
+        "GetAttributes"
+      ],
+      "procedure": [
+        "Provision a pre-active key, activate it and read back state."
+      ],
+      "expected": [
+        "The intended state transition is observed; unsupported activation is not reported as success."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-02",
+      "family": "LIFE",
+      "title": "Revocation transition",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Revoke",
+        "GetAttributes"
+      ],
+      "procedure": [
+        "Revoke for supported reasons and inspect state and authorized retrieval behavior."
+      ],
+      "expected": [
+        "State changes correctly; Get outcomes follow the pinned server policy, not a universal denial assumption."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-03",
+      "family": "LIFE",
+      "title": "Destroy and subsequent lookup",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Destroy",
+        "disposable object"
+      ],
+      "procedure": [
+        "Destroy a run-owned key after required lifecycle transitions, then get/locate it."
+      ],
+      "expected": [
+        "No unexpected usable material returns; retained metadata is interpreted according to the profile."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-04",
+      "family": "LIFE",
+      "title": "Invalid state transition",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "lifecycle fixture"
+      ],
+      "procedure": [
+        "Attempt an invalid or repeated transition and retrieve state afterward."
+      ],
+      "expected": [
+        "Error or documented idempotent result is preserved; no accidental state corruption."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-05",
+      "family": "LIFE",
+      "title": "Rotation preserves old data",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "rotation supported or admin rotation"
+      ],
+      "procedure": [
+        "Create K1, encrypt data, introduce K2 and direct new writes to K2.",
+        "Retrieve K1 by original UID."
+      ],
+      "expected": [
+        "Old data remains decryptable with K1; new data uses K2 and IDs are never remapped."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-06",
+      "family": "LIFE",
+      "title": "Read only identity",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "role fixture"
+      ],
+      "procedure": [
+        "Read an allowed key, then attempt creation, modification and destruction with that identity."
+      ],
+      "expected": [
+        "Allowed read succeeds; denied writes are not retried as different operations."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-07",
+      "family": "LIFE",
+      "title": "Tenant separation",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "two tenants"
+      ],
+      "procedure": [
+        "Use known foreign IDs and matching names across tenants.",
+        "Exercise Get, Locate and attributes."
+      ],
+      "expected": [
+        "No foreign key material or unauthorized metadata is exposed; permitted not-found masking is accepted."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-08",
+      "family": "LIFE",
+      "title": "Certificate identity isolation",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "separate client certificates"
+      ],
+      "procedure": [
+        "Interleave two identities through the same client factory and connection pool."
+      ],
+      "expected": [
+        "Session, authorization and cached key data cannot be reused across identities."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "LIFE-09",
+      "family": "LIFE",
+      "title": "Usage and export restrictions",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "policy-enforcing fixture"
+      ],
+      "procedure": [
+        "Attempt disallowed uses and non-exportable retrieval with the same object type and algorithm."
+      ],
+      "expected": [
+        "Client preserves the requested usage and surfaces denials without weakening restrictions."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-01",
+      "family": "AUTH",
+      "title": "Grant and revoke object access",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "policy-enforcing fixture"
+      ],
+      "procedure": [
+        "Retrieve as an allowed identity, revoke its grant, expire client cache and retry over a fresh authenticated connection."
+      ],
+      "expected": [
+        "Fresh access follows effective policy; any cached-use allowance is explicit and bounded."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-02",
+      "family": "AUTH",
+      "title": "Listing versus retrieval permissions",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "separate permissions supported"
+      ],
+      "procedure": [
+        "Allow exact-ID Get but deny Locate, then test the inverse where supported."
+      ],
+      "expected": [
+        "The client does not treat list permission as retrieval permission or list denial as object absence."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-03",
+      "family": "AUTH",
+      "title": "Sensitive wrapped-only key",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "sensitivity and wrapping policy"
+      ],
+      "procedure": [
+        "Provision sensitive but exportable material with wrapping required; try raw and permitted wrapped retrieval."
+      ],
+      "expected": [
+        "Raw material is not accepted through a fallback; wrapped retrieval succeeds only under the configured policy."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-04",
+      "family": "AUTH",
+      "title": "Permissions cannot weaken on fallback",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "denied operation fixture"
+      ],
+      "procedure": [
+        "Deny a requested operation or format while another route exists."
+      ],
+      "expected": [
+        "Client reports the denial rather than changing sensitivity, usage, credentials or operations to bypass it."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-05",
+      "family": "AUTH",
+      "title": "Credential change invalidates identity cache",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "cached client"
+      ],
+      "procedure": [
+        "Replace the current identity with a less privileged identity while an identical UID remains cached."
+      ],
+      "expected": [
+        "Cache/pool policy prevents reuse of the prior identity's material or authorization."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "AUTH-06",
+      "family": "AUTH",
+      "title": "Malformed authorization metadata",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled peer"
+      ],
+      "procedure": [
+        "Return a supported key with unknown security-relevant algorithm or usage semantics."
+      ],
+      "expected": [
+        "Client does not default to an unrestricted key or silently drop required restrictions."
+      ],
+      "sources": [
+        "S04",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-01",
+      "family": "CRYPTO",
+      "title": "Remote symmetric round trip",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Encrypt",
+        "Decrypt",
+        "appropriate usage"
+      ],
+      "procedure": [
+        "Encrypt remotely and decrypt locally, then reverse direction with a known key and explicit parameters."
+      ],
+      "expected": [
+        "Plaintext and parameters match the independent Java implementation."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-02",
+      "family": "CRYPTO",
+      "title": "AEAD metadata and integrity",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "AEAD support"
+      ],
+      "procedure": [
+        "Exercise nonempty and empty AAD/plaintext, IV and tag handling; corrupt each authenticated input."
+      ],
+      "expected": [
+        "Correct data round trips; authentication failures return no usable plaintext."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-03",
+      "family": "CRYPTO",
+      "title": "RSA encryption parameters",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "RSA Encrypt or Decrypt"
+      ],
+      "procedure": [
+        "Test advertised OAEP hash/MGF parameters and supported sizes; decrypt with an independent implementation."
+      ],
+      "expected": [
+        "Parameter handling is explicit and unsupported combinations fail clearly."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-04",
+      "family": "CRYPTO",
+      "title": "RSA signing parameters",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Sign",
+        "SignatureVerify"
+      ],
+      "procedure": [
+        "Verify server signatures locally and local signatures remotely for declared PSS and PKCS1 modes."
+      ],
+      "expected": [
+        "PSS salt/hash/MGF and message-versus-digest semantics match the selected API contract."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-05",
+      "family": "CRYPTO",
+      "title": "EC signing representation",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "EC Sign or SignatureVerify"
+      ],
+      "procedure": [
+        "Verify signatures across Java and server implementations and exercise supported DER/raw representations."
+      ],
+      "expected": [
+        "Encoding differences are handled explicitly; randomized signatures are compared by validity, not byte identity."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-06",
+      "family": "CRYPTO",
+      "title": "MAC operation semantics",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "MAC or MACVerify"
+      ],
+      "procedure": [
+        "Generate and verify a supported MAC locally and remotely; tamper message and MAC."
+      ],
+      "expected": [
+        "Correct MACs verify and invalid ones fail; unsupported MACVerify remains a separate capability result."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-07",
+      "family": "CRYPTO",
+      "title": "Unsupported crypto or usage",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client remote crypto API"
+      ],
+      "procedure": [
+        "Request unsupported algorithm, size, mode or disallowed key usage."
+      ],
+      "expected": [
+        "Typed failure; no substitution with another algorithm, padding or key."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "CRYPTO-08",
+      "family": "CRYPTO",
+      "title": "Streaming crypto boundary",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client explicitly ships streaming crypto"
+      ],
+      "procedure": [
+        "Exercise first/middle/final chunks, state handles, cancellation and a missing final chunk on eligible servers."
+      ],
+      "expected": [
+        "State is bounded and not shared across calls; unsupported streaming is rejected before partial success is claimed."
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S41",
+        "S42"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-01",
+      "family": "BATCH",
+      "title": "Independent successful batch",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "batch support"
+      ],
+      "procedure": [
+        "Send several independent supported operations with correlation identifiers."
+      ],
+      "expected": [
+        "Every response is matched to its request and exposed individually."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-02",
+      "family": "BATCH",
+      "title": "Dependent ordered batch",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "ordered batch support"
+      ],
+      "procedure": [
+        "Explicitly order create, activate and get using version-valid placeholders/references."
+      ],
+      "expected": [
+        "The created object is the one activated and returned; no reliance on unspecified ordering."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-03",
+      "family": "BATCH",
+      "title": "Omitted batch order",
+      "priority": "P1",
+      "layer": "controlled_peer",
+      "cadence": "nightly",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled peer",
+        "version-specific rules"
+      ],
+      "procedure": [
+        "Exercise omission at 1.4 and 2.1 and independently observe execution assumptions."
+      ],
+      "expected": [
+        "Client honors each version's default and sets ordering explicitly for dependencies."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-04",
+      "family": "BATCH",
+      "title": "Stop on error",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Stop support",
+        "ordered batching"
+      ],
+      "procedure": [
+        "Explicitly set ordered processing, fail the middle operation of a three-item batch and inspect responses and server state."
+      ],
+      "expected": [
+        "Later mutation did not run; legal omission of unprocessed responses is handled and the response count matches its actual items."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-05",
+      "family": "BATCH",
+      "title": "Continue on error",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "Continue support"
+      ],
+      "procedure": [
+        "Fail the middle operation and permit the final independent operation."
+      ],
+      "expected": [
+        "Mixed success and failure are preserved without turning the batch into one boolean result."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-06",
+      "family": "BATCH",
+      "title": "Undo support or rejection",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "optional Undo"
+      ],
+      "procedure": [
+        "Request Undo with one failure; inspect actual rollback or whole-request rejection if unsupported."
+      ],
+      "expected": [
+        "No partial success is falsely presented as an atomic rollback guarantee."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-07",
+      "family": "BATCH",
+      "title": "Typed result reasons",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled peer and live negative cases"
+      ],
+      "procedure": [
+        "Exercise unsupported, invalid field, not found, denied, unavailable and unknown result reasons."
+      ],
+      "expected": [
+        "Exceptions preserve safe numeric/status context; no string-matching-based success logic."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-08",
+      "family": "BATCH",
+      "title": "Asynchronous or pending result",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "optional async client feature"
+      ],
+      "procedure": [
+        "Exercise bounded Pending, Poll completion/failure and Cancel already-completed/unable-to-cancel; otherwise set version-correct async-prohibited behavior."
+      ],
+      "expected": [
+        "No indefinite polling or empty successful result; asynchronous flow is claimed only when completely implemented."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "BATCH-09",
+      "family": "BATCH",
+      "title": "Unsupported ordering option",
+      "priority": "P1",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "controlled peer or documented server restriction"
+      ],
+      "procedure": [
+        "Request ordered processing where unavailable and inspect the rejection without changing options."
+      ],
+      "expected": [
+        "Client preserves whole-request rejection and does not silently execute dependent operations unordered."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-01",
+      "family": "RETRY",
+      "title": "Connect and handshake timeout",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "network fault harness"
+      ],
+      "procedure": [
+        "Blackhole connection establishment, then stall a TLS handshake."
+      ],
+      "expected": [
+        "Each stage and the overall operation terminate within configured deadlines."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-02",
+      "family": "RETRY",
+      "title": "Read timeout and slow body",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "controlled peer"
+      ],
+      "procedure": [
+        "Delay a response and drip partial bytes past the overall deadline."
+      ],
+      "expected": [
+        "Slow progress cannot extend the operation indefinitely; connection is safely discarded."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-03",
+      "family": "RETRY",
+      "title": "Safe read retry",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "idempotent read",
+        "fault proxy"
+      ],
+      "procedure": [
+        "Drop a Get response before delivery, then allow reconnection within the retry budget."
+      ],
+      "expected": [
+        "Bounded retry returns only the intended UID; attempts respect the total deadline."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-04",
+      "family": "RETRY",
+      "title": "Create commit then response loss",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "owned fixture",
+        "post-commit fault"
+      ],
+      "procedure": [
+        "Allow Create to commit and drop its response; inspect the backend independently."
+      ],
+      "expected": [
+        "Client reports an uncertain outcome and does not blindly create a second key."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-05",
+      "family": "RETRY",
+      "title": "Register or rotate ambiguous outcome",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "owned fixture",
+        "post-commit fault"
+      ],
+      "procedure": [
+        "Drop responses after Register or ReKey/rotation commit."
+      ],
+      "expected": [
+        "Recovery reconciles actual state using supported evidence; no implicit duplication or version remapping."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-06",
+      "family": "RETRY",
+      "title": "Lookup failure never creates a key",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client key resolver"
+      ],
+      "procedure": [
+        "Make Get return denied, timeout, malformed response and not found in turn."
+      ],
+      "expected": [
+        "A retrieval API never calls Create as a repair action."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-07",
+      "family": "RETRY",
+      "title": "Cancel and interrupt",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "async or blocking client API"
+      ],
+      "procedure": [
+        "Cancel during connect, read, retry backoff and pool wait."
+      ],
+      "expected": [
+        "Work stops promptly, resources are released and no late key is delivered to another caller."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-08",
+      "family": "RETRY",
+      "title": "Failed connection pool eviction",
+      "priority": "P0",
+      "layer": "controlled_peer",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "client_only"
+      ],
+      "prerequisites": [
+        "pooled client"
+      ],
+      "procedure": [
+        "Return truncated or uncorrelated responses and then send a valid request."
+      ],
+      "expected": [
+        "Broken sessions are evicted; the next caller does not consume stale bytes."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-09",
+      "family": "RETRY",
+      "title": "Explicit failover with state differences",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "two configured endpoints"
+      ],
+      "procedure": [
+        "Fail the primary and use a configured replica with missing or stale key state."
+      ],
+      "expected": [
+        "Client does not treat unrelated servers as a shared keyspace or create a replacement key."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "RETRY-10",
+      "family": "RETRY",
+      "title": "Retry storm control",
+      "priority": "P0",
+      "layer": "fault_proxy_and_live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "owned load fixture"
+      ],
+      "procedure": [
+        "Restart a server while many nodes reconnect; introduce repeated unavailable errors."
+      ],
+      "expected": [
+        "Backoff, jitter, attempt caps and circuit behavior bound retries; authorization errors are not retried as transient."
+      ],
+      "sources": [
+        "S04",
+        "S06"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-01",
+      "family": "DB",
+      "title": "Cold start and bootstrap",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "database integration"
+      ],
+      "procedure": [
+        "Restart the database without cached keys while KMIP is available.",
+        "Keep KMIP credentials available independently of managed application TLS keys."
+      ],
+      "expected": [
+        "Startup obtains the correct keys with no circular authentication dependency."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-02",
+      "family": "DB",
+      "title": "Direct encryption key workflow",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "direct DEK design"
+      ],
+      "procedure": [
+        "Fetch a known key and write, read, flush and reopen encrypted data."
+      ],
+      "expected": [
+        "Plaintext round trip and persisted key references are correct."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-03",
+      "family": "DB",
+      "title": "Envelope encryption workflow",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "envelope design"
+      ],
+      "procedure": [
+        "Generate a DEK, wrap it under the intended KEK, persist its wrapped form and exact KEK reference, then restart and unwrap."
+      ],
+      "expected": [
+        "Data decrypts after restart; KEK versions and wrapping metadata remain sufficient."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-04",
+      "family": "DB",
+      "title": "Rotation with mixed files",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "data persistence and rotation"
+      ],
+      "procedure": [
+        "Write files under K1, rotate to K2, write more, compact/merge and restart."
+      ],
+      "expected": [
+        "Every file uses its recorded key; retired keys remain available for retained data."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-05",
+      "family": "DB",
+      "title": "Backup and restore on fresh nodes",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "database backup"
+      ],
+      "procedure": [
+        "Back up data and required key-reference metadata; restore onto a fresh client identity allowed to read the historical keys."
+      ],
+      "expected": [
+        "Restore works without hidden in-memory state or old machine-local caches."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-06",
+      "family": "DB",
+      "title": "Unavailable KMS at startup",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "cache policy defined"
+      ],
+      "procedure": [
+        "Start with no cache and an unavailable endpoint; repeat with an explicitly supported protected cache."
+      ],
+      "expected": [
+        "Behavior matches policy; no plaintext fallback, default key or accidental new key generation."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-07",
+      "family": "DB",
+      "title": "Unavailable KMS after startup",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "cache policy defined"
+      ],
+      "procedure": [
+        "Disconnect KMIP during reads, writes and rotation under warm and cold cache conditions."
+      ],
+      "expected": [
+        "Allowed cached work and blocked key acquisition follow policy; no wrong-key writes."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-08",
+      "family": "DB",
+      "title": "Revoke and cache expiry",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "policy fixture"
+      ],
+      "procedure": [
+        "Cache a key, revoke or deny it, expire cache and reconnect; inspect new encryption and historical decryption behavior."
+      ],
+      "expected": [
+        "Client enforces its declared policy; it does not claim revocation erased already exported key bytes."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-09",
+      "family": "DB",
+      "title": "Concurrent node initialization",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "multi-node database"
+      ],
+      "procedure": [
+        "Start many nodes with missing or shared logical key names and induce one timeout."
+      ],
+      "expected": [
+        "At-most-intended provisioning is coordinated by the database design; names are not mistaken for universal server deduplication."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-10",
+      "family": "DB",
+      "title": "Credential and server recovery",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "restore fixture"
+      ],
+      "procedure": [
+        "Restore KMS state and rotate bootstrap certificates, then recover a database node."
+      ],
+      "expected": [
+        "Correct historical keys remain resolvable; restoring trust does not bypass identity checks."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-11",
+      "family": "DB",
+      "title": "Corrupt reference or wrapped blob",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "database corruption fixture"
+      ],
+      "procedure": [
+        "Alter persisted UID, algorithm, wrapped DEK or KEK version."
+      ],
+      "expected": [
+        "Deterministic integrity/configuration failure; no guessed key or destructive repair."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "DB-12",
+      "family": "DB",
+      "title": "Application TLS rotation",
+      "priority": "P0",
+      "layer": "database_integration",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "live application TLS"
+      ],
+      "procedure": [
+        "Rotate leaf certificate and private key while sessions are active; force new handshakes and restart."
+      ],
+      "expected": [
+        "New sessions use the new matched identity; old data-encryption key references are unaffected."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-01",
+      "family": "JAVA",
+      "title": "Supported JDK matrix",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "declared product runtimes"
+      ],
+      "procedure": [
+        "Run the core suite on every supported JDK; candidate matrix is 11, 17, 21 and 25."
+      ],
+      "expected": [
+        "Results identify runtime vendor/update and provider; unsupported JDKs are excluded explicitly from the product claim."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-02",
+      "family": "JAVA",
+      "title": "Every shipped transport",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "JSSE or Netty transports offered"
+      ],
+      "procedure": [
+        "Repeat TLS verification, framing, deadlines and cancellation for each shipped transport/provider."
+      ],
+      "expected": [
+        "Security and API behavior are consistent across implementations."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-03",
+      "family": "JAVA",
+      "title": "Concurrent calls and pool boundaries",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "pooled client"
+      ],
+      "procedure": [
+        "Run 1, 8, 32 and 128 callers on owned fixtures with bounded pool sizes."
+      ],
+      "expected": [
+        "No response/key mix-up, deadlock or unbounded queue; use lower contracted loads on SaaS."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-04",
+      "family": "JAVA",
+      "title": "Same UID across namespaces",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "multiple identities/endpoints"
+      ],
+      "procedure": [
+        "Arrange colliding names or UID strings across distinct server namespaces and alternate calls."
+      ],
+      "expected": [
+        "Cache keys include endpoint/namespace/identity context; no cross-context reuse."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-05",
+      "family": "JAVA",
+      "title": "Load and latency envelope",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "agreed performance budget"
+      ],
+      "procedure": [
+        "Measure cold/warm Get and initialization bursts at declared network RTTs and workloads."
+      ],
+      "expected": [
+        "Recorded p95/p99 meet the pre-approved product budget; server time is separated from client overhead."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-06",
+      "family": "JAVA",
+      "title": "Long running soak",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "isolated or approved fixture"
+      ],
+      "procedure": [
+        "Run a 24-hour representative workload with rotation, reconnects and periodic cache expiry."
+      ],
+      "expected": [
+        "No correctness error or monotonic thread/FD/connection growth; memory reaches a bounded steady state."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-07",
+      "family": "JAVA",
+      "title": "Upgrade and rollback",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "previous client release"
+      ],
+      "procedure": [
+        "Run identical fixtures with previous and candidate client releases, then roll back configuration where supported."
+      ],
+      "expected": [
+        "No regression in published profiles; format or configuration changes have explicit migration behavior."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "JAVA-08",
+      "family": "JAVA",
+      "title": "Close and shutdown",
+      "priority": "P1",
+      "layer": "live_server",
+      "cadence": "nightly_and_release",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "client API"
+      ],
+      "procedure": [
+        "Close during idle, in-flight operations and application shutdown; repeat close."
+      ],
+      "expected": [
+        "Resources are released, outcomes are deterministic, and completed keys are not delivered after cancellation."
+      ],
+      "sources": [
+        "S11"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-01",
+      "family": "OBS",
+      "title": "Secret redaction",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "synthetic marker secrets"
+      ],
+      "procedure": [
+        "Put recognizable markers in keys, passwords and credentials; trigger success and error paths with each logging level."
+      ],
+      "expected": [
+        "Markers do not appear in client logs, exception messages, metrics, traces or toString output."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-02",
+      "family": "OBS",
+      "title": "Diagnostic precision",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "induced failure catalog"
+      ],
+      "procedure": [
+        "Trigger TLS, authorization, version, malformed response, timeout and server unavailable failures."
+      ],
+      "expected": [
+        "Diagnostics distinguish failure classes and retain safe operation/version/correlation information."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-03",
+      "family": "OBS",
+      "title": "Metrics and retry accounting",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "instrumented client"
+      ],
+      "procedure": [
+        "Execute success, retries, denied access and cancellation under concurrent load."
+      ],
+      "expected": [
+        "Counts and durations reflect actual attempts; metric labels avoid secrets and unbounded identifiers."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-04",
+      "family": "OBS",
+      "title": "Artifact hygiene",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "CI evidence capture"
+      ],
+      "procedure": [
+        "Inspect test reports, packet capture policy and failed-test attachments."
+      ],
+      "expected": [
+        "Raw production-like secrets are absent; any synthetic secret-bearing trace is access-controlled and excluded from general reports."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-05",
+      "family": "OBS",
+      "title": "Mutable secret handling",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "exposed key API"
+      ],
+      "procedure": [
+        "Inspect API types and lifecycle for returned material; exercise explicit clearing where offered."
+      ],
+      "expected": [
+        "Avoid immutable String copies and accidental retention; report Java memory-clearing limits honestly."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "OBS-06",
+      "family": "OBS",
+      "title": "Result provenance and triage",
+      "priority": "P0",
+      "layer": "mixed_live_and_controlled",
+      "cadence": "pr_and_nightly",
+      "server_ids": [
+        "all_applicable"
+      ],
+      "prerequisites": [
+        "all runs"
+      ],
+      "procedure": [
+        "Attach exact fixture/version, capability snapshot, sanitized failure and independent reproduction to each failure."
+      ],
+      "expected": [
+        "Client defects, server defects, configuration blocks and unsupported features remain distinguishable."
+      ],
+      "sources": [],
+      "status": "NOT_RUN",
+      "cleanup": "Use the run-owned object registry; never delete by an unrestricted Locate result.",
+      "evidence": "Redacted request/response metadata, exact server/client/runtime profile, assertion result and fixture state."
+    },
+    {
+      "id": "SV-PY-01",
+      "family": "SERVER",
+      "title": "Owner and shared access",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "vendor_and_release",
+      "server_ids": [
+        "pykmip"
+      ],
+      "prerequisites": [
+        "Exact target fixture and effective policy recorded"
+      ],
+      "procedure": [
+        "Create/register as CN A; retrieve as A, CN B, then B after explicit sharing."
+      ],
+      "expected": [
+        "Results reflect configured ownership and policy; mTLS remains enabled."
+      ],
+      "sources": [
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Run-owned object registry and administrative teardown.",
+      "evidence": "Target manifest, independent capability/state check and sanitized client outcome."
+    },
+    {
+      "id": "SV-PY-02",
+      "family": "SERVER",
+      "title": "Unsupported handlers",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "vendor_and_release",
+      "server_ids": [
+        "pykmip"
+      ],
+      "prerequisites": [
+        "Exact target fixture and effective policy recorded"
+      ],
+      "procedure": [
+        "Exercise absent ReKey, Import, Export and AddAttribute on disposable fixtures."
+      ],
+      "expected": [
+        "Typed unsupported outcomes; Register/Get path still succeeds."
+      ],
+      "sources": [
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Run-owned object registry and administrative teardown.",
+      "evidence": "Target manifest, independent capability/state check and sanitized client outcome."
+    },
+    {
+      "id": "SV-KR-01",
+      "family": "SERVER",
+      "title": "Read only versioned identifiers",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "vendor_and_release",
+      "server_ids": [
+        "krypton"
+      ],
+      "prerequisites": [
+        "Exact target fixture and effective policy recorded"
+      ],
+      "procedure": [
+        "Pre-provision active AES256 key versions administratively; Get exact tenantID:keyID:keyVersion values before and after external rotation."
+      ],
+      "expected": [
+        "Correct bytes and version are returned; unsupported KMIP lifecycle calls fail explicitly."
+      ],
+      "sources": [
+        "S38",
+        "S39",
+        "S40"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Run-owned object registry and administrative teardown.",
+      "evidence": "Target manifest, independent capability/state check and sanitized client outcome."
+    },
+    {
+      "id": "SV-KR-02",
+      "family": "SERVER",
+      "title": "Tenant and TLS constraints",
+      "priority": "P0",
+      "layer": "live_server",
+      "cadence": "vendor_and_release",
+      "server_ids": [
+        "krypton"
+      ],
+      "prerequisites": [
+        "Exact target fixture and effective policy recorded"
+      ],
+      "procedure": [
+        "Try wrong tenant CN, inactive version, malformed UID and TLS1.2; verify active owner retrieval over TLS1.3."
+      ],
+      "expected": [
+        "Errors are safely classified and no material crosses tenants; only the restricted retrieval profile is claimed."
+      ],
+      "sources": [
+        "S38",
+        "S39",
+        "S40"
+      ],
+      "status": "NOT_RUN",
+      "cleanup": "Run-owned object registry and administrative teardown.",
+      "evidence": "Target manifest, independent capability/state check and sanitized client outcome."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OASIS KMIP 1.1 specification",
+      "url": "https://docs.oasis-open.org/kmip/spec/v1.1/os/kmip-spec-v1.1-os.html"
+    },
+    {
+      "id": "S02",
+      "title": "OASIS KMIP 1.2 specification",
+      "url": "https://docs.oasis-open.org/kmip/spec/v1.2/os/kmip-spec-v1.2-os.html"
+    },
+    {
+      "id": "S03",
+      "title": "OASIS KMIP 1.3 specification",
+      "url": "https://docs.oasis-open.org/kmip/spec/v1.3/os/kmip-spec-v1.3-os.html"
+    },
+    {
+      "id": "S04",
+      "title": "OASIS KMIP 1.4 specification",
+      "url": "https://docs.oasis-open.org/kmip/spec/v1.4/os/kmip-spec-v1.4-os.html"
+    },
+    {
+      "id": "S05",
+      "title": "OASIS KMIP 2.0 specification",
+      "url": "https://docs.oasis-open.org/kmip/kmip-spec/v2.0/os/kmip-spec-v2.0-os.html"
+    },
+    {
+      "id": "S06",
+      "title": "OASIS KMIP 2.1 specification",
+      "url": "https://docs.oasis-open.org/kmip/kmip-spec/v2.1/os/kmip-spec-v2.1-os.html"
+    },
+    {
+      "id": "S07",
+      "title": "OASIS KMIP 1.4 profiles",
+      "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/kmip-profiles-v1.4-os.html"
+    },
+    {
+      "id": "S08",
+      "title": "OASIS KMIP 2.1 profiles",
+      "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.html"
+    },
+    {
+      "id": "S09",
+      "title": "OASIS KMIP 1.4 test cases and vector directory",
+      "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/kmip-testcases-v1.4.html"
+    },
+    {
+      "id": "S10",
+      "title": "OASIS KMIP 2.1 test cases and vector directory",
+      "url": "https://docs.oasis-open.org/kmip/kmip-testcases/v2.1/cn01/kmip-testcases-v2.1-cn01.html"
+    },
+    {
+      "id": "S11",
+      "title": "Oracle JDK 25 JSSE reference",
+      "url": "https://docs.oracle.com/en/java/javase/25/security/java-secure-socket-extension-jsse-reference-guide.html"
+    },
+    {
+      "id": "S12",
+      "title": "PyKMIP 0.11.0 release metadata",
+      "url": "https://pypi.org/project/PyKMIP/0.11.0/"
+    },
+    {
+      "id": "S13",
+      "title": "PyKMIP 0.11.0 engine and operations",
+      "url": "https://github.com/OpenKMIP/PyKMIP/blob/v0.11.0/kmip/services/server/engine.py"
+    },
+    {
+      "id": "S14",
+      "title": "PyKMIP server configuration and testing purpose",
+      "url": "https://pykmip.readthedocs.io/en/latest/server.html"
+    },
+    {
+      "id": "S38",
+      "title": "Krypton reviewed KMIP handler",
+      "url": "https://github.com/openkcm/krypton/blob/5bcbd502746704d7d6d12241ccb0a6dcf8b78b8d/internal/kmip/handler.go"
+    },
+    {
+      "id": "S39",
+      "title": "Krypton reviewed KMIP authentication",
+      "url": "https://github.com/openkcm/krypton/blob/5bcbd502746704d7d6d12241ccb0a6dcf8b78b8d/internal/kmip/auth.go"
+    },
+    {
+      "id": "S40",
+      "title": "Krypton reviewed TLS configuration",
+      "url": "https://github.com/openkcm/krypton/blob/5bcbd502746704d7d6d12241ccb0a6dcf8b78b8d/internal/config/tls.go"
+    },
+    {
+      "id": "S41",
+      "title": "RFC 3394 AES Key Wrap vectors",
+      "url": "https://www.rfc-editor.org/rfc/rfc3394.html"
+    },
+    {
+      "id": "S42",
+      "title": "RFC 5649 AES Key Wrap with Padding vectors",
+      "url": "https://www.rfc-editor.org/rfc/rfc5649.html"
+    }
+  ],
+  "execution_record_fields": [
+    "test_id",
+    "actual_layer",
+    "server_id",
+    "server_version",
+    "image_digest",
+    "wire_version",
+    "tls_version",
+    "client_commit",
+    "jdk_vendor_update",
+    "crypto_provider",
+    "identity_role",
+    "namespace",
+    "case_parameters",
+    "configuration_hash",
+    "seed",
+    "started_at",
+    "duration_ms",
+    "outcome",
+    "reason",
+    "issue_id",
+    "evidence_refs"
+  ]
+}

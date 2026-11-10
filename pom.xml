@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" child.project.url.inherit.append.path="false" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>dev.keytend</groupId>
+  <artifactId>keytend-kmip-parent</artifactId>
+  <version>0.10.0-rc.1</version>
+  <packaging>pom</packaging>
+  <name>keytend-kmip</name>
+  <description>Experimental, not for production use. KMIP 1.1–1.4, 2.0, 2.1 and the 3.0 draft Java client and interoperability laboratory</description>
+  <url>https://github.com/keytend/keytend-kmip-java</url>
+  <licenses>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <!-- Central requires name, description, url, licenses, developers and scm on every published POM;
+       the modules inherit these, the url and scm without their artifactId appended. -->
+  <developers>
+    <developer>
+      <name>Jeremiah Jordan</name>
+      <organization>keytend</organization>
+      <organizationUrl>https://github.com/keytend</organizationUrl>
+    </developer>
+  </developers>
+  <modules>
+    <module>sdk</module>
+    <!-- keytend-kmip-testing: the in-memory KMIP server, for tests only; published on its own,
+         never in the release ZIP's lib/ and never a dependency of main code. -->
+    <module>testing</module>
+    <!-- keytend-kmip-micrometer: opt-in Micrometer meters, published with the SDK. -->
+    <module>micrometer</module>
+    <!-- keytend-kmip-opentelemetry: opt-in OpenTelemetry metrics and traces, published with the SDK. -->
+    <module>opentelemetry</module>
+    <module>cli</module>
+    <module>integration-tests</module>
+  </modules>
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+    <connection>scm:git:https://github.com/keytend/keytend-kmip-java.git</connection>
+    <developerConnection>scm:git:git@github.com:keytend/keytend-kmip-java.git</developerConnection>
+    <url>https://github.com/keytend/keytend-kmip-java</url>
+  </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/keytend/keytend-kmip-java/issues</url>
+  </issueManagement>
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>6.1.3</junit.version>
+    <!-- Every third-party version, here and nowhere else; docs/dependencies.md says why each is
+         taken, where it is used and under which license. -->
+    <slf4j.version>2.0.20</slf4j.version>
+    <!-- The oldest slf4j-api the SDK supports: Slf4j17ConsumerIT compiles and runs against it.
+         Never raised: integration-tests/pom.xml names it where Dependabot does not look. -->
+    <slf4j17.version>1.7.36</slf4j17.version>
+    <!-- Bundled in the SDK JAR, relocated (sdk/pom.xml, "The bundled Caffeine"). -->
+    <caffeine.version>3.3.1</caffeine.version>
+    <!-- An application's own, older Caffeine: BundledCaffeineConsumerIT runs the SDK beside it.
+         Never raised, like slf4j17.version. -->
+    <caffeine.application.version>2.9.3</caffeine.application.version>
+    <micrometer.version>1.17.2</micrometer.version>
+    <!-- The OpenTelemetry API (keytend-kmip-opentelemetry); its SDK only in that module's tests. -->
+    <opentelemetry.version>1.68.0</opentelemetry.version>
+    <picocli.version>4.7.7</picocli.version>
+    <jackson.version>3.2.4</jackson.version>
+    <bouncycastle.version>1.86</bouncycastle.version>
+    <awaitility.version>4.3.0</awaitility.version>
+    <jqwik.version>1.10.2</jqwik.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
+    <h2.version>2.5.252</h2.version>
+    <errorprone.version>2.52.0</errorprone.version>
+    <!-- The newest google-java-format that runs on JDK 17; see the google-java-format-jdk25 profile. -->
+    <google-java-format.version>1.28.0</google-java-format.version>
+    <!-- The coverage profile's JaCoCo agent; empty otherwise (Surefire's argLine names it). -->
+    <jacocoArgLine/>
+    <!-- Surefire's test JVMs per module, each running one test class at a time (a quarter of the
+         CPUs, at least one); -Dtest.forks=1 runs a module's tests in one JVM. -->
+    <test.forks>0.25C</test.forks>
+    <!-- The distribution profile writes a CycloneDX SBOM for the modules that set this to false: each
+         module the release ships (the SDK, the metrics modules, the CLI and the lab), and the
+         in-memory test server, published on its own. -->
+    <cyclonedx.skip>true</cyclonedx.skip>
+    <!-- The SBOM's component type: application for the CLI and the lab. -->
+    <sbom.projectType>library</sbom.projectType>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- slf4j-api is pinned here also because Testcontainers asks for 1.7.36: one version in
+           every module's tree (dependencyConvergence). -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <!-- Its two annotation libraries never: Caffeine's module reads them only statically, and
+           nothing reads the annotations at run time. -->
+      <dependency>
+        <groupId>com.github.ben-manes.caffeine</groupId>
+        <artifactId>caffeine</artifactId>
+        <version>${caffeine.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotations</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-core</artifactId>
+        <version>${micrometer.version}</version>
+      </dependency>
+      <!-- The OpenTelemetry API, context and SDK artifacts, at one version. -->
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-bom</artifactId>
+        <version>${opentelemetry.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>info.picocli</groupId>
+        <artifactId>picocli</artifactId>
+        <version>${picocli.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tools.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcutil-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>${awaitility.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.jqwik</groupId>
+        <artifactId>jqwik</artifactId>
+        <version>${jqwik.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers</artifactId>
+        <version>${testcontainers.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- The default-lifecycle plugins, pinned so that requirePluginVersions holds. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.5.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.5.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.22.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.7.0</version>
+          <dependencies>
+            <!-- enforceBytecodeVersion and banDuplicateClasses. -->
+            <dependency>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>extra-enforcer-rules</artifactId>
+              <version>1.12.1</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!--
+          Which dependencies and plugins have newer releases (pre-releases ignored, tools/versions-rules.xml):
+            ./mvnw -B -ntp versions:display-dependency-updates versions:display-plugin-updates \
+                versions:display-property-updates
+          tools/release-check.sh records the report; Dependabot (.github/dependabot.yml) opens the
+          pull requests. Nothing here rewrites a version.
+        -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.24.0</version>
+          <configuration>
+            <rulesUri>file://${maven.multiModuleProjectDirectory}/tools/versions-rules.xml</rulesUri>
+            <processDependencyManagementTransitive>false</processDependencyManagementTransitive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.16.0</version>
+          <configuration>
+            <release>17</release>
+            <parameters>true</parameters>
+            <showWarnings>true</showWarnings>
+            <!-- Every lint warning fails the build, main and test code, on every JDK of the matrix,
+                 except two categories:
+                 -try: try-with-resources holds scopes, leases and fixtures whose variable the body
+                   never names (Java 17 has no unnamed variables), and the test fixtures' close()
+                   may throw InterruptedException; javac reports both, and the idiom is deliberate.
+                 -serial: the exceptions are Serializable only because Throwable is. The SDK does
+                   not support Java serialization of them (several carry a response or a request,
+                   which are not Serializable), so a serialVersionUID would promise a form that
+                   does not exist. -->
+            <compilerArgs>
+              <arg>-Xlint:all,-try,-serial</arg>
+              <arg>-Werror</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.6.1</version>
+          <configuration>
+            <argLine>@{jacocoArgLine}</argLine>
+            <!--
+              Test classes run in several JVMs at once, never two in one JVM: the tests' JVM-wide
+              state (the SLF4J provider that records logs, system properties, the default proxy
+              selector, the security providers, the SDK's thread checks) stays one class's at a
+              time. JUnit's own parallel mode stays off for that reason.
+            -->
+            <forkCount>${test.forks}</forkCount>
+            <reuseForks>true</reuseForks>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.11.0</version>
+        </plugin>
+        <!-- The SDK's bundled Caffeine (sdk/pom.xml): antrun, shade and moditect. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.6.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.moditect</groupId>
+          <artifactId>moditect-maven-plugin</artifactId>
+          <version>1.3.0.Final</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.5.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.12.0</version>
+          <configuration>
+            <!-- No class-use pages: writing them leaves javadoc's current class set to the last class
+                 in directory-listing order, which changes link labels in index-all.html between file
+                 systems. Without them the Javadoc JAR is the same on every machine. -->
+            <use>false</use>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>2.8.0</version>
+          <configuration>
+            <!-- The report stays in target/: verify runs after the JARs are packaged, so it is
+                 never bundled. -->
+            <outputDirectory>${project.build.directory}/third-party</outputDirectory>
+            <!-- Checked on every run, not only when the report is older than the POM. -->
+            <force>true</force>
+            <failOnMissing>true</failOnMissing>
+            <failOnBlacklist>true</failOnBlacklist>
+            <!-- One name per license, whatever each POM calls it. -->
+            <licenseMerges>
+              <licenseMerge>Apache-2.0|Apache 2.0|Apache License 2.0|Apache License, Version 2.0|The Apache License, Version 2.0|The Apache Software License, Version 2.0|The Apache Software License, version 2.0</licenseMerge>
+              <licenseMerge>MIT|MIT License|Bouncy Castle Licence</licenseMerge>
+              <licenseMerge>BSD-3-Clause|New BSD License|BSD License 3|BSD Licence 3</licenseMerge>
+              <licenseMerge>EPL-1.0|EPL 1.0|Eclipse Public License 1.0|Eclipse Public License - v 1.0</licenseMerge>
+              <licenseMerge>EPL-2.0|Eclipse Public License v2.0|Eclipse Public License - v 2.0</licenseMerge>
+              <licenseMerge>MPL-2.0|MPL 2.0|Mozilla Public License 2.0</licenseMerge>
+            </licenseMerges>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.10.5.0</version>
+          <configuration>
+            <effort>Max</effort>
+            <threshold>Low</threshold>
+            <xmlOutput>true</xmlOutput>
+            <plugins>
+              <plugin>
+                <groupId>com.h3xstream.findsecbugs</groupId>
+                <artifactId>findsecbugs-plugin</artifactId>
+                <version>1.14.0</version>
+              </plugin>
+            </plugins>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <!--
+      The licenses of the dependencies, checked in every module's verify. What ships (compile and
+      runtime scope: the SDK's slf4j-api and bundled Caffeine, the metrics modules' Micrometer and
+      OpenTelemetry API, the CLI's and the lab's libraries) must be under a permissive license; what
+      only builds and tests it may also be under EPL or MPL (JUnit, jqwik, H2). A dependency with a
+      license outside its list, or with none, fails the build.
+    -->
+    <plugins>
+      <!--
+        The build's own preconditions, checked first in every module: Maven 3.9 or later (the
+        wrapper's is 3.10) and JDK 17 or later; every plugin at an explicit version; one version of each dependency in the
+        tree, and none declared twice.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.9.0,)</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[17,)</version>
+                </requireJavaVersion>
+                <requirePluginVersions/>
+                <dependencyConvergence/>
+                <banDuplicatePomDependencyVersions/>
+                <!-- No dependency, in any scope, needs a newer JDK than the build's floor. -->
+                <enforceBytecodeVersion>
+                  <maxJdkVersion>17</maxJdkVersion>
+                </enforceBytecodeVersion>
+                <!-- No class is on the class path twice, from two artifacts. -->
+                <banDuplicateClasses>
+                  <findAllDuplicates>true</findAllDuplicates>
+                  <ignoreWhenIdentical>true</ignoreWhenIdentical>
+                </banDuplicateClasses>
+                <!-- The in-memory test server is a test dependency only: no module's main code
+                     takes it, directly or transitively. -->
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>dev.keytend:keytend-kmip-testing:*:*:compile</exclude>
+                    <exclude>dev.keytend:keytend-kmip-testing:*:*:runtime</exclude>
+                    <exclude>dev.keytend:keytend-kmip-testing:*:*:provided</exclude>
+                    <exclude>dev.keytend:keytend-kmip-testing:*:*:system</exclude>
+                  </excludes>
+                  <message>keytend-kmip-testing (the in-memory server) is for tests only: test scope.</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        Formatting, checked in verify (./mvnw spotless:apply formats). Java: google-java-format,
+        Google style (2-space indent, 100 columns), the formatter that changes this code least
+        (palantir-java-format, the other candidate, has no 2-space style with longer lines and
+        changed a third more). Javadoc is not reflowed. The generated registries are left as
+        tools/generate_registry.py writes them. POMs: sortPom, keeping blank lines and comments.
+      -->
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <java>
+            <excludes>
+              <exclude>**/dev/keytend/kmip/model/Enums.java</exclude>
+              <exclude>**/dev/keytend/kmip/model/Operation.java</exclude>
+              <exclude>**/dev/keytend/kmip/model/Tag.java</exclude>
+              <exclude>**/dev/keytend/kmip/client/Requests.java</exclude>
+              <!-- Quoted line for line in README.md and the guides, which tests compare. -->
+              <exclude>**/dev/keytend/kmip/kms/samples/*.java</exclude>
+              <exclude>**/dev/keytend/kmip/kms/OperatingTlsGuideTest.java</exclude>
+            </excludes>
+            <googleJavaFormat>
+              <version>${google-java-format.version}</version>
+              <style>GOOGLE</style>
+              <formatJavadoc>false</formatJavadoc>
+            </googleJavaFormat>
+          </java>
+          <pom>
+            <sortPom>
+              <version>4.0.0</version>
+              <nrOfIndentSpace>2</nrOfIndentSpace>
+              <expandEmptyElements>false</expandEmptyElements>
+              <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+              <keepBlankLines>true</keepBlankLines>
+              <sortModules>false</sortModules>
+            </sortPom>
+          </pom>
+        </configuration>
+        <executions>
+          <execution>
+            <id>format</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>shipped-licenses</id>
+            <goals>
+              <goal>add-third-party</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <includedScopes>compile,runtime</includedScopes>
+              <thirdPartyFilename>THIRD-PARTY-shipped.txt</thirdPartyFilename>
+              <includedLicenses>Apache-2.0|MIT|BSD-2-Clause|BSD-3-Clause</includedLicenses>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-licenses</id>
+            <goals>
+              <goal>add-third-party</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <includedScopes>test,provided</includedScopes>
+              <thirdPartyFilename>THIRD-PARTY-test.txt</thirdPartyFilename>
+              <includedLicenses>Apache-2.0|MIT|BSD-2-Clause|BSD-3-Clause|EPL-1.0|EPL-2.0|MPL-2.0</includedLicenses>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <!--
+      Error Prone over main and test code, its warnings failing the build through -Werror. Error
+      Prone needs JDK 21 or later to run, so the profile is active on JDK 21 and 25 and not on 17;
+      the release checks build on all three. It is a compiler plugin only: nothing is added to the
+      SDK's dependencies, and suppressions name the check in @SuppressWarnings.
+      Checks off everywhere, each because the pattern is deliberate here:
+        ArrayRecordComponent: records carry byte arrays (sealed data, AAD, key material) by design.
+        AssignmentExpression: read loops such as while ((n = in.read(buffer)) > 0).
+        DoNotCallSuggester: its fix is an Error Prone annotation, which would be a dependency.
+        EmptyCatch: best-effort closes and isolated listener calls, each catching "ignored".
+        MissingSummary: Google's Javadoc summary style; doclint checks the comments.
+        ReferenceEquality: identity comparisons of sentinels, cached instances and sockets.
+        StatementSwitchToExpressionSwitch: a style choice, not a defect.
+        StringSplitter: split() over the SDK's own tables and command arguments, where dropping
+          trailing empty strings is what is wanted; its fix is Guava, a dependency.
+        UnnecessaryMethodReference: a method reference hands over an object as a bare
+          functional interface on purpose (without its close(), for example).
+      Checks off in test code only, where the pattern is the test's:
+        AddressSelection: the tests listen and connect on localhost by name.
+        AvoidCommonTypeNames: a test's record is named as in the guide it checks.
+        FutureReturnValueIgnored: fire-and-forget cancellations and interrupts on a timer.
+        ImmutableEnumChecker: a test fixture enum holds an array.
+        InputStreamSlowMultibyteRead: failing test streams implement read() only.
+        RethrowReflectiveOperationExceptionAsLinkageError: a test fails with AssertionError.
+        StringConcatToTextBlock: tests build Java sources line by line.
+        ThreadLocalUsage: a test makes thread-locals to check they are not inherited.
+        UnnecessaryAsync: counters in concurrency tests stay atomic.
+        UnnecessaryLambda: a test transport's default answer is a lambda field.
+        UnusedVariable: tests name the results of setup calls they make for their effect.
+    -->
+    <profile>
+      <id>errorprone</id>
+      <activation>
+        <jdk>[21,)</jdk>
+      </activation>
+      <properties>
+        <errorprone.main>-Xplugin:ErrorProne -Xep:ArrayRecordComponent:OFF -Xep:AssignmentExpression:OFF -Xep:DoNotCallSuggester:OFF -Xep:EmptyCatch:OFF -Xep:MissingSummary:OFF -Xep:ReferenceEquality:OFF -Xep:StatementSwitchToExpressionSwitch:OFF -Xep:StringSplitter:OFF -Xep:UnnecessaryMethodReference:OFF</errorprone.main>
+        <errorprone.test>-Xep:AddressSelection:OFF -Xep:AvoidCommonTypeNames:OFF -Xep:FutureReturnValueIgnored:OFF -Xep:ImmutableEnumChecker:OFF -Xep:InputStreamSlowMultibyteRead:OFF -Xep:RethrowReflectiveOperationExceptionAsLinkageError:OFF -Xep:StringConcatToTextBlock:OFF -Xep:ThreadLocalUsage:OFF -Xep:UnnecessaryAsync:OFF -Xep:UnnecessaryLambda:OFF -Xep:UnusedVariable:OFF</errorprone.test>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <!-- javac runs in its own JVM, which opens the compiler internals Error Prone uses. -->
+              <fork>true</fork>
+              <compilerArgs combine.children="append">
+                <arg>-XDcompilePolicy=simple</arg>
+                <arg>--should-stop=ifError=FLOW</arg>
+                <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+              </compilerArgs>
+              <annotationProcessorPaths>
+                <path>
+                  <groupId>com.google.errorprone</groupId>
+                  <artifactId>error_prone_core</artifactId>
+                  <version>${errorprone.version}</version>
+                </path>
+              </annotationProcessorPaths>
+            </configuration>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <compilerArgs combine.children="append">
+                    <arg>${errorprone.main}</arg>
+                  </compilerArgs>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <compilerArgs combine.children="append">
+                    <arg>${errorprone.main} ${errorprone.test}</arg>
+                  </compilerArgs>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+      google-java-format 1.28.0 does not run on JDK 25, and no later release runs on JDK 17. JDK 25
+      takes 1.36.1: 1.37.0 fails under Spotless, and 2.0.0 (JDK 21 and later) restyles lambdas and
+      text blocks. 1.28.0 and 1.36.1 format this code identically; should they ever differ, the
+      format check fails on one JDK of the matrix, and the version here moves on.
+    -->
+    <profile>
+      <id>google-java-format-jdk25</id>
+      <activation>
+        <jdk>[25,)</jdk>
+      </activation>
+      <properties>
+        <google-java-format.version>1.36.1</google-java-format.version>
+      </properties>
+    </profile>
+    <!--
+      Test coverage, as a report only (no threshold): ./mvnw -B verify -Pcoverage writes
+      target/site/jacoco/index.html in each module. Not in the default build, where the agent would
+      slow the tests down.
+    -->
+    <profile>
+      <id>coverage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.16</version>
+            <executions>
+              <execution>
+                <id>agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                  <propertyName>jacocoArgLine</propertyName>
+                </configuration>
+              </execution>
+              <execution>
+                <id>report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+      OpenRewrite, run by hand, never by verify. Look first, then apply what is worth it:
+        ./mvnw -B -Prewrite rewrite:dryRun -Drewrite.activeRecipes=RECIPE[,RECIPE...]
+        (writes target/rewrite/rewrite.patch; rewrite:run applies it)
+      Recipes worth a look: org.openrewrite.java.migrate.UpgradeToJava17,
+      org.openrewrite.staticanalysis.CommonStaticAnalysis,
+      org.openrewrite.java.testing.junit5.JUnit5BestPractices, org.openrewrite.maven.BestPractices.
+      Review every change: no recipe may change the public API or behavior. The generated
+      registries (tools/generate_registry.py) are excluded; change the generator instead.
+    -->
+    <profile>
+      <id>rewrite</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.openrewrite.maven</groupId>
+            <artifactId>rewrite-maven-plugin</artifactId>
+            <version>6.46.1</version>
+            <configuration>
+              <exclusions>
+                <exclusion>**/dev/keytend/kmip/model/Enums.java</exclusion>
+                <exclusion>**/dev/keytend/kmip/model/Operation.java</exclusion>
+                <exclusion>**/dev/keytend/kmip/model/Tag.java</exclusion>
+                <exclusion>**/dev/keytend/kmip/client/Requests.java</exclusion>
+              </exclusions>
+            </configuration>
+            <dependencies>
+              <!-- The versions rewrite-recipe-bom 3.37.0 names for this plugin release, with their
+                   patch releases since. -->
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-migrate-java</artifactId>
+                <version>3.42.1</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-static-analysis</artifactId>
+                <version>2.41.1</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-testing-frameworks</artifactId>
+                <version>3.44.0</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>distribution</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>javadoc-license-notices</id>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/reports/apidocs</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources</directory>
+                      <includes>
+                        <include>META-INF/LICENSE</include>
+                        <include>META-INF/NOTICE</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!--
+            The CLI's and the integration application's Javadoc link the SDK's types to the SDK's
+            Javadoc, which the reactor wrote first. The link is named here, not detected: shade
+            makes the SDK's dependency-reduced POM (sdk/target/) its project file, which moves the
+            project's base directory, and detection would then look in sdk/target/target/. The SDK
+            drops it (sdk/pom.xml).
+          -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <detectOfflineLinks>false</detectOfflineLinks>
+              <offlineLinks>
+                <offlineLink>
+                  <url>${project.url}/apidocs/</url>
+                  <location>${maven.multiModuleProjectDirectory}/sdk/target/reports/apidocs</location>
+                </offlineLink>
+              </offlineLinks>
+            </configuration>
+            <executions>
+              <execution>
+                <id>generate-docs-before-notices</id>
+                <goals>
+                  <goal>javadoc</goal>
+                </goals>
+                <phase>prepare-package</phase>
+              </execution>
+              <execution>
+                <id>javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.cyclonedx</groupId>
+            <artifactId>cyclonedx-maven-plugin</artifactId>
+            <version>2.9.3</version>
+            <configuration>
+              <projectType>${sbom.projectType}</projectType>
+              <!-- The CLI and the lab are not deployed (maven.deploy.skip) but ship in the ZIP. -->
+              <skipNotDeployed>false</skipNotDeployed>
+              <outputFormat>json</outputFormat>
+              <outputName>${project.build.finalName}-cyclonedx</outputName>
+              <!-- Runtime dependencies only (the SDK's slf4j-api, the CLI's picocli, ...): test and
+                   build tools are not shipped. -->
+              <includeTestScope>false</includeTestScope>
+              <includeProvidedScope>false</includeProvidedScope>
+              <includeSystemScope>false</includeSystemScope>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sbom</id>
+                <goals>
+                  <goal>makeBom</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <!--
+            Each JAR in the module's target/ gets the entry modes 0644 (a file) and 0755 (a
+            directory), in place, after package wrote the last one and before verify signs them
+            (the central profile), install installs them and deploy stages them. The archivers copy
+            each file's permissions from disk and only mask them with 022, so under umask 0077 the
+            entries would be 0600 and 0700, and the JARs on Central, their signatures and the GitHub
+            release's would follow the maintainer's umask (docs/releasing.md, "Reproducible builds").
+            Only the central directory changes; nothing is recompressed.
+          -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>canonical-modes</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>pre-integration-test</phase>
+                <configuration>
+                  <target>
+                    <exec executable="python3" failonerror="true">
+                      <arg value="-I"/>
+                      <arg file="${maven.multiModuleProjectDirectory}/tools/package-release.py"/>
+                      <arg value="--canonical-modes"/>
+                      <arg file="${project.build.directory}"/>
+                    </exec>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Maven Central (no release is deployed there for now): ./mvnw -B clean -Pdistribution,central deploy
+         -Dgpg.keyname=AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E! (the release key's signing subkey, exactly),
+         with GNUPGHOME set to the signing keyring and MAVEN_GPG_PASSPHRASE to its passphrase, read
+         from the passphrase file into the environment, never into an argument (docs/releasing.md,
+         step 3). Signs every artifact and uploads the bundle without publishing it (autoPublish=false). -->
+    <profile>
+      <id>central</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <!-- The passphrase comes from MAVEN_GPG_PASSPHRASE, not from a prompt; gpg runs in
+                       $GNUPGHOME, the signing keyring, and signs with -Dgpg.keyname's subkey. -->
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.12.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
+              <waitUntil>validated</waitUntil>
+              <!-- keytend-kmip-testing is published, signed, as a test artifact of its own: applications
+                   add it in test scope. The lab and the CLI are applications, not libraries. -->
+              <excludeArtifacts>
+                <artifact>keytend-kmip-integration</artifact>
+                <artifact>keytend-kmip-cli</artifact>
+              </excludeArtifacts>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- No signing key named: the central profile builds and checks everything but signs nothing. -->
+    <profile>
+      <id>no-signing-key</id>
+      <activation>
+        <property>
+          <name>!gpg.keyname</name>
+        </property>
+      </activation>
+      <properties>
+        <gpg.skip>true</gpg.skip>
+      </properties>
+    </profile>
+  </profiles>
+</project>

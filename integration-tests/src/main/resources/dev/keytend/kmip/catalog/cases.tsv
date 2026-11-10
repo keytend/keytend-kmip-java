@@ -1,0 +1,145 @@
+ENV-01	ENV	Pin all build identities	live_server	P1	all_applicable
+ENV-02	ENV	Check entitlement and endpoint	live_server	P1	all_applicable
+ENV-03	ENV	Independent reference smoke	live_server	P1	all_applicable
+ENV-04	ENV	Capability snapshot	live_server	P1	all_applicable
+ENV-05	ENV	Namespace and cleanup	live_server	P1	all_applicable
+ENV-06	ENV	Time and persistence	live_server	P1	all_applicable
+TLS-01	TLS	Valid mutual TLS	live_server	P0	all_applicable
+TLS-02	TLS	Unknown server issuer	controlled_peer	P0	client_only
+TLS-03	TLS	Wrong server name	controlled_peer	P0	client_only
+TLS-04	TLS	Expired and future server certificate	controlled_peer	P0	client_only
+TLS-05	TLS	Missing and wrong client certificate	live_server	P0	all_applicable
+TLS-06	TLS	Client certificate purpose	live_server	P0	all_applicable
+TLS-07	TLS	Chain construction	mixed_live_and_controlled	P0	all_applicable
+TLS-08	TLS	TLS versions and cipher policy	live_server	P0	all_applicable
+TLS-09	TLS	Keystore and truststore loading	live_server	P0	all_applicable
+TLS-10	TLS	Session reuse and credential changes	live_server	P0	all_applicable
+TLS-11	TLS	Revocation policy	live_server	P0	all_applicable
+TLS-12	TLS	Endpoint address changes	live_server	P0	all_applicable
+TLS-13	TLS	Trust anchor rollover	mixed_live_and_controlled	P0	all_applicable
+WIRE-01	WIRE	Independent golden messages	codec_harness	P1	client_only
+WIRE-02	WIRE	Primitive values	codec_harness	P1	client_only
+WIRE-03	WIRE	Padding boundaries	codec_harness	P1	client_only
+WIRE-04	WIRE	UTF8 and opaque identifiers	codec_harness	P1	client_only
+WIRE-05	WIRE	Fragmented transport	controlled_peer	P1	client_only
+WIRE-06	WIRE	Adjacent messages	controlled_peer	P1	client_only
+WIRE-07	WIRE	Truncation at every boundary	controlled_peer	P1	client_only
+WIRE-08	WIRE	Length overflow and allocation cap	controlled_peer	P1	client_only
+WIRE-09	WIRE	Depth and element count	controlled_peer	P1	client_only
+WIRE-10	WIRE	Malformed type or duplicate field	controlled_peer	P1	client_only
+WIRE-11	WIRE	Unknown optional information	controlled_peer	P1	client_only
+WIRE-12	WIRE	Critical extension handling	controlled_peer	P1	client_only
+WIRE-13	WIRE	Wrong response correlation	controlled_peer	P1	client_only
+WIRE-14	WIRE	Secret-buffer ownership	codec_harness	P1	client_only
+WIRE-15	WIRE	Bounded parser fuzzing	codec_harness	P1	client_only
+VER-01	VER	Force every required version	live_server	P0	all_applicable
+VER-02	VER	Automatic highest common version	live_server	P0	all_applicable
+VER-03	VER	Fixed-version mode	live_server	P0	all_applicable
+VER-04	VER	No common version	mixed_live_and_controlled	P0	all_applicable
+VER-05	VER	Discovery unavailable	mixed_live_and_controlled	P0	all_applicable
+VER-06	VER	Authentication is not version failure	mixed_live_and_controlled	P0	all_applicable
+VER-07	VER	Version-scoped attributes	live_server	P0	all_applicable
+VER-08	VER	Version-scoped operations	live_server	P0	all_applicable
+VER-09	VER	Two point zero and two point one	live_server	P0	all_applicable
+VER-10	VER	Per-endpoint capability cache	live_server	P0	all_applicable
+VER-11	VER	Newer versions advertised	controlled_peer	P0	client_only
+DISC-01	DISC	Query interpretation	mixed_live_and_controlled	P1	all_applicable
+DISC-02	DISC	Get selected and all attributes	live_server	P1	all_applicable
+DISC-03	DISC	Attribute set and indices	live_server	P1	all_applicable
+DISC-04	DISC	Locate exact and ambiguous names	mixed_live_and_controlled	P1	all_applicable
+DISC-05	DISC	Locate filters	live_server	P1	all_applicable
+DISC-06	DISC	Locate pagination	live_server	P1	all_applicable
+DISC-07	DISC	Opaque UID round trip	live_server	P1	all_applicable
+DISC-08	DISC	Metadata to key consistency	mixed_live_and_controlled	P1	all_applicable
+KEY-01	KEY	Retrieve known AES key	live_server	P0	all_applicable
+KEY-02	KEY	Create then retrieve	live_server	P0	all_applicable
+KEY-03	KEY	Register then retrieve	live_server	P0	all_applicable
+KEY-04	KEY	Restart persistence	live_server	P0	all_applicable
+KEY-05	KEY	Exportable and non-exportable keys	live_server	P0	all_applicable
+KEY-06	KEY	Wrong algorithm or key size	controlled_peer	P0	client_only
+KEY-07	KEY	Wrapped key retrieval	live_server	P0	all_applicable
+KEY-08	KEY	Wrapped registration	live_server	P0	all_applicable
+KEY-09	KEY	Wrap integrity and KEK mismatch	codec_harness	P0	client_only
+KEY-10	KEY	Get versus Export semantics	live_server	P0	all_applicable
+KEY-11	KEY	Raw and transparent symmetric formats	live_server	P0	all_applicable
+ASYM-01	ASYM	RSA private key formats	live_server	P1	all_applicable
+ASYM-02	ASYM	RSA public key formats	live_server	P1	all_applicable
+ASYM-03	ASYM	EC keys	live_server	P1	all_applicable
+ASYM-04	ASYM	X509 certificate objects	live_server	P1	all_applicable
+ASYM-05	ASYM	Certificate private-key pairing	live_server	P1	all_applicable
+ASYM-06	ASYM	Mismatched and expired application identity	database_integration	P1	all_applicable
+ASYM-07	ASYM	Certificate links and chains	mixed_live_and_controlled	P1	all_applicable
+ASYM-08	ASYM	Keypair creation and registration	live_server	P1	all_applicable
+ASYM-09	ASYM	Remote signing extension	database_integration	P1	all_applicable
+LIFE-01	LIFE	Activation transition	live_server	P1	all_applicable
+LIFE-02	LIFE	Revocation transition	live_server	P1	all_applicable
+LIFE-03	LIFE	Destroy and subsequent lookup	live_server	P1	all_applicable
+LIFE-04	LIFE	Invalid state transition	live_server	P1	all_applicable
+LIFE-05	LIFE	Rotation preserves old data	live_server	P1	all_applicable
+LIFE-06	LIFE	Read only identity	live_server	P1	all_applicable
+LIFE-07	LIFE	Tenant separation	live_server	P1	all_applicable
+LIFE-08	LIFE	Certificate identity isolation	live_server	P1	all_applicable
+LIFE-09	LIFE	Usage and export restrictions	live_server	P1	all_applicable
+AUTH-01	AUTH	Grant and revoke object access	live_server	P0	all_applicable
+AUTH-02	AUTH	Listing versus retrieval permissions	live_server	P0	all_applicable
+AUTH-03	AUTH	Sensitive wrapped-only key	live_server	P0	all_applicable
+AUTH-04	AUTH	Permissions cannot weaken on fallback	live_server	P0	all_applicable
+AUTH-05	AUTH	Credential change invalidates identity cache	live_server	P0	all_applicable
+AUTH-06	AUTH	Malformed authorization metadata	controlled_peer	P0	client_only
+CRYPTO-01	CRYPTO	Remote symmetric round trip	live_server	P1	all_applicable
+CRYPTO-02	CRYPTO	AEAD metadata and integrity	live_server	P1	all_applicable
+CRYPTO-03	CRYPTO	RSA encryption parameters	live_server	P1	all_applicable
+CRYPTO-04	CRYPTO	RSA signing parameters	live_server	P1	all_applicable
+CRYPTO-05	CRYPTO	EC signing representation	live_server	P1	all_applicable
+CRYPTO-06	CRYPTO	MAC operation semantics	live_server	P1	all_applicable
+CRYPTO-07	CRYPTO	Unsupported crypto or usage	live_server	P1	all_applicable
+CRYPTO-08	CRYPTO	Streaming crypto boundary	live_server	P1	all_applicable
+BATCH-01	BATCH	Independent successful batch	live_server	P1	all_applicable
+BATCH-02	BATCH	Dependent ordered batch	live_server	P1	all_applicable
+BATCH-03	BATCH	Omitted batch order	controlled_peer	P1	client_only
+BATCH-04	BATCH	Stop on error	live_server	P1	all_applicable
+BATCH-05	BATCH	Continue on error	live_server	P1	all_applicable
+BATCH-06	BATCH	Undo support or rejection	live_server	P1	all_applicable
+BATCH-07	BATCH	Typed result reasons	mixed_live_and_controlled	P1	all_applicable
+BATCH-08	BATCH	Asynchronous or pending result	mixed_live_and_controlled	P1	all_applicable
+BATCH-09	BATCH	Unsupported ordering option	mixed_live_and_controlled	P1	all_applicable
+RETRY-01	RETRY	Connect and handshake timeout	fault_proxy_and_live_server	P0	all_applicable
+RETRY-02	RETRY	Read timeout and slow body	controlled_peer	P0	client_only
+RETRY-03	RETRY	Safe read retry	fault_proxy_and_live_server	P0	all_applicable
+RETRY-04	RETRY	Create commit then response loss	fault_proxy_and_live_server	P0	all_applicable
+RETRY-05	RETRY	Register or rotate ambiguous outcome	fault_proxy_and_live_server	P0	all_applicable
+RETRY-06	RETRY	Lookup failure never creates a key	mixed_live_and_controlled	P0	all_applicable
+RETRY-07	RETRY	Cancel and interrupt	live_server	P0	all_applicable
+RETRY-08	RETRY	Failed connection pool eviction	controlled_peer	P0	client_only
+RETRY-09	RETRY	Explicit failover with state differences	fault_proxy_and_live_server	P0	all_applicable
+RETRY-10	RETRY	Retry storm control	fault_proxy_and_live_server	P0	all_applicable
+DB-01	DB	Cold start and bootstrap	database_integration	P0	all_applicable
+DB-02	DB	Direct encryption key workflow	database_integration	P0	all_applicable
+DB-03	DB	Envelope encryption workflow	database_integration	P0	all_applicable
+DB-04	DB	Rotation with mixed files	database_integration	P0	all_applicable
+DB-05	DB	Backup and restore on fresh nodes	database_integration	P0	all_applicable
+DB-06	DB	Unavailable KMS at startup	database_integration	P0	all_applicable
+DB-07	DB	Unavailable KMS after startup	database_integration	P0	all_applicable
+DB-08	DB	Revoke and cache expiry	database_integration	P0	all_applicable
+DB-09	DB	Concurrent node initialization	database_integration	P0	all_applicable
+DB-10	DB	Credential and server recovery	database_integration	P0	all_applicable
+DB-11	DB	Corrupt reference or wrapped blob	database_integration	P0	all_applicable
+DB-12	DB	Application TLS rotation	database_integration	P0	all_applicable
+JAVA-01	JAVA	Supported JDK matrix	live_server	P1	all_applicable
+JAVA-02	JAVA	Every shipped transport	live_server	P1	all_applicable
+JAVA-03	JAVA	Concurrent calls and pool boundaries	live_server	P1	all_applicable
+JAVA-04	JAVA	Same UID across namespaces	live_server	P1	all_applicable
+JAVA-05	JAVA	Load and latency envelope	live_server	P1	all_applicable
+JAVA-06	JAVA	Long running soak	live_server	P1	all_applicable
+JAVA-07	JAVA	Upgrade and rollback	live_server	P1	all_applicable
+JAVA-08	JAVA	Close and shutdown	live_server	P1	all_applicable
+OBS-01	OBS	Secret redaction	mixed_live_and_controlled	P0	all_applicable
+OBS-02	OBS	Diagnostic precision	mixed_live_and_controlled	P0	all_applicable
+OBS-03	OBS	Metrics and retry accounting	mixed_live_and_controlled	P0	all_applicable
+OBS-04	OBS	Artifact hygiene	mixed_live_and_controlled	P0	all_applicable
+OBS-05	OBS	Mutable secret handling	mixed_live_and_controlled	P0	all_applicable
+OBS-06	OBS	Result provenance and triage	mixed_live_and_controlled	P0	all_applicable
+SV-PY-01	SERVER	Owner and shared access	live_server	P0	pykmip
+SV-PY-02	SERVER	Unsupported handlers	live_server	P0	pykmip
+SV-KR-01	SERVER	Read only versioned identifiers	live_server	P0	krypton
+SV-KR-02	SERVER	Tenant and TLS constraints	live_server	P0	krypton

@@ -1,0 +1,2712 @@
+[
+  {
+    "file": "1.3/mandatory/AKLC-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/AKLC-M-1-13.xml",
+    "sha256": "cb65fc4de5a696bb878cb381d663bdfb895a7abc417c1a74b3736ca0e3fedb25"
+  },
+  {
+    "file": "1.3/mandatory/AKLC-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/AKLC-M-2-13.xml",
+    "sha256": "a5b3b8ca8a8b77119cabd31e9a726f404fed0a03ee42691645db614612093b71"
+  },
+  {
+    "file": "1.3/mandatory/AKLC-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/AKLC-M-3-13.xml",
+    "sha256": "90a8a37fc698796a8a042a1ecaf60ab95102e9ad61b7e24ab54fad9a72b6568f"
+  },
+  {
+    "file": "1.3/mandatory/AKLC-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/AKLC-O-1-13.xml",
+    "sha256": "c6616230b2605af57dc4004775e31153c0b0e3bb8274481d79b349c01d52c2fa"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-1-13.xml",
+    "sha256": "1ab81370a7de775829262575cc27db8f3e2e6c668eaba2dafefd4d70f2566a89"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-2-13.xml",
+    "sha256": "582523e183f3626d43964b2ece66abde65c08050ed505d4b5cbb194c7cd27166"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-3-13.xml",
+    "sha256": "238570dee309331a9b1e3817c36fa68b8248dc718666c8347c06f750e2120b27"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-3-ECC-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-3-ECC-13.xml",
+    "sha256": "c48e82de2dd42b7fa649aba8087e3e8abd86f2a2dd236a645f8b4e8b1aae5ded"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-4-13.xml",
+    "sha256": "b26536aa3aecb68a0aba688c868d5f54cfa599f4c62d44c83f2b960dce61e00a"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-5-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-5-13.xml",
+    "sha256": "8add2584b48f4d535c19d7d7928a3cdd4276d2270bc57db699581b54a3d509ad"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-6-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-6-13.xml",
+    "sha256": "1646718b0fb31440f08192649206702bd151529b826aca0bc0ef43ba75d1de80"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-7-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-7-13.xml",
+    "sha256": "711c8734769385e794dc185b25d50923c872c5acd5472bea6d84ee7081ae05d0"
+  },
+  {
+    "file": "1.3/mandatory/CS-AC-M-8-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-AC-M-8-13.xml",
+    "sha256": "a06a3ae56fe17434e204fd31908a963fffb4cb9572dc6fa99b927f16d0300ab4"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-1-13.xml",
+    "sha256": "65bf75f01bf72ff8bd1b66ef8c14a9da5536132670fc52698d1c1763bc8a1eb2"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-10-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-10-13.xml",
+    "sha256": "40fe89284fa03976484ef7d4cdbf5cbcc0cf5f86334c881be45efc0032cf8eda"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-11-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-11-13.xml",
+    "sha256": "cda1f09a6f1e94f04ef69a1aee21babfec80a28314d1170f9fa79193f8aa8bdf"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-12-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-12-13.xml",
+    "sha256": "be17c13dc150094518f2fd4a0a2416e2e1bc0cc9229eba09e319ca5f5535f80d"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-13-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-13-13.xml",
+    "sha256": "a08ea9998119eaf7ecb90e1328a56d1e664279aee86b11c124bbe0af64477061"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-14-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-14-13.xml",
+    "sha256": "e5fa3cee56ea99d2bd8cd673521c17ddfb9168bf800dd3df8fb667454d859e31"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-2-13.xml",
+    "sha256": "9cc9e613f8b6848c307782ff8273798999e935bb23d6808961098fc017d03f78"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-3-13.xml",
+    "sha256": "2d18c055ea23dc89e87b3fb49ff86e952b1a02bf50561eafec6dc64d041d4c2d"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-4-12-3DES-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-4-12-3DES-13.xml",
+    "sha256": "42caeaa12aa28a0deddbe9e8502723470e9d08f6840f8e246b44a88945fd4e68"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-4-13.xml",
+    "sha256": "70dc35afb9d4e81f96ae94ef4995c4c3a30833b0df663ef0d09d4c8d43dd3a86"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-5-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-5-13.xml",
+    "sha256": "dfe5c9a9b9b900adf1c6537f23dd5792b66cb658c6fd5efdea99ebb4c3d6d428"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-6-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-6-13.xml",
+    "sha256": "1176f0295a42c7b15aa323c3ac3c020558b63790912a9d660bbe74571a65c475"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-7-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-7-13.xml",
+    "sha256": "30b34d6c4dbb10396ed398387bb7514a5e0d44d6f7cedee87b493eba138ebc1e"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-8-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-8-13.xml",
+    "sha256": "440161c7619ea6186ed933eb4bc3a1bd484dca6386a8c301b4263a7f3a340c23"
+  },
+  {
+    "file": "1.3/mandatory/CS-BC-M-9-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-BC-M-9-13.xml",
+    "sha256": "53be58b5b8e302aeb9f1c9def046f9132ed960030993050df2055f662d91c645"
+  },
+  {
+    "file": "1.3/mandatory/CS-RNG-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-RNG-M-1-13.xml",
+    "sha256": "7a433ced1d03d336f0da45d246b2d6be56f7161dea0724a75499355d519df0ad"
+  },
+  {
+    "file": "1.3/mandatory/CS-RNG-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-RNG-O-1-13.xml",
+    "sha256": "d71ec70b11c6cdae5fbfcc05b749191f2ac59d84c58785f07f3f288adb4f3518"
+  },
+  {
+    "file": "1.3/mandatory/CS-RNG-O-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-RNG-O-2-13.xml",
+    "sha256": "2b0ffc140d6b02e5e1aa7043b278f6da1f0bf5f6f9eac0b98c27dfd539943323"
+  },
+  {
+    "file": "1.3/mandatory/CS-RNG-O-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-RNG-O-3-13.xml",
+    "sha256": "3b74a9962f5109bd781cdfb4265bd3f90dda77a93fd9d019e8dd40d147eb02e0"
+  },
+  {
+    "file": "1.3/mandatory/CS-RNG-O-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/CS-RNG-O-4-13.xml",
+    "sha256": "25d9f5b5077f3472124487a8c6976f6ac8c4783b001acfefa458109fe975dd38"
+  },
+  {
+    "file": "1.3/mandatory/MSGENC-HTTPS-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/MSGENC-HTTPS-M-1-13.xml",
+    "sha256": "7c00c1fc13ea85f8af73639a3061f13e63ee5b970d44841eac36b7ec992226f8"
+  },
+  {
+    "file": "1.3/mandatory/MSGENC-JSON-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/MSGENC-JSON-M-1-13.xml",
+    "sha256": "7c00c1fc13ea85f8af73639a3061f13e63ee5b970d44841eac36b7ec992226f8"
+  },
+  {
+    "file": "1.3/mandatory/MSGENC-XML-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/MSGENC-XML-M-1-13.xml",
+    "sha256": "7c00c1fc13ea85f8af73639a3061f13e63ee5b970d44841eac36b7ec992226f8"
+  },
+  {
+    "file": "1.3/mandatory/OMOS-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/OMOS-M-1-13.xml",
+    "sha256": "7d21d0b89b733ee52fec85fe2535571c76eaeff1fd9c00f763a2c2b485ff250a"
+  },
+  {
+    "file": "1.3/mandatory/OMOS-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/OMOS-O-1-13.xml",
+    "sha256": "22252b495ee587b1a2c072b4914f1b6edfe70b8e0f84b10bbde03bddcde580da"
+  },
+  {
+    "file": "1.3/mandatory/SASED-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SASED-M-1-13.xml",
+    "sha256": "6aaa8d5c9d2f3cff87f2f78312e169adb8a526eb0d439a0d84f14174d7a33ffd"
+  },
+  {
+    "file": "1.3/mandatory/SASED-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SASED-M-2-13.xml",
+    "sha256": "64fc6f731fdccae678345d5c455000d3f008e753921e42cccaa887778b5cb776"
+  },
+  {
+    "file": "1.3/mandatory/SASED-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SASED-M-3-13.xml",
+    "sha256": "98a25d5adb93c6a1bcf29e059a7203c7b55809e205c39002b230b399a7c50a2d"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-1-13.xml",
+    "sha256": "1531dddd56d59e7a265dbc019ddab8559872f67ff6031e6e1736745e2ca9855e"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-10-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-10-13.xml",
+    "sha256": "54965abac9237dc7503b6b83fb75e62fe352ab6c0586a2a60b7b3296540a53cb"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-11-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-11-13.xml",
+    "sha256": "b1df5c42a8b538e1ed67dfd8ccc8a7c9c0f99383146f78ee7a3ffc34fff4338b"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-12-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-12-13.xml",
+    "sha256": "f515e140a973d016ff990c2a16b15681f3b865c6deca41a3bbcef450c179a205"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-2-13.xml",
+    "sha256": "92280de958fcef554553b226b5a802ae00a2dff3fe0beba8f04b48858d920e48"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-3-13.xml",
+    "sha256": "a8877444fc50d4fb03e3e2e878cf8b304df6d0d24840e7ade084d37256a0bb31"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-4-13.xml",
+    "sha256": "e8a3268bf59fb86ad0db5988bfc82cbc94660a059f38fbfda889f04a0815af4a"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-5-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-5-13.xml",
+    "sha256": "2bab5977b6b6669a7e9fdc3a6733c0edd89ba396621ee2b7d543aa5e10a85415"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-6-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-6-13.xml",
+    "sha256": "7fd7175a0ed99b410e020fd36e46b432180ba455f8c58cdd38f2a5bec392a184"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-7-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-7-13.xml",
+    "sha256": "5ac4c39d090968528825356e882eb48b7fc3ef170bc6d755e187aab25b7cafd1"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-8-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-8-13.xml",
+    "sha256": "3077b67f4ce08de87ca85de19dfd0f4a1818e0900f54dfbc3b16c07202d8711c"
+  },
+  {
+    "file": "1.3/mandatory/SKFF-M-9-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKFF-M-9-13.xml",
+    "sha256": "52f626b77c0fa8173b8f76310f2842d2cea1f56d13d1a6c11494688db8c82f75"
+  },
+  {
+    "file": "1.3/mandatory/SKLC-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKLC-M-1-13.xml",
+    "sha256": "e4ad0eda2861eb1df8d1775180e6bd93d799ac7396f341b752dadc099252dcdb"
+  },
+  {
+    "file": "1.3/mandatory/SKLC-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKLC-M-2-13.xml",
+    "sha256": "690fd1e521cc5a0b4b77bc053af478fb81d0e1e8a3821401af41869833b3a6a9"
+  },
+  {
+    "file": "1.3/mandatory/SKLC-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKLC-M-3-13.xml",
+    "sha256": "18f40c42b265d05a1d14128c126cf70ff1bbbd36fe18e73536b5b4db67bb16bf"
+  },
+  {
+    "file": "1.3/mandatory/SKLC-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SKLC-O-1-13.xml",
+    "sha256": "3a036b17ce3e12fb4145a953519ada28d9e7eb72bc635d6e175f75f738596a6e"
+  },
+  {
+    "file": "1.3/mandatory/SUITEB_128-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SUITEB_128-M-1-13.xml",
+    "sha256": "53e724186f88d76a1c6e9c0a81e3d8118d631036946dc79f5b023dc54065712a"
+  },
+  {
+    "file": "1.3/mandatory/SUITEB_192-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/SUITEB_192-M-1-13.xml",
+    "sha256": "53e724186f88d76a1c6e9c0a81e3d8118d631036946dc79f5b023dc54065712a"
+  },
+  {
+    "file": "1.3/mandatory/TL-M-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/TL-M-1-13.xml",
+    "sha256": "3c90e0545718b4f4e01f0ccdf36b7321bd93abadc83c7b798afa83a4911299f2"
+  },
+  {
+    "file": "1.3/mandatory/TL-M-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/TL-M-2-13.xml",
+    "sha256": "ea1dd94ee62cb99312de4d9c542964f02a91295a54adadc782b0c0d80bc79196"
+  },
+  {
+    "file": "1.3/mandatory/TL-M-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/mandatory/TL-M-3-13.xml",
+    "sha256": "eb82db1f70f8c6c562c000cb17fbf0b16f63be860df610e84705f5b3325fbb03"
+  },
+  {
+    "file": "1.3/optional/AKLC-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/AKLC-O-1-13.xml",
+    "sha256": "09aecdf589053cc80d59858ff643575b798b4c8c97a6121cfdea593723e8b412"
+  },
+  {
+    "file": "1.3/optional/CS-RNG-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/CS-RNG-O-1-13.xml",
+    "sha256": "d0884f27bc2686f7f427465009e8d78a434b2ab2070122648d5ea44c44295418"
+  },
+  {
+    "file": "1.3/optional/CS-RNG-O-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/CS-RNG-O-2-13.xml",
+    "sha256": "9dbf9817c751178011933d0fee19cf4563f42166acd7f35f73cc5a537ca19a22"
+  },
+  {
+    "file": "1.3/optional/CS-RNG-O-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/CS-RNG-O-3-13.xml",
+    "sha256": "53f1c7f51999f541aedaf86d7a6b3c0f55da5a871de3f655421b9516aafe0d1f"
+  },
+  {
+    "file": "1.3/optional/CS-RNG-O-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/CS-RNG-O-4-13.xml",
+    "sha256": "ab24360e53c503b29827af9c143e505951c4053004a394cb4d79e52bc3ee6735"
+  },
+  {
+    "file": "1.3/optional/OMOS-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/OMOS-O-1-13.xml",
+    "sha256": "3fe177bb29878f989a43c16ac7950a013094c9e8464932e8a7c4a0116ac6d189"
+  },
+  {
+    "file": "1.3/optional/SKLC-O-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.3/os/test-cases/kmip-v1.3/optional/SKLC-O-1-13.xml",
+    "sha256": "32886254786fa0ce2ec9a462b452ec4467eca67e2b1128acdda1506a44488391"
+  },
+  {
+    "file": "1.4/mandatory/AKLC-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/AKLC-M-1-14.xml",
+    "sha256": "839ef2af09326ea1a766a40be2c90c91cc1ecd0c32fe95014afce2747c680cc8"
+  },
+  {
+    "file": "1.4/mandatory/AKLC-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/AKLC-M-2-14.xml",
+    "sha256": "697239e200b48680e2f1573a82e14fcb36b45a4cfb3fdda7bbc5cca333a14d3b"
+  },
+  {
+    "file": "1.4/mandatory/AKLC-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/AKLC-M-3-14.xml",
+    "sha256": "080c475a80917e249645db24eaffa4c0a7e0a8e6d7f3bd5189bf00117f95762c"
+  },
+  {
+    "file": "1.4/mandatory/AX-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/AX-M-1-14.xml",
+    "sha256": "c602560dfc090319a58a97ee8864fd3a5d02006bfa40839a75f43cbea64e5f13"
+  },
+  {
+    "file": "1.4/mandatory/AX-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/AX-M-2-14.xml",
+    "sha256": "d60337246b5bae075d00a5d2c7737ebcccfb9cfd1d01d7b918b39535de4b2bdf"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-1-14.xml",
+    "sha256": "bdb73f94f1f5bbd19915e03b17edac325f5d43f1bea9531bb4a3c9ab7ff9ce9a"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-2-14.xml",
+    "sha256": "6847dca9d93e635b12488a7440935c26b8bbdd2ba6f17d14a8dad7b9d01be68f"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-3-14.xml",
+    "sha256": "6dd976972ae3075ba92de0f1ad29f794e8d651d7eceb65cb668220ad33b754cc"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-4-14.xml",
+    "sha256": "e3f53fda7812eea747f60bccfe8d07cd883f4312cafab79195b97cdba7fca3db"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-5-14.xml",
+    "sha256": "d7553be4b4a69c41ae12ac650af2fd5b06b354513887958f7a0584ca94291787"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-6-14.xml",
+    "sha256": "499bfd7d0a348f45c5262d0c41bb733d39b085d9d5dbb05f598ef1798e0b15b4"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-7-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-7-14.xml",
+    "sha256": "7a8ea11d99be6c462a2053025ceeb04d0c1a7c195e8db479efb15d8dfb476879"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-8-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-8-14.xml",
+    "sha256": "bdbe00f96d33e4d98f7bb237481f3457df5e4687441924f74861859ebea0a9d1"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-1-14.xml",
+    "sha256": "161806e7b8e763e4f039012cc0387c4c761c470e2143d3398110363c52e5cbba"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-10-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-10-14.xml",
+    "sha256": "08cbce28e74933a97f718fe0798d3a1b421854a62085514d58b78695dfb6f640"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-2-14.xml",
+    "sha256": "b402bddc8a029d6e7f2fbf7b1be6095a61a062ee969e458531d338b7a0833e69"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-3-14.xml",
+    "sha256": "771b711c2c837cb23ec0b1aa4691e249e6bd665062feceb05505e71e3002555c"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-4-14.xml",
+    "sha256": "f7f440046b7c3b086cf16bedd37d7df0deed952e929bb683937037ed2e1a89a0"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-5-14.xml",
+    "sha256": "cf5ca9ed9c0583fc8b704c009ca93569ac7857d56ba4266573c58457fda3eeac"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-6-14.xml",
+    "sha256": "1092bb78e44afe7b51d56817d9472315d66ce710cd9ee415cea6aaae50e44df0"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-7-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-7-14.xml",
+    "sha256": "6b7300411a51c8b788ba55da94f20b38d4e540669fdee823a7503384f2be64e1"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-8-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-8-14.xml",
+    "sha256": "813ae770b5a3c7f9e313b8d7631d83af219d39cfb2d7f5ad74c56174b88b4825"
+  },
+  {
+    "file": "1.4/mandatory/CS-AC-M-OAEP-9-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-AC-M-OAEP-9-14.xml",
+    "sha256": "4c4a4a5f41a2201177ca5777a7360e4378002ff0923dae78f844a3917f600a51"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-1-14.xml",
+    "sha256": "95f1d8ba1ba648e6b11e29c90c0a48c66ec66cc8f6232b77d28cb922792e4e0f"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-10-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-10-14.xml",
+    "sha256": "9901c7780711df44dfdc8f638a48833402170b7f4b7496572001a0fc0a32d939"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-11-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-11-14.xml",
+    "sha256": "8a4a2fde0859d6386600d43d905dbcd5c26491e9e8f97b029cf9d2c0d8e8a0b4"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-12-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-12-14.xml",
+    "sha256": "f741dbf088b3f00e4269f1d2a2cb5af7a6cfa031ff4bfb51ef13871bf1d67ee8"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-13-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-13-14.xml",
+    "sha256": "9c15474dfbfd6302b8dece8825e98069d10640f69f1c75a80e2157471eea81d5"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-14-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-14-14.xml",
+    "sha256": "ec91a9aea167c64538d8cd117d371e92d8f784e92c3e1ae856ad0db8cee3fda1"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-2-14.xml",
+    "sha256": "3292bad16083d2e573de125d5218ad8dba3fd94c71ce90ddf702c063c8e82d82"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-3-14.xml",
+    "sha256": "7d9a56752dd0bb6018bbc7c509e6e8b84cfdd85063b1a6f66d187d8429737f18"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-4-14.xml",
+    "sha256": "ce79fd4d875a173d8207d36b9c08f420496b80729436675456ea05160265a4c4"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-5-14.xml",
+    "sha256": "959735833d46a2ff319666e7c9a6270f7ab6fa9b60be4ed4da5968f7757a293c"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-6-14.xml",
+    "sha256": "e7bbc5745cb15f576826b1309f5d036bb5aa44f217818e730f38f4645f94623f"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-7-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-7-14.xml",
+    "sha256": "e1f5daee680935ef05fc5da81be44c253d16438fbfa2a8df67c5aedf18d1586b"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-8-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-8-14.xml",
+    "sha256": "2b7b0705fff85a60c8d789b94c7e2a8f1f0c72a9fcc9e3c5ba8fce450cf11a52"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-9-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-9-14.xml",
+    "sha256": "6c2c1259a9ecba000752dbffe2c61991a574cc72528747463433875348dbe0a7"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-GCM-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-GCM-1-14.xml",
+    "sha256": "add4993d5aae5c59281e98383c7a1d65d5dbeab518adaba723860662d5109494"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-GCM-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-GCM-2-14.xml",
+    "sha256": "be434156080e11afeab1bc230593812b13e9e58598ebaa856dc6db3eeadf401c"
+  },
+  {
+    "file": "1.4/mandatory/CS-BC-M-GCM-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-BC-M-GCM-3-14.xml",
+    "sha256": "bf5354d32e5cc0791b1d53328fc9cd2cacd3182db653d720b5e348a6976fe209"
+  },
+  {
+    "file": "1.4/mandatory/CS-RNG-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/CS-RNG-M-1-14.xml",
+    "sha256": "2bec6a159d578c1683a4183e9037489b8aa8d1f55023214b5547d4499a79c062"
+  },
+  {
+    "file": "1.4/mandatory/MSGENC-HTTPS-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/MSGENC-HTTPS-M-1-14.xml",
+    "sha256": "70f2b1860f0b27ebffa797ef6167259d0906fa3f6df2701a15d57e57fb69eade"
+  },
+  {
+    "file": "1.4/mandatory/MSGENC-JSON-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/MSGENC-JSON-M-1-14.xml",
+    "sha256": "70f2b1860f0b27ebffa797ef6167259d0906fa3f6df2701a15d57e57fb69eade"
+  },
+  {
+    "file": "1.4/mandatory/MSGENC-XML-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/MSGENC-XML-M-1-14.xml",
+    "sha256": "70f2b1860f0b27ebffa797ef6167259d0906fa3f6df2701a15d57e57fb69eade"
+  },
+  {
+    "file": "1.4/mandatory/OMOS-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/OMOS-M-1-14.xml",
+    "sha256": "48213f1a79121403fdc91bae6b543478ad004fa4b7479de34b7c382fec5cdffb"
+  },
+  {
+    "file": "1.4/mandatory/SASED-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SASED-M-1-14.xml",
+    "sha256": "686a6caed5548ed3fcef467c9eff0588eb78fb7e6f39234bd9050efcb1221749"
+  },
+  {
+    "file": "1.4/mandatory/SASED-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SASED-M-2-14.xml",
+    "sha256": "64f819d2f4024387e012a081efadf64878aa5a870cd0e23319e786140d3996da"
+  },
+  {
+    "file": "1.4/mandatory/SASED-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SASED-M-3-14.xml",
+    "sha256": "6d1926bf59f4186076f3b981c2093a798e85b2cf7437486d4fbcaeee3f48f52f"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-1-14.xml",
+    "sha256": "af417723b02d03e0e96db33c0a565854c83d9fd1d2e5f6a679746869cc225f5b"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-10-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-10-14.xml",
+    "sha256": "73aaf1a26bd022c3877a24b11777869b15fe1cf6d32ce7f3e9bbc0c29e630daa"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-11-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-11-14.xml",
+    "sha256": "45e053048972bb6d2ff269a762aef67392e06055766de23735390636cb52545c"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-12-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-12-14.xml",
+    "sha256": "064c4cb575e803b79ac53a0d4f17ae48fdadb8de6e427b65c78e57209087ac62"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-2-14.xml",
+    "sha256": "9a0bffc5f576d7915a711e1e6014904a80c45b5cffa024571d95cab5c8d6306d"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-3-14.xml",
+    "sha256": "0dc17250c4b33ce42121598cdd8f122c138d6bf743f5d533b2cbbc54614f6799"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-4-14.xml",
+    "sha256": "55cde12f0eb5646b27142e23b46a5bc2bcf7842a2eeaef54b35ab12f76053e66"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-5-14.xml",
+    "sha256": "da412b719d8a67226a4490dc19c24f6a611675811200ff26a018b00f93e63eed"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-6-14.xml",
+    "sha256": "a7a7e6eeb5d138199c3fcfbdb7f3dee8a8d69375bb49ae09c77714ac34559a59"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-7-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-7-14.xml",
+    "sha256": "bf0f45d1d9f3e318ed941c12ddc16b44792fa86d64af44cbbb2a4dd75b604df9"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-8-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-8-14.xml",
+    "sha256": "593db2e3daf6e98aedcd0bf088af74f35796cb381f7efc2f5845a6273da9f561"
+  },
+  {
+    "file": "1.4/mandatory/SKFF-M-9-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKFF-M-9-14.xml",
+    "sha256": "f9ca4f04254f6b5442d44b2588bc751804c70ce8a402c03b3f731466cfaa4688"
+  },
+  {
+    "file": "1.4/mandatory/SKLC-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKLC-M-1-14.xml",
+    "sha256": "5b1770bc8b3b652f23ed3652d1cb3198b82f731de5e5832d3922e8bb6527f80c"
+  },
+  {
+    "file": "1.4/mandatory/SKLC-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKLC-M-2-14.xml",
+    "sha256": "29e758da19a0295621493df6660b0e8edd42474d1f09421bbc5d023d32250bec"
+  },
+  {
+    "file": "1.4/mandatory/SKLC-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SKLC-M-3-14.xml",
+    "sha256": "9d1c467e4c54dc95141ec13ec6efa1517c4b76c1cd3531bf8ec623d9803158ea"
+  },
+  {
+    "file": "1.4/mandatory/SUITEB_128-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SUITEB_128-M-1-14.xml",
+    "sha256": "01bf197ddf582ce660204e3dcc84009369d3d5894ad3e5171cfcfd7244ae86a1"
+  },
+  {
+    "file": "1.4/mandatory/SUITEB_192-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/SUITEB_192-M-1-14.xml",
+    "sha256": "01bf197ddf582ce660204e3dcc84009369d3d5894ad3e5171cfcfd7244ae86a1"
+  },
+  {
+    "file": "1.4/mandatory/TL-M-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/TL-M-1-14.xml",
+    "sha256": "640bb1a4c75ffc7d14e8ad3f4c1971e6a85740e4eac1bc4a710bc5189ab08db3"
+  },
+  {
+    "file": "1.4/mandatory/TL-M-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/TL-M-2-14.xml",
+    "sha256": "6e6f2972955c4de742815dc777dd49b41e02d37654b765ea2ccb635bde054d46"
+  },
+  {
+    "file": "1.4/mandatory/TL-M-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/mandatory/TL-M-3-14.xml",
+    "sha256": "f0938db313d018ce2fd867da1148e7bb937b30058b912dfaf5a4e9186b34fdfa"
+  },
+  {
+    "file": "1.4/optional/AKLC-O-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/AKLC-O-1-14.xml",
+    "sha256": "c6ce988f8a1bb4d8109d785f42ef46628c15a1c63d8e542f19974d995f2b026e"
+  },
+  {
+    "file": "1.4/optional/CS-RNG-O-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/CS-RNG-O-1-14.xml",
+    "sha256": "33cd1ec90c113000f7e1d440923205954f8f24046a6c887fbf9bef7f33944e50"
+  },
+  {
+    "file": "1.4/optional/CS-RNG-O-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/CS-RNG-O-2-14.xml",
+    "sha256": "fae7def4906c42180648547fd774d32b4dd795de3844fb78211250d28c272639"
+  },
+  {
+    "file": "1.4/optional/CS-RNG-O-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/CS-RNG-O-3-14.xml",
+    "sha256": "7e8f54218fdb1085acad12da2ff8ab91b2816c6821de107abc9440af15273ad1"
+  },
+  {
+    "file": "1.4/optional/CS-RNG-O-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/CS-RNG-O-4-14.xml",
+    "sha256": "9f0165e758d74bb938edde0643abae26268d6ac736a458201c99f449ce888fb8"
+  },
+  {
+    "file": "1.4/optional/OMOS-O-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/OMOS-O-1-14.xml",
+    "sha256": "6c0d7c4ba93cc3672a5fafadec568cb21521f3d2a38aca1d90d9b462c52592c0"
+  },
+  {
+    "file": "1.4/optional/SKLC-O-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/profiles/v1.4/os/test-cases/kmip-v1.4/optional/SKLC-O-1-14.xml",
+    "sha256": "116c96e19485201dcac4b4f9540bba36f8e0b35103076ae7b30603838fbbe62e"
+  },
+  {
+    "file": "1.4/testcases/TC-CERTATTR-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CERTATTR-1-14.xml",
+    "sha256": "2de6b3a7a13aeb735da1ded45d522a91fae186cc4d0bf05b5cc430e26d5cf609"
+  },
+  {
+    "file": "1.4/testcases/TC-CREATE-SD-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CREATE-SD-1-14.xml",
+    "sha256": "11509cd923738bf8349948b15711ad1ffee49d6c127617d159273c8958b13cac"
+  },
+  {
+    "file": "1.4/testcases/TC-CREG-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CREG-1-14.xml",
+    "sha256": "301f751ead5d62f9ba91b0ae23b9245ef5d192db96930be024181bc32d5faae6"
+  },
+  {
+    "file": "1.4/testcases/TC-CREG-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CREG-2-14.xml",
+    "sha256": "e004ebf0cf981c86ade2009fc9a11414017f6499312f71e78b167aa8277dc57a"
+  },
+  {
+    "file": "1.4/testcases/TC-CREG-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CREG-3-14.xml",
+    "sha256": "4b7ba8b02c2025dd603ba16858fc7d5dfdc68aed5be61367747ff668d1d1cf74"
+  },
+  {
+    "file": "1.4/testcases/TC-CS-CORVAL-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-CS-CORVAL-1-14.xml",
+    "sha256": "7e3c6206dbe838bb9983004fed12733901fcf87c5c5a314d623a799e0823c7ae"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-1-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-1-10.xml",
+    "sha256": "532a6d06981c95390aa546fd6f229537afe1649988d6aabe896f8c4a89f5bc02"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-1-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-1-11.xml",
+    "sha256": "0b1a3d926ba6e4dc51a15002bb69fba722870a7e140ffa0cf48e9366b6ed33d2"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-1-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-1-12.xml",
+    "sha256": "511f4c4de098a5fc30b369080cd279a64665343aecda5368d6d69e842c3b06fa"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-1-13.xml",
+    "sha256": "3558cba213c579386acc9ba097aca0d2c97e2bde642c348d79dd2c38ee749670"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-1-14.xml",
+    "sha256": "92042cbc67dfe35d965d7119977b8cd121f7e9ed077851ec58f33d2dd2a64e35"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-2-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-2-10.xml",
+    "sha256": "5e521747f7d8b15afee1025ce6e43f9d81a8b39a895a835c4940be8b44e4e76b"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-2-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-2-11.xml",
+    "sha256": "6f840adfa265aeb2bf9db460542145e95f1e99f50b1e05a151e6e1486aa33435"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-2-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-2-12.xml",
+    "sha256": "29e6116962539e0533d81759713f5b84c98fe3f1aedfc09789da467b6b46b1a6"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-2-13.xml",
+    "sha256": "35260d19b6fe096ff574bc180fb5d6b4ca0b209ab4c921ed988f3c63b8297cc0"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-2-14.xml",
+    "sha256": "3e3872117623abc7423c061db505567f42662ba60c189b1c70be9376fce620a2"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-3-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-3-10.xml",
+    "sha256": "00d420c1ce634f740bcceb32bca955a7fdb5f4d1d5f1d0a434bb36533ec9500e"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-3-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-3-11.xml",
+    "sha256": "495db9222001350e1a547cf4bcad084412e0c033c12f5af71a6e3293a2c867e3"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-3-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-3-12.xml",
+    "sha256": "6aa1d3b7931089bd5e5b1c7f197ed7753289732f1d8cac8df5eba963cb22ea08"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-3-13.xml",
+    "sha256": "63e9fb6441fac2dbfbb5a6c2e8cf2039b7f7ee3c94c9b925f8eac3b17c82f47b"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-3-14.xml",
+    "sha256": "5208d08788f9b6fb87197284e4bc06172ad53cc516d629601eb302383fbc0a4f"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-4-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-4-10.xml",
+    "sha256": "2779009d7acf9020e975d6f57ff37b68cc155661f6893eb4ebaf3781985e6379"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-4-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-4-11.xml",
+    "sha256": "f608af8d31d6bf86bbd36908f7428226fd3689ac83064f382a0f0415025f3e56"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-4-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-4-12.xml",
+    "sha256": "0aafb2ef80e9136c7ff89cda7d8e98ac3c1fa58bf3bcd60683ce34d5149ac4ec"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-4-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-4-13.xml",
+    "sha256": "7af3dd9db104c345922f4a1642e1a11b1af38f275400d3ca72770ed7245d42a2"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-4-14.xml",
+    "sha256": "60d1b9de6a183e15cf7fa004849d7ab822796865c71e8aec5355b1fa3a5863fc"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-5-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-5-10.xml",
+    "sha256": "297a7ca508c050acb1fa9d4173cfd59736c6b210471284ea7c245d28f6de6660"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-5-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-5-11.xml",
+    "sha256": "31c9af3a8b7f9ed12b0624ce860cd0ca0f0a3ea03e6c200dfdbb3ec503be09c2"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-5-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-5-12.xml",
+    "sha256": "38631b0cd77c885c373a7b15db5c90c3bec58ca3721d4c78c6949ebce7f4b92a"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-5-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-5-13.xml",
+    "sha256": "287ab78687389ef63c6c9460a5214b1e2c68e0fec65d5084ed0c52a633c8b605"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-5-14.xml",
+    "sha256": "4cfecd5adf04af41f44e6ae23905f3f91c808058eb4187a85ad15e90175d551c"
+  },
+  {
+    "file": "1.4/testcases/TC-DERIVEKEY-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-DERIVEKEY-6-14.xml",
+    "sha256": "0f70df4dca3a6d957b1d7ae31396e2e9839e73c369b7b78ba5f5cc9d9b1f9d08"
+  },
+  {
+    "file": "1.4/testcases/TC-ECC-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-ECC-1-14.xml",
+    "sha256": "6fbfa4bdf9c88bfef91d579827d66bf2aec58f3a8a4c106737a1f342dc8ee5f7"
+  },
+  {
+    "file": "1.4/testcases/TC-ECC-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-ECC-2-14.xml",
+    "sha256": "ed91d04a2b1094cea9e51df5d6b2937ba41c96b3af378d2d734c09c6bc00dd59"
+  },
+  {
+    "file": "1.4/testcases/TC-ECC-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-ECC-3-14.xml",
+    "sha256": "8c38e05b4d4d1ae4736739865709270b8a31d0f2c5845e5bac0a442f239b749a"
+  },
+  {
+    "file": "1.4/testcases/TC-ECDSA-SIGN-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-ECDSA-SIGN-1-14.xml",
+    "sha256": "f79743a1623d0a76f3b9c17acae3222a157fbdb39c7732da29d91a9e4fe7c029"
+  },
+  {
+    "file": "1.4/testcases/TC-ECDSA-SIGN-DIGESTEDDATA-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-ECDSA-SIGN-DIGESTEDDATA-1-14.xml",
+    "sha256": "57c72b37b013c167b2185eb13489ed59e377167fc849ac8668642d37cededcae"
+  },
+  {
+    "file": "1.4/testcases/TC-EXTRACTABLE-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-EXTRACTABLE-1-14.xml",
+    "sha256": "bce2b7b2c989ab943051e7b51b9fdbc43f3cb86bb7baa8fecb58e7853ee20a6b"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-1-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-1-10.xml",
+    "sha256": "52647fef81726122c93a979effd1b2430690afd266488685d131d48ad597f4bd"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-1-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-1-11.xml",
+    "sha256": "1bc46af6db2d1722fe160abbfb2bddda52719c8cd57f8691a3a10a836f5aa524"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-1-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-1-12.xml",
+    "sha256": "a070140575cfcc9696d51024b371d35b8070872684b828ba1c7462b93a2d64e0"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-1-13.xml",
+    "sha256": "67b9612147b956079619ba94d8aea11015b763e05cd5947201def07c6e69138f"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-1-14.xml",
+    "sha256": "0aeb36f1b9c4f74f973989ffe9b7c303b68dae01a1f64726a628dc650a11cce1"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-2-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-2-12.xml",
+    "sha256": "acb4094fb6286de07b4d1e34b5f555e66deb58fce607ffa4cf27d1d0e806fa87"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-2-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-2-13.xml",
+    "sha256": "ef80fa36bcc3044596bea1233a427fea7e1cc384115ddb4f9035bf8afdd9e827"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-2-14.xml",
+    "sha256": "e175d7758535e6660f05bb4c39dce63176d1f728cffbc0525e2070ebb0ba5efa"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-3-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-3-10.xml",
+    "sha256": "170427921ed9512955b9089a0dd401a52d3ecefb8a711fb365c853ff064c4319"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-3-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-3-11.xml",
+    "sha256": "497a16651deae11ac64cdf0e058ecfdb4e91de6d8fe8a11984b75199d9533c86"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-3-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-3-12.xml",
+    "sha256": "8bccb74173ce97710868dd485ef9e8350db3503ebff7c792493bec0c0b62f703"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-3-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-3-13.xml",
+    "sha256": "50eb99593deabd1469d850221b0446d944caf63cfe6a86434bf267ed3a6d4ad2"
+  },
+  {
+    "file": "1.4/testcases/TC-I18N-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-I18N-3-14.xml",
+    "sha256": "c34ffae5b7a75a216c20c1e7ccd5ad0e3049003fd3ad7fc534ff544d05becacc"
+  },
+  {
+    "file": "1.4/testcases/TC-MDO-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-MDO-1-14.xml",
+    "sha256": "cca143a49296b61592a00ab60b093262f98ee63740bc2d9f8212cb16c276c5ec"
+  },
+  {
+    "file": "1.4/testcases/TC-MDO-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-MDO-2-14.xml",
+    "sha256": "fa6c8008356cd7740442a013678e1bc40efe2eac30e0525026cb953d2da01d7f"
+  },
+  {
+    "file": "1.4/testcases/TC-MDO-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-MDO-3-14.xml",
+    "sha256": "3ef50e3e4609503282a42fcda91c45b29e542af87656aca71599cb58c729de53"
+  },
+  {
+    "file": "1.4/testcases/TC-NP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-NP-1-14.xml",
+    "sha256": "8303772904de8a8296ed5558284d7b3e4dd0728e26eb3ff15b64462697a60f04"
+  },
+  {
+    "file": "1.4/testcases/TC-NP-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-NP-2-14.xml",
+    "sha256": "1963c2f2debf6a6f0e95ff946a6219f2b00a2426dbab0fdb00423a2d587d2ffe"
+  },
+  {
+    "file": "1.4/testcases/TC-OFFSET-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OFFSET-1-14.xml",
+    "sha256": "16bd89fbef12e3e66dca15ec0ccc0430c3341fa0b31e2a66549c2e1ad2a41823"
+  },
+  {
+    "file": "1.4/testcases/TC-OFFSET-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OFFSET-2-14.xml",
+    "sha256": "b6142e0d127ce56db98b4e82143bd3f067e24f0a0219c03bb0df324405a1a36b"
+  },
+  {
+    "file": "1.4/testcases/TC-OTP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OTP-1-14.xml",
+    "sha256": "ed315d2676271f950d740070fb043702595a7118ed0a79f6584c330e9ae73fe1"
+  },
+  {
+    "file": "1.4/testcases/TC-OTP-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OTP-2-14.xml",
+    "sha256": "9db8b468aeb3d1302e1e52f31d68b1277ded83e60d8ddcebf2a859f9458b37e8"
+  },
+  {
+    "file": "1.4/testcases/TC-OTP-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OTP-3-14.xml",
+    "sha256": "c05e5e0b2685ea4a2d78644e88cbef74bb8aab0370ad78653566675d2d551b5b"
+  },
+  {
+    "file": "1.4/testcases/TC-OTP-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OTP-4-14.xml",
+    "sha256": "934146c7726020a4f7b211850779a5cd78747d4b0949d563a20964622f6f3956"
+  },
+  {
+    "file": "1.4/testcases/TC-OTP-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-OTP-5-14.xml",
+    "sha256": "74341bdd0988cbf9b1a97762659e0560dfd4276e6fcdc721aace4ae0ccc39ec4"
+  },
+  {
+    "file": "1.4/testcases/TC-PGP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-PGP-1-14.xml",
+    "sha256": "18b0a730e8c1043e6cdf4f891467e6449ea8fb74b4623d84af1d0c3ec54675af"
+  },
+  {
+    "file": "1.4/testcases/TC-PKCS12-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-PKCS12-1-14.xml",
+    "sha256": "57cdecf8bd12801e3c5462b285745b6d45a2f0abe69453fc4c3175124ecbd2c0"
+  },
+  {
+    "file": "1.4/testcases/TC-PKCS12-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-PKCS12-2-14.xml",
+    "sha256": "6874e760146eba47fee4a4dd8725c30a0a11a38e603e05ce45894a76085711da"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-CAP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-CAP-1-14.xml",
+    "sha256": "f1a7630d2e5742b7f7f3a2185055f9c98343fb0b2e12b81dcb81b21dd5ee2fb3"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-CAP-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-CAP-2-14.xml",
+    "sha256": "09410dfb62d4295a9bf907cc09d103b72994fecd9f8fda88f49c75768f10ecad"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-CAP-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-CAP-3-14.xml",
+    "sha256": "29a23b45188f64d39d74b90d188c2532ed9c08ab29dc527fb637482785e2c0e6"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-CREG-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-CREG-1-14.xml",
+    "sha256": "a47a6e6b818584aea8e6845e6e1aa48f09ca200bf7b500e5fb0fdf58d418e0b1"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-PROF-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-PROF-1-14.xml",
+    "sha256": "dfe1039deba367223d4a1cabd97824fc231c3dea8d991c92e8755997a0f37ad8"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-PROF-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-PROF-2-14.xml",
+    "sha256": "43ee5926d5f27599c7c354b749a54dfb97bed165faf1d539bcb4dbeb82ba9123"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-PROF-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-PROF-3-14.xml",
+    "sha256": "03a9c2049b3f5df1496d5a2cc79d9d6609918631c3c5da6b6c83b20f4f7e4e55"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-1-14.xml",
+    "sha256": "6687a45187591a4e21f7fcf3bb80c820fee9db92a36106c9a3fea7145cb184e7"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-2-14.xml",
+    "sha256": "d587a0fd2962d6b5ee7a5ef28c733c8bdba15746c71a99fad2a79a443a12155d"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-3-14.xml",
+    "sha256": "a8debca744a6dcedf8cfaa39a4f4c4b2eeeaa51085bd155726dd24c45dbbcf8e"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-4-14.xml",
+    "sha256": "6c70a735294dc27917d9953462a81189c758667fbc7ca3ab38ea006f37adade2"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-5-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-5-14.xml",
+    "sha256": "5fff49b422f11402f845b28a3eed66f8638048738c9d28a7da5037b7a82972a6"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-RNGS-6-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-RNGS-6-14.xml",
+    "sha256": "9dbffd5420220b645a64d7afe52239cdde24d87ef6a1a6eacf1db0ab91ca60f0"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-S2C-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-S2C-1-14.xml",
+    "sha256": "32fa2a4d2439086c4a7ecc3f48e71449540d68514bd245a8aad7d23972c86069"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-S2C-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-S2C-2-14.xml",
+    "sha256": "2b54c963ed76bb78ad2f648390df51532f0a6e492c93a3a1f5567b7ec5020185"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-S2C-PROF-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-S2C-PROF-1-14.xml",
+    "sha256": "944f771d6196b98b6707dac4d968f8fef5d1c5ccdb012da7173b2c3f5288062d"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-S2C-PROF-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-S2C-PROF-2-14.xml",
+    "sha256": "d536257bc932839af59371852bcf82bff3b7265adf4051a0bcfc1d5cd74ac8ae"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-VAL-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-VAL-1-14.xml",
+    "sha256": "74e1172db408210b6699f172ed5e6509edb4fe1f251029057b2741b4cbbb38cf"
+  },
+  {
+    "file": "1.4/testcases/TC-Q-VAL-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-Q-VAL-2-14.xml",
+    "sha256": "c8f1c3830a309e25705ab56ed26a895a8261f92e012aff270202c78f4f068826"
+  },
+  {
+    "file": "1.4/testcases/TC-REKEY-1-10.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-REKEY-1-10.xml",
+    "sha256": "fdf51e4ce27178de9393a152d64591442b9e0adc65c0d3c8a67bb109c1a8a039"
+  },
+  {
+    "file": "1.4/testcases/TC-REKEY-1-11.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-REKEY-1-11.xml",
+    "sha256": "d570f300936f5e2ee663292b2c4307ed551fdc2e067957ced88933e8e4d649f1"
+  },
+  {
+    "file": "1.4/testcases/TC-REKEY-1-12.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-REKEY-1-12.xml",
+    "sha256": "608631b86651d90c39f6caecc28365615c1bcb6b259cc11cea4c4930fd2bbe19"
+  },
+  {
+    "file": "1.4/testcases/TC-REKEY-1-13.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-REKEY-1-13.xml",
+    "sha256": "fe8b0d290e6b88c19991e019703c3be3456e67324601ee2c1dcf6611721abc47"
+  },
+  {
+    "file": "1.4/testcases/TC-REKEY-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-REKEY-1-14.xml",
+    "sha256": "a1922a2c18fb74a8a1cbaa61157ce90c62addfaa2340b4abe29e97614a6eb153"
+  },
+  {
+    "file": "1.4/testcases/TC-RNG-ATTR-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-RNG-ATTR-1-14.xml",
+    "sha256": "05efa53f078d861e835d9e36f953184e2bc043b9be307f0c29bc7cad1a015443"
+  },
+  {
+    "file": "1.4/testcases/TC-RNG-ATTR-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-RNG-ATTR-2-14.xml",
+    "sha256": "a2424decec015e48543e8325c78fd79c5f573bae4134438ef3f93d167338807a"
+  },
+  {
+    "file": "1.4/testcases/TC-RSA-SIGN-DIGESTEDDATA-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-RSA-SIGN-DIGESTEDDATA-1-14.xml",
+    "sha256": "196b40b353eb73dd44a78dc69d5d0bdb1fb0e0c39fc10671d60f8700b27a1a14"
+  },
+  {
+    "file": "1.4/testcases/TC-SENSITIVE-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-SENSITIVE-1-14.xml",
+    "sha256": "ae8b997b745523c81b5977a31e01e4ecc09e116b41c9a0f27310e84165f1abcf"
+  },
+  {
+    "file": "1.4/testcases/TC-SJ-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-SJ-1-14.xml",
+    "sha256": "6ef7903119557ec088c912e571c1b65505f41fa64616245f44b03a5ab963bf1e"
+  },
+  {
+    "file": "1.4/testcases/TC-SJ-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-SJ-2-14.xml",
+    "sha256": "049b5ce58f0fc2228cda37510be7c40fcd6857969411044cc7811737592e3a4a"
+  },
+  {
+    "file": "1.4/testcases/TC-SJ-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-SJ-3-14.xml",
+    "sha256": "ca5dc4fe564a5d9485f8d95a4defe563f024cfd7e6d490863457e4ea5ca87789"
+  },
+  {
+    "file": "1.4/testcases/TC-SJ-4-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-SJ-4-14.xml",
+    "sha256": "8e6c04eaae31908ef40bbe04e671aacc289410f02998b48d8499f80114c65653"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-ENC-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-ENC-1-14.xml",
+    "sha256": "33ea3cb789b430477b5c6e37deb1d37f83eda069bf5114148c89e118efb7fa4d"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-ENC-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-ENC-2-14.xml",
+    "sha256": "df131d3b893ba263250baa261c4151bfb6416e50ab9535d738cd81d7cc4d7988"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-ENCDEC-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-ENCDEC-1-14.xml",
+    "sha256": "39024f50be06e7dc8345c38c53943bc8ba21e2b93887550744881b6f97af7062"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-HASH-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-HASH-1-14.xml",
+    "sha256": "254b6fceebd9a463b880ad9b9cfe886728dd158e21e63414305ba1835f63140f"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-HASH-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-HASH-2-14.xml",
+    "sha256": "71057c3fcd543ff6b3e9627307b14ce7a10ba4b2b6084222a199251b0ef8e8fc"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-HASH-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-HASH-3-14.xml",
+    "sha256": "39d61a331c8c0fb8a8b62dcd20910d05ddf58b17c95544096b1e1d3acc4e64df"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-MAC-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-MAC-1-14.xml",
+    "sha256": "81ca46e9a86b9c8dad36f88a2508718ed2629dfae80ce69c49f0f2808837e990"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-SIGN-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-SIGN-1-14.xml",
+    "sha256": "da0557e5fda62bb6e699f2de32b4cbfe0163bf87991bdf91c2cb295b9c63e148"
+  },
+  {
+    "file": "1.4/testcases/TC-STREAM-SIGNVFY-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-STREAM-SIGNVFY-1-14.xml",
+    "sha256": "76534915c3e5216b0b28da6306a7803a934a235d706dbee44692231ea907e810"
+  },
+  {
+    "file": "1.4/testcases/TC-WRAP-1-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-WRAP-1-14.xml",
+    "sha256": "11794c9333954e5a20c73df49ae6d41982002c3470d02595e10e8e3bc74736a2"
+  },
+  {
+    "file": "1.4/testcases/TC-WRAP-2-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-WRAP-2-14.xml",
+    "sha256": "48aed12cc056785c37920d5b6db85007b56ed16611d76870d4c6083b7455d7ab"
+  },
+  {
+    "file": "1.4/testcases/TC-WRAP-3-14.xml",
+    "url": "https://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/TC-WRAP-3-14.xml",
+    "sha256": "689e0728f30fb229285d154bc489ca35d9fad77c763a16f9a79903b102cdf040"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/CS-RNG-O-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/CS-RNG-O-4-20.xml",
+    "sha256": "87f4b632e85e076e80574b0a5b655276ffbf9f3edbc1b79426c805c794322712"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/SKLC-O-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/SKLC-O-1-20.xml",
+    "sha256": "d7aa76ecdf02af13379b1ebead32a9ed849e6462977cddb062a36357482d0925"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/CS-RNG-O-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/CS-RNG-O-1-20.xml",
+    "sha256": "0f6e852b4f9b69c4b576fb54aee58e2c882521b160a8fb4600e28cbeb56dac22"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/AKLC-O-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/AKLC-O-1-20.xml",
+    "sha256": "ca29eb59ee4445bd22579dfc616f40abd560d2dcad06b4bec1573a3c8574bc4d"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/CS-RNG-O-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/CS-RNG-O-2-20.xml",
+    "sha256": "384ab0cdbc4f7675db4f98ef1e505cf436a7af29ee7ebe0c11f45b1365e3063a"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/CS-RNG-O-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/CS-RNG-O-3-20.xml",
+    "sha256": "f39603787c36a74238d17608137f94daaae4a4625f6dd1e7f27ea38b9146f3b3"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/optional/OMOS-O-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/optional/OMOS-O-1-20.xml",
+    "sha256": "911498a015ed2408800c591ea6da0a5d1312bb245de804dc97d877216ad57155"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-9-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-9-20.xml",
+    "sha256": "3f733911543a274dea1f0b4ea558e8db5814601098e6a98eed759c1c2a99bc72"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-12-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-12-20.xml",
+    "sha256": "b2a45e6e1e6f8dc4bfca0e3fcdcd2b0da6fd62bc09ec7621db148c0c08febbb2"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-7-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-7-20.xml",
+    "sha256": "a4606de921e138103d64a54dedb548f16b518c2d1a37d3410a8fbf45c30a9cec"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-6-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-6-20.xml",
+    "sha256": "c93105c2415c50ab7830a0f28fcfbf6b9055823047538069df1a36065a5c5b5e"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/AKLC-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/AKLC-M-1-20.xml",
+    "sha256": "bcaf70542f55c9ad7cd94e7bf057e3c2d890592fdc2a22c4dc6615139015c161"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-13-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-13-20.xml",
+    "sha256": "2ed27a0c0b811aa8dbd615ca74a8a172795f5eb2cc1df05dfdb0454162a8f449"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-13-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-13-20.xml",
+    "sha256": "a43bd76bbf35f7cb671a8425b4f67610957f0c2538fefb42e4bbe4b96f648e9f"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-14-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-14-20.xml",
+    "sha256": "ed2a2fe88aeaea83853b1cd782d75877a7f757dc31b2b56e547f14ce2ecca207"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-4-20.xml",
+    "sha256": "35a8f135f26d5414dab1f236e72a04fc722ed6039377d183153bfc9a9bdee620"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-9-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-9-20.xml",
+    "sha256": "44b7d1484d2fcafa955abb46318c3a3d83982b19196fb22f89f049352fd21e0b"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKLC-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKLC-M-3-20.xml",
+    "sha256": "b26efbb00124cd7ae4868c3c2895c4b5183825ea08250b4590835965340ac360"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-6-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-6-20.xml",
+    "sha256": "69ce9e19acbebb6109d5df81a971769c4df05f369cf304168de507948dce6b35"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-5-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-5-20.xml",
+    "sha256": "d7c50ef19df9d9fbff43cb612a14da4600875863fcbc0ff5b60181e82d9cb201"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SASED-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SASED-M-3-20.xml",
+    "sha256": "2569de85f572086e9b880f9987d7bb31b6896c6f10c48d10b060e2c6c305e9ae"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/AX-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/AX-M-1-20.xml",
+    "sha256": "a2b51e03fdf2fc21dbd30790c8fb221234fc5944470fb1e0dc2596e24730e402"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-6-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-6-20.xml",
+    "sha256": "17ed993c17babca8b641e7b8ca4ca6cdfac0baba9717d6a08a9f416267b6c114"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-11-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-11-20.xml",
+    "sha256": "951d33a9b189968928f33170f85bfab2e58d831e7fc18caaebf6193714ba7315"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-10-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-10-20.xml",
+    "sha256": "65e8e881d91b5bc8ff97b1ee0e6de2ea5d61cd793a6c099481830456fd2eef22"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKLC-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKLC-M-1-20.xml",
+    "sha256": "dc8e934cac93ca1b30a83cf5e0891c65adc69f91ebd8c50478b1c72943428480"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-1-20.xml",
+    "sha256": "7443b9dd175d318fb5fa0003ccc89b14ce9c509467db8bf686a7bbda4ec6a797"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20POLY1305-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20POLY1305-1-20.xml",
+    "sha256": "b145a16a05e115f20f1c1635233fcb9c812ec859ceb1cad1e1d31634893a57e7"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-5-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-5-20.xml",
+    "sha256": "f680b101026261e2be76c5ed783bdc34f630779d7099a466bdef47bb86a66c09"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/AKLC-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/AKLC-M-3-20.xml",
+    "sha256": "789cdce6c8d6dcc601d9f57a5ee95825b7c317833358276ea7d089b31f6c5b77"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-2-20.xml",
+    "sha256": "b839db5c80542f839c4aed871a2be1df52260a21c0c5cdc60d6c8cfeb2eea6ea"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-4-20.xml",
+    "sha256": "d751117c23eaea85f6082dc7e07f18125fafcca1f08462a25a5c5216658600e6"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-10-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-10-20.xml",
+    "sha256": "3585e6a0b297e55507dd62d8f815ec6c5ff54cced1f4ff578613936c50132726"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-1-20.xml",
+    "sha256": "0fd07b8f1038536b9c1ae5e2315666978d916a19225e7fe963c3563d9c0f6366"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-8-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-8-20.xml",
+    "sha256": "9ef3bc3811fad51faa34cfa04bdb959411b13d13a93f51cd1b2cb8f47b61a64b"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-5-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-5-20.xml",
+    "sha256": "4984d7855695949b3568bb6000bc3d000de8e10424335987ffccc83e17774045"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-10-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-10-20.xml",
+    "sha256": "5494d814c2f66f50f18af2569c6c2e2fba7eff77a35fed22f96ddaa65599d0c8"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-8-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-8-20.xml",
+    "sha256": "e92f21706dce6663d4ad6a09bf0451c47ec17ece82bd083373225d994222bfb0"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-1-20.xml",
+    "sha256": "b35b85fb576cbb90957c510b6ce30f67ab32729e4c519cef708ea2a1cc07bc8d"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SASED-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SASED-M-2-20.xml",
+    "sha256": "5222f96855181d07c67ea8c7327fa6d3de3350742f5e168e47a88d67107f1826"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/QS-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/QS-M-1-20.xml",
+    "sha256": "b7b11763dfcd6abaf93e0ede4fdbd181de43a465d8f73b3b6bc22c600551ed2e"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/OMOS-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/OMOS-M-1-20.xml",
+    "sha256": "6e10164a08f7d127d2a631ad2ad71f9f74f8a4f1fa40fbeb9b7944d517ec0b21"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-8-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-8-20.xml",
+    "sha256": "ac4c66eb6206aff023a37a2139404458395943a6013d8b9208a9b371064f3cd8"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/PKCS11-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/PKCS11-M-1-20.xml",
+    "sha256": "e60260cfea48f064fde39c7dc8a0bc0bc3224eb733349e61c76387ddf59bc731"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/QS-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/QS-M-2-20.xml",
+    "sha256": "a508432f26d53b9f902820e1959a4dc3f885c041f72e6f73a3ef234b49547477"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-6-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-6-20.xml",
+    "sha256": "94e3078d455991fc8d6e4460a8fd84315a2a7e8a237c1aa62ca2a66be51a0b9a"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-2-20.xml",
+    "sha256": "ea816f06b4a49cae4ac094c802c0df1836ab03fdc9d6f05e59041962bc486a87"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-3-20.xml",
+    "sha256": "d22f73fb736d9219c2398c37a64ca74e02dacec5ebb6e7b98b2de59b7f938cfe"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/MSGENC-XML-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/MSGENC-XML-M-1-20.xml",
+    "sha256": "1dae6dcc94f1d5c612c1c853f418b216f79f2277444bf015e98609e7bfe98014"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-2-20.xml",
+    "sha256": "46db160a0c146935ef1bfd3b34266e739aca475bce27f26c5e0ad392b3c5cad3"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-3-20.xml",
+    "sha256": "728be8fd8733fa3c05efbcadab5d3ef1e9a1a68c5994b4ad004da6247ee28f9c"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-1-20.xml",
+    "sha256": "eca30a37cf8f95122708411c8bc8644dcfea16b0bff6fb97d3621d4301f13c14"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-11-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-11-20.xml",
+    "sha256": "920c1b348eb1c2299f3d45431a32226a62d3264ebbfa31e06379a55f9e247e35"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-1-20.xml",
+    "sha256": "5357cf6e504a5eb399b7fc6d335ba0523038d6ac09b20b77602535c184763271"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-3-20.xml",
+    "sha256": "c2f58338d7f60f8e24e38dec800268cc0f3c973171a931d30b947aa6a8fff9af"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-1-20.xml",
+    "sha256": "df9d9d98715a23556e9e773cc3c2bb29cc1ff7ea59aa2a65fb55c43f880efcb9"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/TL-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/TL-M-1-20.xml",
+    "sha256": "c231afa4d5f831e2d147d9f12816fe9f865fac3480d73a51b00974793d7e800b"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/AKLC-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/AKLC-M-2-20.xml",
+    "sha256": "9397a3f4714c5ff35d556816371e679cd678affa14af5dfee47aafc0c958af4f"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/MSGENC-JSON-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/MSGENC-JSON-M-1-20.xml",
+    "sha256": "a34c6ab1faf3832a70ddd290b07e0205dff208c38becde15309afebe01516538"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-3-20.xml",
+    "sha256": "0a1beccef808b8a9b79b4167018e778a04380bde6b1e483a8ccabffe830b4314"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-8-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-8-20.xml",
+    "sha256": "3eaa5263bc01151575b396739d1051fbd1ee35942488a432c3ea9daa805b3a22"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-8-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-8-20.xml",
+    "sha256": "bca327699600f9d4954dc06db59c7992e76a7fc3e270a33eb442c7c6ef1c8c0d"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-2-20.xml",
+    "sha256": "aee3cad196d797bfadffc24ca59b3f94b64e2485edcb83fd7211e22927a9a401"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-11-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-11-20.xml",
+    "sha256": "e6d4321bb2b3738b36b380e48570654e6bb03e596efa3491fd5b1c0b1faaa2e2"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-12-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-12-20.xml",
+    "sha256": "f81b1a223d17a00b71071e42b82aac77a35a6c4adae3c0d28d5b108653fa6046"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-7-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-7-20.xml",
+    "sha256": "019bcbdbb8791b613d0872c961658540c4b75fcd89a5cdab94a15da91f6c122d"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-5-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-5-20.xml",
+    "sha256": "371fc4d84b94f653a6f6475376a91bfcf04307a8c7cd2adbb0505e5a2dd0a607"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-2-20.xml",
+    "sha256": "bdfc03f4a29573ed5e56d7c8147e3d0f3ad153d187cb71c27457e9151c53d98d"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-7-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-7-20.xml",
+    "sha256": "77fda5404796f664758ac69dc3c078432cdf9e6437cc2df1c2822328938faa9f"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-RNG-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-RNG-M-1-20.xml",
+    "sha256": "ed9800f265ea7c1163463cea0671e08b999087e999d747c14f2e716deb40ace2"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-7-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-7-20.xml",
+    "sha256": "f689fa171d6789c6a199126ac0b1e947c54276fa797f8a712f6264d131605668"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-7-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-7-20.xml",
+    "sha256": "830710a37d0b3b633f63032bbd244bbed9ece63368b4539b09a6a6d7ea6aca04"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-6-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-6-20.xml",
+    "sha256": "5ae08e0b408dcc9aacfe186f4c39dbe1ed10082f517d90036a7f465d2553a72e"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/TL-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/TL-M-2-20.xml",
+    "sha256": "b2bc0d7bbf03cb07a3aae342f4d2e303fa0f3ee84d9bd22864d424017b0533fe"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-3-20.xml",
+    "sha256": "c6e055f573cac4f3784db54027779034a1c96de370d725ceac9466e517a4d739"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-1-20.xml",
+    "sha256": "534e1bd56782394384c1a30653e27a5eb269c84d687df1609d55d2684bd1f9f9"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-3-20.xml",
+    "sha256": "41e7338bd32eb50dd5fe39694a0974233f58805e41985225bf37b5ac9c1a1dfb"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-GCM-2-20.xml",
+    "sha256": "a5ecc4c6ee0d1fb2f567cba3a4093ab977ad78e83ae9bddc244e2b42400c1773"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-CHACHA20-3-20.xml",
+    "sha256": "19b8ee5af47f80ecfe2564a170323dd626109e70809e752acdb57ee17aa43f07"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/AX-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/AX-M-2-20.xml",
+    "sha256": "e8012cbfb1e1a00d32372b20221cc1e11054a64e2f2c596ffbd005bfee897aa6"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKFF-M-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKFF-M-4-20.xml",
+    "sha256": "6a1fed60e2a9f1d4bb88d53865a74c518dd5fd20bd3ad3a1bf568cec0f00c085"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-4-20.xml",
+    "sha256": "681d90b51d365aa38b849dd186ed7f8778c7351843aaf975d6302744c1df0ddc"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SKLC-M-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SKLC-M-2-20.xml",
+    "sha256": "b62e9b89fbd3d2321c61ae8433f2de78fb85ffe224b364f381e8dfd8156e41cc"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/TL-M-3-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/TL-M-3-20.xml",
+    "sha256": "7239b0307732c56b66bf654d0c0331908f3d36f4d60cb4bf1b1c4e4cdec6a0e1"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-12-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-12-20.xml",
+    "sha256": "a756e107d3bb281ca532cb6ec4a05ba7269f3ce135912b49668dc96d6d3b8c64"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-9-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-9-20.xml",
+    "sha256": "96e87e5b727ef9d3c29f96476086117e5862fffd4aae4f219dff3a845d36e7cf"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/MSGENC-HTTPS-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/MSGENC-HTTPS-M-1-20.xml",
+    "sha256": "e23f7ea80a45653d3e66a76beff5fb3e2c660f3d6a6449bf63b04ef6d9ceda9c"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/SASED-M-1-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/SASED-M-1-20.xml",
+    "sha256": "03740afafb9127f87cf8a2f252a25032ee61ba9444ee7f29c4260b13f535a005"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-2-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-OAEP-2-20.xml",
+    "sha256": "778cbfc2c28ea7ba705269028353f4babf8435744d09187eb98cf5503c7e5a78"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-5-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-5-20.xml",
+    "sha256": "9e5f2e1afe68115278a93933909c67e346e7ee308ab6816d04b75561d3170664"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-AC-M-4-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-AC-M-4-20.xml",
+    "sha256": "fc8d2f1faca7ea524b09b68312cf5348eca835aad3331b968d0894142f9d21c4"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/BL-M-10-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/BL-M-10-20.xml",
+    "sha256": "512700369383e16bce8504c27510d39ba6aa7bbb3826e45c0ee3fcb8f8fe9785"
+  },
+  {
+    "file": "2.0/archive/test-cases/kmip-v2.0/mandatory/CS-BC-M-9-20.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.0/os/kmip-profiles-v2.0-os.zip#test-cases/kmip-v2.0/mandatory/CS-BC-M-9-20.xml",
+    "sha256": "1edcaa321c2a0a4f3be8c047527a04b71a4fea3eb5415117e5868c07112e4e4a"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/SKLC-O-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/SKLC-O-1-21.xml",
+    "sha256": "f0e20bdfc8d3bbdd86485820bb72d679a1d8fb7b842d894b5bdfa283767c3e22"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/CS-RNG-O-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/CS-RNG-O-3-21.xml",
+    "sha256": "efcdcea99ecc7a7a99aef7881ca3b8661b85827620f68bf4b044152e66231b82"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/OMOS-O-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/OMOS-O-1-21.xml",
+    "sha256": "bdf13524bccbbd94a7e72987cd49d89e5de00f7940d00917b4cf87239df4302a"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/CS-RNG-O-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/CS-RNG-O-2-21.xml",
+    "sha256": "fd996a2fc0bb8e2987647c47f47a7f4ddddcd9c32e3e7b0e06f94c51ca9ccab0"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/CS-RNG-O-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/CS-RNG-O-4-21.xml",
+    "sha256": "58402b16798590c73d45db729fa20602d6c49af84b999627754e1dcfd4c22887"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/AKLC-O-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/AKLC-O-1-21.xml",
+    "sha256": "acc16ce8faa23eccd41ca1d7352fe651c556f476437e8007ece14ebaa5eb60aa"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/optional/CS-RNG-O-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/optional/CS-RNG-O-1-21.xml",
+    "sha256": "661c1fae6e312fb81e63c2f72d9a8e62683ff9725ce34701d936eeaba7274181"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-10-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-10-21.xml",
+    "sha256": "9fda518badb6415b9797c38bfb6ebb8e6bc4e62b7d6f1d3995bda46df877092a"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-9-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-9-21.xml",
+    "sha256": "3087bae8360fbdf446097344b78386ebe6f25533bc1a2976ab167dcd0a20c030"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/MSGENC-HTTPS-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/MSGENC-HTTPS-M-1-21.xml",
+    "sha256": "d8d36e821b8c9204b49ce3c312da4c4d06c9d171b08b7ed011953bff178f50ca"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-3-21.xml",
+    "sha256": "9e559bcb079ad60f76f2409c8c6cb90e2951707c3259b824808a01b196960c72"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-8-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-8-21.xml",
+    "sha256": "8f62d12c8ba726b00b6dcf55982ad00299f96a31b24299f6304a28ee962b127f"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKLC-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKLC-M-3-21.xml",
+    "sha256": "7e84bd6df260569df461d61fd3d2b8c25f0a274959ae10657ec2a72521444293"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/TL-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/TL-M-1-21.xml",
+    "sha256": "e5a7f441e8e7ddb411824fbf5b274637d05081f544a7a5e4d22bc1262a30369b"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-9-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-9-21.xml",
+    "sha256": "f70a62d080d4e33763d04b4556903b427ade0dc62986f45f0652e672166c076e"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/QS-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/QS-M-2-21.xml",
+    "sha256": "8ce770ebfefd21aa07b318d69b58d9244de6457a280351885c82ecabcb337dc5"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-8-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-8-21.xml",
+    "sha256": "d354f3a4000218a4095b96f965c17086eb277a4fcff64c3a8b3f4d825511f848"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/TL-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/TL-M-2-21.xml",
+    "sha256": "8b1bb85d7cc17408984d980db218d5655233f20e62ef14ce7ea1133e637d82de"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-9-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-9-21.xml",
+    "sha256": "cf58f00456c9969597904b8f367cad85f4100ddf8af117bc38fda3c82e3ed86e"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-8-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-8-21.xml",
+    "sha256": "1b597385e54c20dc1666cd115229826b36b9227a363419b559ba78ed40753606"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-3-21.xml",
+    "sha256": "445cce14c2df6c5e43198940093546f44c44975e8f625f522bdb904e87ed7305"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-4-21.xml",
+    "sha256": "c71d6634eba8c0b091fb33a564391b8b0a7098362cdf8244357d5359acaf7fb3"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-7-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-7-21.xml",
+    "sha256": "5513a42a935beffe5d01b8458bb089df0ea80ca78f6f984ef5a2dda5f46a2059"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-6-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-6-21.xml",
+    "sha256": "04ac63ba80e5fe014b5572971eedda9d1c9a9028d7b7b459c9f822de425acc39"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-6-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-6-21.xml",
+    "sha256": "66cde3436506e5d9f437edc9fb8556138ef0dc7427c1fc311ba7651ec15d08ba"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/QS-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/QS-M-1-21.xml",
+    "sha256": "38bbcf3cc59ecbe2e92e6270a1d046ab8d95f0883cd544e547b23e8e6a8298d1"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-6-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-6-21.xml",
+    "sha256": "ec6d87ba10f4e4bbb6d38c13345c3dd3713a0f7081d6a8c82289379292ce934c"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-3-21.xml",
+    "sha256": "faf3d59fe413cd5f6e5898a7ac23adcb01ed54227475ded6a19f487703ec7ed3"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-4-21.xml",
+    "sha256": "f169cd5dd87ba1122f88d1c87f108a31f30a53291f43fb74303fc8af07d698c1"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-1-21.xml",
+    "sha256": "f2b08323c9c22a09afd2a7e2e841d336078fb7efe448ced0015fac3093374a0e"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-13-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-13-21.xml",
+    "sha256": "fd8057f2e64a59ffea233e1043e2fdd051138b9d3344899ff5330d74aad59719"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-13-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-13-21.xml",
+    "sha256": "41370ba51fb85590cb17b3b081aed88f0a6f11c53c903b207520ce34902dd4b9"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-5-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-5-21.xml",
+    "sha256": "9a67956dabb2ccdd34ac4858d9530a7902f16cdd70db86add47e049a60e0fdcf"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-2-21.xml",
+    "sha256": "7236407c7cce127b792524a9b3a28ec2bff0280f12ee6924a525534532450370"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-2-21.xml",
+    "sha256": "e894aa6a1aeda429d0858f06f8adc7a998e40c2e636133e0ff5587fa3653dfad"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/OMOS-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/OMOS-M-1-21.xml",
+    "sha256": "ed6fba519b9a40eedd27f8ff31497fff312bb0aecd99c2aafc85d0d0f9a35496"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-8-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-8-21.xml",
+    "sha256": "cbabc49f57474aeab4658d844f1d9dfa1c496308ba1350c4cc28abf025af9d74"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-3-21.xml",
+    "sha256": "beff509fffb14b7da661e26bdc1b2652a5801e13f9c3ad5c33fc6f57d360b49c"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/AKLC-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/AKLC-M-2-21.xml",
+    "sha256": "9505882318411921a229176e71c1d5dc6e03d14b7eabe0d3764e35e6b0c26d26"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-9-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-9-21.xml",
+    "sha256": "004284a49a627b54d428707bd9c4bcb6a00484caee454aed330e591ba439ac4c"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-1-21.xml",
+    "sha256": "634daa1864672560bdcefb029ca27b3134e1f33c47993c7f3913c44974cb4169"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-10-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-10-21.xml",
+    "sha256": "0d1a70b7f4dfb17eac1c6cc5c879c7a6fbe478606a98f91629e7e32a60e82d3a"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-2-21.xml",
+    "sha256": "2471aa711bb7fb663520c18782a3e57749b853b636e4931be8ebb7703e934ae6"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-5-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-5-21.xml",
+    "sha256": "5cd4dc3a66eabf2cf00463cfcf364c372c8ec9fe7f2f27ef10ad72ac8e018a25"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/PKCS11-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/PKCS11-M-1-21.xml",
+    "sha256": "728ab3fad9f82ba4a2e3f7e85e8e57b52b458f370cd3beeac7c03fabe394e6cd"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-2-21.xml",
+    "sha256": "171b7ce707a17d136c4b22bf499a50826e32d7d4fd143dfdb90b2f0196ffc247"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SASED-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SASED-M-3-21.xml",
+    "sha256": "ba730d303d31868c8d313a7136c4240d1e26ea1a2661089a5a6b1dddd0bdeee5"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-6-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-6-21.xml",
+    "sha256": "9a88c5339d3d084916ea7a1c0a6a193e81bd272a46bd4d05162bfb2516593cbb"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-11-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-11-21.xml",
+    "sha256": "77e04e82d19f49a49f7da06d68cb5b249353f662d5b4857bb2cec9d9c63109c2"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-12-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-12-21.xml",
+    "sha256": "3b255d4134012afa27b59c72ff4c1facdffcd51ce8426a5c9246cf92228bd7f7"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-10-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-10-21.xml",
+    "sha256": "eda85d4b20866e9413f96b5e3b26e4fd230b86befb046ba892902e4fc0d99e7d"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-4-21.xml",
+    "sha256": "e2975e8ba5123e8df156e8b1d95516253f539ad4656bf3648ac4f5b8193d6925"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/MSGENC-XML-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/MSGENC-XML-M-1-21.xml",
+    "sha256": "5ca1a4533bb8e911231ea9e43c446894ff11f9004e2ca74531515327145e75d3"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-3-21.xml",
+    "sha256": "7b9a8e7d25a84c381d5385cc6c6e487aa70dc40b841b9db7bb419bbc3151eaa1"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/AKLC-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/AKLC-M-1-21.xml",
+    "sha256": "2e86935384786c299ddcb661bde28ecaede427694c3128ab7db44f3ba8ad921d"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/AKLC-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/AKLC-M-3-21.xml",
+    "sha256": "2113e77f879369e1176e088bbb65881858dad30605b5187fcbf539aa29799bfa"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SASED-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SASED-M-1-21.xml",
+    "sha256": "a9d66f75be31c8eb27ca839d09a4373994daae9751cdb49e854278fe84f19e19"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20POLY1305-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20POLY1305-1-21.xml",
+    "sha256": "04ce835627b7ae850bc0cd77161b03e69351c429f0fa7613116e4f0aeb46f8d0"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-3-21.xml",
+    "sha256": "8d4d9ec60ea046fc7a26520feb0baab18422fdf2d22a85f16cbbc0bc2e29a5c8"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-7-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-7-21.xml",
+    "sha256": "2aa38c2b71a6ddaf440df75fb2339cbc3135f2ef079ab157c792c5d4d3360099"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-2-21.xml",
+    "sha256": "328ba73ebbb3105e14a3d16a1a0fc5357c32f82d820d23848f804292e0bd5e45"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-8-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-8-21.xml",
+    "sha256": "de1ed65872dc4857ab0ff0c851232601aa55f96abd6f0f4ecf91290551783de9"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-11-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-11-21.xml",
+    "sha256": "325fc5e5bf8593537b0d9fd2decbf0527b35ee558e13b53cf34b480eafc55c76"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-12-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-12-21.xml",
+    "sha256": "1023f6d652e40a52bb5559e6750a80b929ed83d82bc15bef969574bf3f55a823"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-GCM-1-21.xml",
+    "sha256": "0aca7214d64746085f248298ebbff2dd2e1d7899399c0524668979040f890f75"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-1-21.xml",
+    "sha256": "b51722da90ff19ce42fd6877f89d99f8fc8d6ac0b4c19701f8d874c674b68a51"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKLC-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKLC-M-1-21.xml",
+    "sha256": "20ba269cf863b667ebf910d7abda708e39d73925ce1c11530f4e6e9afa6c96d6"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/AX-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/AX-M-1-21.xml",
+    "sha256": "638ca2292146d6f712925a9378bf097173bc8c367d4e5141863b9dce27253649"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-5-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-5-21.xml",
+    "sha256": "4327bb77f96f3b2bc3b3cf53abd370e06c9dd5a94126a326a9be7cff42fe1001"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/TL-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/TL-M-3-21.xml",
+    "sha256": "43f279e57e533fd88cb9539025353e98c42dd6d21101a7b07c51706a0833e92b"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-2-21.xml",
+    "sha256": "f0170251184e05a81f47c5cd802f7c3ed14f3889eff21697f2d9bc2444e9f8b4"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-1-21.xml",
+    "sha256": "00f759c3c6911b9124a0260706fb07d32cd8b7c67dd38fc05e617f5f15e3d8dd"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-1-21.xml",
+    "sha256": "418b671a487b5eafc8a237f35e1c602ef67d3208d1e6374e289ceba36dcd88bc"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-1-21.xml",
+    "sha256": "37d8029a16ed73bf8e4837fc688a5958a039ce6373121d7a082889ec3c9a7475"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/MSGENC-JSON-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/MSGENC-JSON-M-1-21.xml",
+    "sha256": "681e7ccd518fc4d25b66077567868ab63652418a81e44625e4bfdc8c5ab70cfe"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-CHACHA20-2-21.xml",
+    "sha256": "ee2d25fc5664547352b49863dd38778c6d8b6f0aec2e9953fdb8d54371c0037c"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-5-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-5-21.xml",
+    "sha256": "2e032a63ea647994d2c4ef8741b70d2ebb1c1a1352a22cf2d0843f8c792a4327"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-7-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-7-21.xml",
+    "sha256": "78c5334613d1838ead8f86fcb60432e56c83a06dc4c7c2962b43df1566af84bb"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-6-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-6-21.xml",
+    "sha256": "bc3ce07314181558f65387bbe6c9988c834ca3400857760c8a31ca570ea9d827"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKLC-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKLC-M-2-21.xml",
+    "sha256": "176750e7be358abfedea5fcf4799b8a89ba42118ca1c1617402666580ec1666b"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-3-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-3-21.xml",
+    "sha256": "f374781fdf58b05387bcc7ae5d26e1c460675a5c649ed9eef09be057a6867d0d"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SASED-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SASED-M-2-21.xml",
+    "sha256": "b24f571a4d7ce3b8bc727187b00a3348e5383e17556b5795d098206d294cb456"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-14-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-14-21.xml",
+    "sha256": "5c3ff0413aa28adeb347f3780d957dfdd6fb0c16efe2e6d1ddf57cf36c13cbe6"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/AX-M-2-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/AX-M-2-21.xml",
+    "sha256": "aa4e6e0689d728f6112e2353035ee19c81f371e2b0e74bdacebdcad2ec1c683b"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-4-21.xml",
+    "sha256": "36d908d195c35c9d6f8de5211774e3c1a33bb055309e6bf18c32424705520378"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/SKFF-M-7-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/SKFF-M-7-21.xml",
+    "sha256": "14b1b50da1ee7f22e22d0cb5069cddd95109c2f1b6980828116254dd011382e7"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-10-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-10-21.xml",
+    "sha256": "08d9c7e6753e4d08ba35878c768f3390bad2447bf81e73d808a6cd292b320a5c"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-4-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-4-21.xml",
+    "sha256": "93dd248bc476a1bb38a61fd6d0babbe2983280c11f912f8b12807af7340560c2"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-7-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-7-21.xml",
+    "sha256": "eb41e981d8a989fcb48ffc7acba4fdca4314621de2beb1676e4c5e98f69a343d"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-5-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-AC-M-OAEP-5-21.xml",
+    "sha256": "1972f3a8bfb71a3c46400b40918ed99451c563e35a6d7e572f180932f218d553"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-BC-M-11-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-BC-M-11-21.xml",
+    "sha256": "100441cf90f24f6ced14935dd4d645db9890915de76d4a35d04c7279d85c92ce"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/BL-M-12-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/BL-M-12-21.xml",
+    "sha256": "09541ad8b96feb2f7f8932883ee0dcf022d541774ef8437a58ebc752eb104572"
+  },
+  {
+    "file": "2.1/archive/test-cases/kmip-v2.1/mandatory/CS-RNG-M-1-21.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v2.1/os/kmip-profiles-v2.1-os.zip#test-cases/kmip-v2.1/mandatory/CS-RNG-M-1-21.xml",
+    "sha256": "250b547b7a67fbdd93549414848b19f2b78efa13c045ec34c4415e0cf1c315de"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/AKLC-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/AKLC-M-1-30.xml",
+    "sha256": "348ff210057ebfeb99085e8bb0cb359434937bf34a12c7f12ea8f10a5872f4bd"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/AKLC-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/AKLC-M-2-30.xml",
+    "sha256": "b8f94ad9071ba2e7d79e2300257e4892f08e0c43d3b8f4545999a8fa03758303"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/AKLC-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/AKLC-M-3-30.xml",
+    "sha256": "2551fab2d97bcc6e483af06d8b5eca29f10178fbc44af81e72fe0613b622cee7"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/AX-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/AX-M-1-30.xml",
+    "sha256": "3ce5dd2480fc714616c96312cba596187483daab1b730abacdb47c2d16a9a37b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/AX-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/AX-M-2-30.xml",
+    "sha256": "da85b949c40254a5e88bf71c8d625f4b90423b00dedf121f3aa9d98ebfd7dd71"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-1-30.xml",
+    "sha256": "700e009b2021aa523a998da27c7a5f51206193968278167ae33e1e30fe0e44b1"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-10-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-10-30.xml",
+    "sha256": "a79a19d3dba1ecb09e68dc735bc64f0060886c527d0a700bcf70ee0b9533b06e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-11-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-11-30.xml",
+    "sha256": "8dedf2f727d360373a553c0457bfca45e01b676ae5bcfacb90df60fe432de5ef"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-12-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-12-30.xml",
+    "sha256": "c0474db567168b84030dfcab7db6ee361a2d2e5d2e0ba679f5417730493885c2"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-13-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-13-30.xml",
+    "sha256": "5aae12b6602c7f97a851635b183f75b364c62f73e2be3f85baa379ca352ac923"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-14-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-14-30.xml",
+    "sha256": "8b2a9a2c2c28c5b6c278449c9a23712b246cf6edf859835b26d7611dd2a33205"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-15-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-15-30.xml",
+    "sha256": "5aba44fba15985731b0fb40dec74bc2a2ee013cbeceaccbc259a2ebed1b48489"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-16-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-16-30.xml",
+    "sha256": "fe6a72b747171fff7ca69be34f09ba40aae8b06fbbc81aefc3e1cbabb737cca6"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-17-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-17-30.xml",
+    "sha256": "d00dbd309e646eced55de43bf0b92497d63481c49b3dc129b40e72454fa8ff96"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-18-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-18-30.xml",
+    "sha256": "e211a43b480eb2ce25930c865c1086d942ea8207d96e933266c5debe6da68ce4"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-19-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-19-30.xml",
+    "sha256": "223970ba2bf7cea91b7a66d4d459087ced1ae1b088207bf595c1119752ec3eac"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-2-30.xml",
+    "sha256": "f1ab769db61dd13321844e51630d8a98e90d8a36365df0b2130a46f9c12e0b12"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-20-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-20-30.xml",
+    "sha256": "7061740e393d8a6b54a9192795c752ea6f595a1aa1ee4bd13c2c1eb86a013abe"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-21-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-21-30.xml",
+    "sha256": "9eb9577bd5192b02817b982ee720f6f0cd00acddd749d2b47283b65b853a652f"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-3-30.xml",
+    "sha256": "955decad92ec1e1816e19a412e47fab55c68f898e44b8a49c8178d5fb64fec14"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-4-30.xml",
+    "sha256": "340677035d4854d974298ee8ec3bf191e40607b41221fa36d18fe29921e82714"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-5-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-5-30.xml",
+    "sha256": "b9d6042d4c97f3324f2613e187912b70eb907e41f208348da32003b770c7b46d"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-6-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-6-30.xml",
+    "sha256": "ef18532956b71925332d2612fbe3fdcfad0e41ed0c61f7dee338e99ed0a82f92"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-7-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-7-30.xml",
+    "sha256": "608e160dfe9bf56d66bf983d45ca1cd0ae43241213db0be17a86edf6a85f9024"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-8-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-8-30.xml",
+    "sha256": "407bd77b7726e72cf24f59b3289e579c220c54b49febbd13b25556297b60545d"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/BL-M-9-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/BL-M-9-30.xml",
+    "sha256": "ecf61721f4196293b9ce4f1db498b7f27aa1437a4be4141a1a48384261e4719f"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-1-30.xml",
+    "sha256": "9b3846f97b47ac4af488c735e60ff48522d967e8c6b143188329bbcdd3dc105c"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-2-30.xml",
+    "sha256": "e30791f4e6c5d588f83d8f8c4e87bdb2d2456ac3712a7b7150e0ee0820d103ec"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-3-30.xml",
+    "sha256": "fcbb154516a874e72dfee2f33d9e27b82a7a413564dc0c071a5793c58bd60979"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-4-30.xml",
+    "sha256": "350e9441f91104aed139eece9e4cc987780faa9779f2533011133940e8c8b35b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-5-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-5-30.xml",
+    "sha256": "4ddbcb5130af58b9a9d7018ccf132e92cd438915fa908f669e00e012bfecd23e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-6-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-6-30.xml",
+    "sha256": "4852e5f455439208e66ac4351b84593e382a6616d1f6fad5def414b30d33e2cd"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-7-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-7-30.xml",
+    "sha256": "5c755f5643e55f52e08682ab599463a15fbb20f60b1d45a9b56c4318efd8e59f"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-8-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-8-30.xml",
+    "sha256": "570b3d6f58d82327c47434717f575869a3741a3726b7db46122aa5952f36ca8b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-1-30.xml",
+    "sha256": "4fe3cce80865aa793d45f95a409bbcb1ba274d05744a1906d2048c49206805ba"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-10-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-10-30.xml",
+    "sha256": "eca7f290136ea3f91d9eb3d79e925b1fe2288790efc794de78e8769f6fa1b420"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-2-30.xml",
+    "sha256": "6c2247825c0ba575e7e2a94ef71cab79fde48a9b2af51ebd1ef19c682e81ad17"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-3-30.xml",
+    "sha256": "ec8328024a40cfaf8d812437539c29d44b208afc3aa81ef1ef06fe3a677c77dc"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-4-30.xml",
+    "sha256": "5d84fbec632a292c31e13dc1f6ce6ab971cabd0b804f36b8d63f72206b00aa4d"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-5-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-5-30.xml",
+    "sha256": "d433b5452bfdd7ba57a08f2a220ecfe79940f6ec427f132182aeccd9163a4ea9"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-6-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-6-30.xml",
+    "sha256": "851d1773ba3cd37ab5376ec9f04a07c9ad88785ae3a0c8501de6fd8df0bf5018"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-7-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-7-30.xml",
+    "sha256": "4d24a3a6afc85b3573150a091367b30b7faac884f2beb073eb8f74cb30daaa26"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-8-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-8-30.xml",
+    "sha256": "a030db3f7e14be6de92363a9d57af62aa1a7308bd4a8dc74668e36fab48a7916"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-9-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-AC-M-OAEP-9-30.xml",
+    "sha256": "1e2e08d8793d061d6bf665cc6848c24b7e0cdc22af8f0e7c52634f39024b365c"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-1-30.xml",
+    "sha256": "6aad62c113a6e4ab69d33b21c42b3d413c0c126c149ff29f5496a25f03fefe49"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-10-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-10-30.xml",
+    "sha256": "2acbc535c52ed10c1b752c7b9948c5179bd21910fa4cbe1f3aee9d15c5cbfdb7"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-11-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-11-30.xml",
+    "sha256": "4cbe50c65d002596fdd3a99d52820e9fbdea5f86c704a8c6737717c845945543"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-12-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-12-30.xml",
+    "sha256": "4750dd3f2021ad6bc6ebf2000409de5d0c31c01e9364acfbca224af0818ceb1e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-13-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-13-30.xml",
+    "sha256": "b07d3a1d604bf5310c813b66c91a6360d00dd38be1ae1f07ceeab9dbde282048"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-14-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-14-30.xml",
+    "sha256": "c6b9ae6eceaa3d4becd91c4c2a8b9bd98882fdc1b356eb0aea14bd070ba79fad"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-2-30.xml",
+    "sha256": "8ca589110b08bb52a047c2a3902cb1a71299f5cc31ccdc5f163025c6b9c9b435"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-3-30.xml",
+    "sha256": "4c3a635afcf21e44f27b742f0abdc16a42fbfe353cd380445953c491df9e3201"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-4-30.xml",
+    "sha256": "e648b1ca621ff68121abb3b2ab95bbf0c805d9ed6166d4a194abb87123f7a30d"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-5-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-5-30.xml",
+    "sha256": "f2c90efc705cd605b71c6cf74ad630ae7448312de2395cdc85bd93be50fead22"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-6-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-6-30.xml",
+    "sha256": "72775dff46ad19e965f69aaaf2c4c422aa842753162b06b719d9adb226036eb1"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-7-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-7-30.xml",
+    "sha256": "0a1adb88b6b441a5886f74b05abad67f2697127c986cd75a941a89813058542b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-8-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-8-30.xml",
+    "sha256": "f44636572fb6646c494f635c6c5ac6c3fc5a270dee4ebce2db9aadc604132f1a"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-9-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-9-30.xml",
+    "sha256": "31ef9e137327cb5941c74f2a4c3a6d35abde1b4a0c2c9d0d61d6b7d166879c56"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-1-30.xml",
+    "sha256": "f1f2312b380bb5272461b50172f10db3d52fe5be586773f2182a818e1e4e1d6b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-2-30.xml",
+    "sha256": "d96f74ebbb05f94ad61b70d345671d43323d993075ca118867221d284f054282"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-3-30.xml",
+    "sha256": "2e4aa2af05be8917dd248cad8726c922c4ad7365e3d46fa1a7317fd8b248a916"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20-4-30.xml",
+    "sha256": "9535ff675ccb962efc7aad9602381594063bde4cf93d831bde93e3240ba3b4aa"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20POLY1305-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-CHACHA20POLY1305-1-30.xml",
+    "sha256": "d3aa8dc126e0637cebe157288e99f0a70d138ffe920f6d3a179a5dc5ce6a8fc1"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-1-30.xml",
+    "sha256": "1459198e17debe5c0778f6fcc793938d096186a29806babd22b7efbe40ad24be"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-2-30.xml",
+    "sha256": "b9fd18a2b1c5d2251c3776ee3af6b224f06c0abea428aa7798a2f8c0ae7152c8"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-BC-M-GCM-3-30.xml",
+    "sha256": "bab08023c2f2fcf2c614e4be384c16cc8f4d5cab4695784b20561a57c89f6493"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/CS-RNG-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/CS-RNG-M-1-30.xml",
+    "sha256": "171a6ab8145252a12c8d3281d6b18388a1cbeaecf56a681fe1842a479983fb12"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/MSGENC-HTTPS-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/MSGENC-HTTPS-M-1-30.xml",
+    "sha256": "076a81b871da073ae86547e939658f167c4d07ec47232fb3f84d04ec6bdbda3b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/MSGENC-JSON-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/MSGENC-JSON-M-1-30.xml",
+    "sha256": "91dcc8d7d3d4145780cd40b38b9e21fc1d7bc1143af71f938d81a65bb51c170c"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/MSGENC-XML-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/MSGENC-XML-M-1-30.xml",
+    "sha256": "581158e119720a590c1a17301270884953e83fa858bb4331297f25e59898b08a"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/OMOS-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/OMOS-M-1-30.xml",
+    "sha256": "fe3c0a3a4f4f18d6722142577e3cb51980f65708d7374c807208a05e27b3fc5e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/PKCS11-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/PKCS11-M-1-30.xml",
+    "sha256": "6d00e31bce266172cfeee346c4108fe27012823d6a4d2869411c61cc93a8c199"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/QS-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/QS-M-1-30.xml",
+    "sha256": "75feff2a188479709df0ba2195aaa3e577743017a4091526daacc984fe537563"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/QS-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/QS-M-2-30.xml",
+    "sha256": "a88a6a0f846998908504e397f252eee2cd27c4e68131a1a223a5e9a417ccbf35"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SASED-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SASED-M-1-30.xml",
+    "sha256": "057321a01e2b2c29ebd3070be6e5031aa5095bc18168bd54405362f7575e959a"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SASED-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SASED-M-2-30.xml",
+    "sha256": "036c54af2e852081440b3147e13f8634eefb08620555208956d9bcb2d2286744"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SASED-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SASED-M-3-30.xml",
+    "sha256": "e566d6b13514836e4bfed0852cd9f24890a47b80f1d6fb7a456ee621b36bea47"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-1-30.xml",
+    "sha256": "af7446d78f77fcade8b4a6b8f1056f71c7713bb28b7cfa1dca946da062874ce8"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-10-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-10-30.xml",
+    "sha256": "a9da32b701985c74c1245d83cc11f6243fa0a32123051d64574774d6c3d54482"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-11-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-11-30.xml",
+    "sha256": "0a447750eab5361e194e18947865b0c34a74c9f9248b9a9007dea3a0c6d131e8"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-12-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-12-30.xml",
+    "sha256": "5686be42fa091bfb7f830e2968dcd10ee983708d507668774cd471b9d863878e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-2-30.xml",
+    "sha256": "87bf3c068435246c00e8134fb4db64946f1643079784fb7914791217f12c0bad"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-3-30.xml",
+    "sha256": "c12d7c59eed9f4d603b62aeedc218cce1e5a62e6feaa8e7031d92ed784258582"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-4-30.xml",
+    "sha256": "1d670e018ef83c36c3c3f8c34b31b25afc04326a8d086e58375c0664ff46b49c"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-5-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-5-30.xml",
+    "sha256": "866fda9bc26ba42cf17bbcd90cabd506edd5b3d6e5150475e6a29715708a0efc"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-6-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-6-30.xml",
+    "sha256": "015174fe065829f0f16022de31d75834acccf2399f58f5736bacf4d7e0a46989"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-7-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-7-30.xml",
+    "sha256": "43841032cb89e50200c7ba6ebe3b5f27258b7f71588a8baab25268359910a35a"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-8-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-8-30.xml",
+    "sha256": "3b68e6d6d77c90d0d34948cef734626bc7d4ef6eaa47f9a009a7c9fd3e17ab5a"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKFF-M-9-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKFF-M-9-30.xml",
+    "sha256": "d50ae9bdb6ab5bb977085d98e2743508e454e66c7a6c89e5108eb03443d58143"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKLC-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKLC-M-1-30.xml",
+    "sha256": "b5e68c183dfc201a245e7f2817766974368788c5f697dd40ca69e85930896ae2"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKLC-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKLC-M-2-30.xml",
+    "sha256": "9df1f8b22e7262b9deed37dc5abd9e3194a5f47262961c8699b0ac45723a9cad"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/SKLC-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/SKLC-M-3-30.xml",
+    "sha256": "7da83ba1057ac1b54376f509f266331d98ded1dbf2cca50a2338cff92ac5735e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/TL-M-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/TL-M-1-30.xml",
+    "sha256": "b5857e71c74ad19671e5f824bfae9f47ee993b4093de37a640d596b07792ff6b"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/TL-M-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/TL-M-2-30.xml",
+    "sha256": "afa9a724bb8487df13ff7954f1190e56c4a8e6b327f59393788437802e08c934"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/mandatory/TL-M-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/mandatory/TL-M-3-30.xml",
+    "sha256": "ea96bdf64e772641ec0dd055a69ec80d2addfd1444370aa8dbdc76a0f1fc8ec3"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/AKLC-O-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/AKLC-O-1-30.xml",
+    "sha256": "62dc5832a906cf26195967200b3d3ca73a830d0230cbf4d2a2e6f4f0a26546ee"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/CS-RNG-O-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/CS-RNG-O-1-30.xml",
+    "sha256": "6de6a96366fbd6a68ec4e06a5f5a8584cbcd28d36283b436ef75c66d1937ca2e"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/CS-RNG-O-2-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/CS-RNG-O-2-30.xml",
+    "sha256": "c7dc2ce2de61f2245b004691ff6342d81ba3f82ae4d1f376f60256e4a8a2659d"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/CS-RNG-O-3-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/CS-RNG-O-3-30.xml",
+    "sha256": "d3ccf6220524dbd7bbe5ccf4ca01e36cf9116fd3a7584081207106e6d096577f"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/CS-RNG-O-4-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/CS-RNG-O-4-30.xml",
+    "sha256": "b008c58da24e2a81869cf68c1a8ccbe2a38cc14f5033d34f28e2a5b366f63595"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/OMOS-O-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/OMOS-O-1-30.xml",
+    "sha256": "2c2398cf2deefe055e39dd1a97911c9e580d4eb5a7385986391003493c3b6267"
+  },
+  {
+    "file": "3.0/archive/test-cases/kmip-v3.0/optional/SKLC-O-1-30.xml",
+    "url": "https://docs.oasis-open.org/kmip/kmip-profiles/v3.0/csd02/kmip-profiles-v3.0-csd02.zip#test-cases/kmip-v3.0/optional/SKLC-O-1-30.xml",
+    "sha256": "ec126a39e10d8bcad458fc7e9e5319ef4a9aed9b74bbfba547e63bad039c5615"
+  }
+]

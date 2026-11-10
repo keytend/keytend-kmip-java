@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dev.keytend</groupId>
+    <artifactId>keytend-kmip-parent</artifactId>
+    <version>0.10.0-rc.1</version>
+  </parent>
+  <artifactId>keytend-kmip-integration</artifactId>
+  <name>KMIP interoperability application</name>
+  <description>Experimental, not for production use. Interoperability laboratory for keytend-kmip against real KMIP servers; shipped in the GitHub release, not published to Maven Central</description>
+  <properties>
+    <!-- Not published: maven-deploy-plugin and the central profile both skip this module. -->
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <!-- An SBOM of the application and the runtime JARs the release ZIP's lib/ carries for it. -->
+    <cyclonedx.skip>false</cyclonedx.skip>
+    <sbom.projectType>application</sbom.projectType>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- The reports' JSON (Catalog.json), with Jackson's streaming generator; an application
+         dependency of the laboratory, which the release ZIP ships with it. -->
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- The in-memory KMIP server, for tests only (never at run time). -->
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip-testing</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- The SDK's logs, to standard error (src/main/resources/simplelogger.properties). -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The dry run's certificates (CatalogDryRun.certificates). -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The SDK's classes before package (./mvnw test, an IDE) require Caffeine, which the SDK JAR
+         bundles from package on (sdk/pom.xml, "The bundled Caffeine"): test scope only. -->
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!--
+        A runnable JAR, as the CLI's: its manifest lists each runtime JAR (the SDK, slf4j-api,
+        jackson-core, slf4j-simple) twice on its class path, as lib/X.jar, where the package phase
+        copies them in integration-tests/target/, and as X.jar, beside it in the release ZIP's flat
+        lib/; the JDK skips the entries that do not exist. So
+        `java -cp integration-tests/target/keytend-kmip-integration-VERSION.jar MAIN` runs it.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>dev.keytend.kmip.interop.InteropApplication</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathLayoutType>custom</classpathLayoutType>
+              <customClasspathLayout>lib/$${artifact.artifactId}-$${artifact.baseVersion}$${dashClassifier?}.$${artifact.extension} $${artifact.artifactId}-$${artifact.baseVersion}$${dashClassifier?}.$${artifact.extension}</customClasspathLayout>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>runtime-libraries</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <includeScope>runtime</includeScope>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+          <!-- slf4j-api and slf4j-simple 1.7.36 for Slf4j17ConsumerIT, outside the test class
+               path (which has 2.0.20): an application that pins 1.7 runs the SDK with them.
+               The old versions here, and the older Caffeine below, are named as artifact strings,
+               one execution each, rather than as artifactItems: Dependabot reads artifactItems and
+               would propose raising them, which would defeat the tests. -->
+          <execution>
+            <id>slf4j-api-1.7</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>generate-test-resources</phase>
+            <configuration>
+              <artifact>org.slf4j:slf4j-api:${slf4j17.version}</artifact>
+              <outputDirectory>${project.build.directory}/slf4j-1.7</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>slf4j-simple-1.7</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>generate-test-resources</phase>
+            <configuration>
+              <artifact>org.slf4j:slf4j-simple:${slf4j17.version}</artifact>
+              <outputDirectory>${project.build.directory}/slf4j-1.7</outputDirectory>
+            </configuration>
+          </execution>
+          <!-- Caffeine, outside every class path: the version the SDK bundles (Slf4j17ConsumerIT
+               compiles the SDK's sources, whose descriptor requires it), and an application's own,
+               older one (BundledCaffeineConsumerIT runs the SDK JAR beside it). -->
+          <execution>
+            <id>caffeine</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>generate-test-resources</phase>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.github.ben-manes.caffeine</groupId>
+                  <artifactId>caffeine</artifactId>
+                  <version>${caffeine.version}</version>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/caffeine</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>caffeine-application</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>generate-test-resources</phase>
+            <configuration>
+              <artifact>com.github.ben-manes.caffeine:caffeine:${caffeine.application.version}</artifact>
+              <outputDirectory>${project.build.directory}/caffeine</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        The checks of the packaged SDK (*ConsumerIT: its descriptor and contents, the bundled
+        Caffeine beside an application's own, SLF4J 1.7): integration-test, after package, when the
+        reactor resolves the SDK to its JAR; ./mvnw test, which stops before package, does not run
+        them. The integration profile runs the other *IT classes, which need servers.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>packaged-sdk</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/*ConsumerIT.java</include>
+              </includes>
+              <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+              <summaryFile>${project.build.directory}/failsafe-reports/packaged-sdk-summary.xml</summaryFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>integration</id>
+      <properties>
+        <!-- Agreed local-fixture Get latency limits; external runners set their own budget. -->
+        <kmip.catalog.p95Millis>1000</kmip.catalog.p95Millis>
+        <kmip.catalog.p99Millis>2000</kmip.catalog.p99Millis>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <systemPropertyVariables>
+                <project.root>${maven.multiModuleProjectDirectory}</project.root>
+                <kmip.catalog.p95Millis>${kmip.catalog.p95Millis}</kmip.catalog.p95Millis>
+                <kmip.catalog.p99Millis>${kmip.catalog.p99Millis}</kmip.catalog.p99Millis>
+              </systemPropertyVariables>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+                <configuration>
+                  <excludes>
+                    <exclude>**/*ConsumerIT.java</exclude>
+                  </excludes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

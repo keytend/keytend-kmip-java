@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Author: Jeremiah Jordan
+Date: Sun, 1 Nov 2026 18:39:44 -0600
+Subject: [PATCH 4/4] Metrics: the Kmip group, for KMIP key providers loaded as
+ plugins
+
+Trunk refuses metrics of a group it does not list (verifyUnknownMetric), so a key provider
+loaded from lib/ cannot register its gauges under a group of its own. List the group the
+KMIP key provider uses for how long new files can still get their key without the KMS.
+---
+ .../org/apache/cassandra/metrics/CassandraMetricsRegistry.java   | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/java/org/apache/cassandra/metrics/CassandraMetricsRegistry.java b/src/java/org/apache/cassandra/metrics/CassandraMetricsRegistry.java
+index 312f449..eaba88c 100644
+--- a/src/java/org/apache/cassandra/metrics/CassandraMetricsRegistry.java
++++ b/src/java/org/apache/cassandra/metrics/CassandraMetricsRegistry.java
+@@ -141,6 +141,7 @@ public class CassandraMetricsRegistry extends MetricRegistry
+                                    .add(InternodeOutboundMetrics.TYPE_NAME)
+                                    .add(org.apache.cassandra.journal.Metrics.TYPE_NAME)
+                                    .add(KeyspaceMetrics.TYPE_NAME)
++                                   .add("Kmip") // KMIP key providers (transparent data encryption), loaded as plugins
+                                    .add(MemtablePool.TYPE_NAME)
+                                    .add(MessagingMetrics.TYPE_NAME)
+                                    .add(MutualTlsMetrics.TYPE_NAME)

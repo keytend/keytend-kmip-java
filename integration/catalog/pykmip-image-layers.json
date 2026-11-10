@@ -1,0 +1,26 @@
+{
+  "server": "pykmip",
+  "recorded_at": "2026-11-07T03:13:20.064342+00:00",
+  "method": "podman image inspect <image>: RootFS.Layers (diff IDs, in order); image_layers_sha256 is the SHA-256 of those diff IDs joined by a newline, without a trailing newline (Catalog.layerDigest)",
+  "configuration_hash": "afbced4ad84a2ebfc597ce1dfeeca0193cf546a0536d557936b45074cc46bf1e",
+  "image_layers": [
+    "sha256:95ac3d364b0e62cb9ad4814c0a58aa29f116fa6c74368b405bc50813123d6595",
+    "sha256:acd3800072cd2144d45ccb263b81ab2349df28deb44f078d3a991deee6b7748a",
+    "sha256:154a0e04459fc7c42485399f3acc695edc4d5fe33352772c08170fa88f13f142",
+    "sha256:c2cd752cd7659a7325e52f70f051d7974beb1d785fdf3dfa39ff8e01a30e9579",
+    "sha256:cf1b1a51b20bc868ae08b0d028d8e7117bf2f58f5ca1868719d1618bb577e760"
+  ],
+  "image_layers_sha256": "b75ccb50552a827d6271b2eccbc796e6c90c6318be18ec6b8c56180d5cc67dd7",
+  "images": [
+    {
+      "image_digest": "3900a0e87b92d711245687719b71cea4357aaab9d4eb1ff85ab085277f6ee709",
+      "created": "2026-11-07T03:06:58.214916377Z",
+      "entrypoint": [
+        "python",
+        "/opt/server.py"
+      ],
+      "cmd": null
+    }
+  ],
+  "note": "Built through the Docker-compatible API, as Testcontainers builds it, so a Testcontainers rebuild has these layers."
+}

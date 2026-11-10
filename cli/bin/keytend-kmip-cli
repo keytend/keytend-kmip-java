@@ -1,0 +1,60 @@
+#!/bin/sh
+# Copyright 2026 Jeremiah Jordan
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Runs keytend-kmip-cli (see cli/README.md). It finds the CLI JAR and the SDK JAR beside it:
+#   KEYTEND_KMIP_CLI_JAR             the CLI JAR, if set
+#   cli/target/ of a source checkout  after ./mvnw package (the SDK JAR is in cli/target/lib/)
+#   lib/ of an unpacked binary ZIP    (bin/ and lib/ side by side; the SDK JAR is in lib/)
+# The CLI JAR's manifest puts its runtime JARs (the SDK, picocli, jackson-core, slf4j-api and
+# slf4j-simple) on the class path, from lib/ beside it or from its own directory, so the class
+# path is the CLI JAR alone: nothing else in a binary ZIP's lib/ is on it.
+# JAVA_HOME selects the JDK (17 or later); JAVA_OPTS adds JVM options.
+set -eu
+
+here=$(cd "$(dirname "$0")" && pwd)
+jar=${KEYTEND_KMIP_CLI_JAR:-}
+if [ -z "$jar" ]; then
+  for candidate in "$here"/../target/keytend-kmip-cli-*.jar "$here"/../lib/keytend-kmip-cli-*.jar; do
+    case $candidate in *-sources.jar | *-javadoc.jar) continue ;; esac
+    if [ -f "$candidate" ]; then
+      jar=$candidate
+      break
+    fi
+  done
+fi
+if [ -z "$jar" ] || [ ! -f "$jar" ]; then
+  echo "keytend-kmip-cli: no CLI JAR found; run ./mvnw package from the repository root, or set KEYTEND_KMIP_CLI_JAR" >&2
+  exit 2
+fi
+
+dir=$(dirname "$jar")
+version=$(basename "$jar" .jar)
+version=${version#keytend-kmip-cli-}
+sdk=
+for candidate in "$dir/lib/keytend-kmip-$version.jar" "$dir/keytend-kmip-$version.jar"; do
+  if [ -f "$candidate" ]; then
+    sdk=$candidate
+    break
+  fi
+done
+if [ -z "$sdk" ]; then
+  echo "keytend-kmip-cli: no keytend-kmip-$version.jar beside $jar" >&2
+  exit 2
+fi
+
+if [ -n "${JAVA_HOME:-}" ]; then java=$JAVA_HOME/bin/java; else java=java; fi
+# JAVA_OPTS is split into words on purpose.
+# shellcheck disable=SC2086
+exec "$java" ${JAVA_OPTS:-} -cp "$jar" dev.keytend.kmip.cli.Main "$@"

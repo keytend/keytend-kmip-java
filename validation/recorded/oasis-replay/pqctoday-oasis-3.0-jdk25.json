@@ -1,0 +1,414 @@
+{
+  "server" : "pqctoday",
+  "version" : "3.0",
+  "java" : "25.0.1",
+  "checks" : [ {
+    "name" : "mandatory/AKLC-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "mandatory/AKLC-M-2-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "mandatory/AKLC-M-3-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "mandatory/AX-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/AX-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "8 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "7 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-10-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-11-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-12-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-13-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-14-30.xml",
+    "outcome" : "PASS",
+    "detail" : "8 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-15-30.xml",
+    "outcome" : "PASS",
+    "detail" : "3 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-16-30.xml",
+    "outcome" : "PASS",
+    "detail" : "3 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-17-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-18-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-19-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-20-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-21-30.xml",
+    "outcome" : "PASS",
+    "detail" : "3 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "7 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-4-30.xml",
+    "outcome" : "PASS",
+    "detail" : "8 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-5-30.xml",
+    "outcome" : "PASS",
+    "detail" : "7 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-6-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-7-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-8-30.xml",
+    "outcome" : "PASS",
+    "detail" : "7 exchanges"
+  }, {
+    "name" : "mandatory/BL-M-9-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "9 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-4-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-5-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-6-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Unbound OASIS variable $MAC_DATA"
+  }, {
+    "name" : "mandatory/CS-AC-M-7-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-8-30.xml",
+    "outcome" : "PASS",
+    "detail" : "8 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-10-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-4-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-5-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-6-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-7-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-8-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-AC-M-OAEP-9-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-10-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-11-30.xml",
+    "outcome" : "PASS",
+    "detail" : "7 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-12-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-13-30.xml",
+    "outcome" : "PASS",
+    "detail" : "6 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-14-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-4-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-5-30.xml",
+    "outcome" : "PASS",
+    "detail" : "4 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-6-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-7-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-8-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-9-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-CHACHA20-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-CHACHA20-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-CHACHA20-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-CHACHA20-4-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-CHACHA20POLY1305-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "10 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-GCM-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "11 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-GCM-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "115 exchanges"
+  }, {
+    "name" : "mandatory/CS-BC-M-GCM-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/CS-RNG-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "1 exchanges"
+  }, {
+    "name" : "mandatory/MSGENC-HTTPS-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ObjectType"
+  }, {
+    "name" : "mandatory/MSGENC-JSON-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ObjectType"
+  }, {
+    "name" : "mandatory/MSGENC-XML-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ObjectType"
+  }, {
+    "name" : "mandatory/OMOS-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/PKCS11-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Type/tag mismatch for PKCS_11ReturnCode"
+  }, {
+    "name" : "mandatory/QS-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "1 exchanges"
+  }, {
+    "name" : "mandatory/QS-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "1 exchanges"
+  }, {
+    "name" : "mandatory/SASED-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for VendorIdentification"
+  }, {
+    "name" : "mandatory/SASED-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SASED-M-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-10-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "mandatory/SKFF-M-11-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "mandatory/SKFF-M-12-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-3-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-4-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-5-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-6-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-7-30.xml",
+    "outcome" : "PASS",
+    "detail" : "5 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-8-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-9-30.xml",
+    "outcome" : "PASS",
+    "detail" : "15 exchanges"
+  }, {
+    "name" : "mandatory/SKLC-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field KeyFormatType"
+  }, {
+    "name" : "mandatory/SKLC-M-2-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field KeyFormatType"
+  }, {
+    "name" : "mandatory/SKLC-M-3-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field KeyFormatType"
+  }, {
+    "name" : "mandatory/TL-M-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for VendorIdentification"
+  }, {
+    "name" : "mandatory/TL-M-2-30.xml",
+    "outcome" : "PASS",
+    "detail" : "1 exchanges"
+  }, {
+    "name" : "mandatory/TL-M-3-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field VendorIdentification"
+  }, {
+    "name" : "optional/AKLC-O-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field CryptographicAlgorithm"
+  }, {
+    "name" : "optional/CS-RNG-O-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "1 exchanges"
+  }, {
+    "name" : "optional/CS-RNG-O-2-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for DataLength"
+  }, {
+    "name" : "optional/CS-RNG-O-3-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for DataLength"
+  }, {
+    "name" : "optional/CS-RNG-O-4-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResultReason"
+  }, {
+    "name" : "optional/OMOS-O-1-30.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "optional/SKLC-O-1-30.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field KeyFormatType"
+  } ]
+}

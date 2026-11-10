@@ -1,0 +1,64 @@
+# Copyright 2026 Jeremiah Jordan
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Weekly pull requests for newer Maven dependencies and plugins (docs/dependencies.md). Every
+# version is a property or a pin in the root pom.xml, so one pull request changes one place. The
+# root POM's modules are all covered from /: the SDK, keytend-kmip-testing (the in-memory test
+# server, whose only dependency is the SDK), the metrics module, the CLI and the lab.
+# Security updates are separate and immediate (the repository's Dependabot security updates).
+# Pre-releases are never proposed. A pull request passes the same checks as any other change.
+# The deliberately old slf4j 1.7.36 and Caffeine 2.9.3 of two compatibility tests are named where
+# Dependabot does not look (integration-tests/pom.xml), so it never proposes raising them.
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      # slf4j-api, and Caffeine, which the SDK JAR bundles relocated: a Caffeine update needs an
+      # SDK release (docs/dependencies.md).
+      sdk-runtime:
+        patterns:
+          - org.slf4j:*
+          - com.github.ben-manes.caffeine:*
+      metrics:
+        patterns:
+          - io.micrometer:*
+          - io.opentelemetry:*
+      cli:
+        patterns:
+          - info.picocli:*
+          - tools.jackson*
+      test:
+        patterns:
+          - org.junit*
+          - org.bouncycastle:*
+          - org.awaitility:*
+          - net.jqwik:*
+          - org.testcontainers:*
+          - com.h2database:*
+      build-plugins:
+        patterns:
+          - org.apache.maven.plugins:*
+          - org.codehaus.mojo:*
+          - org.moditect:*
+          - com.github.spotbugs:*
+          - com.h3xstream.findsecbugs:*
+          - com.diffplug.spotless:*
+          - com.google.errorprone:*
+          - org.cyclonedx:*
+          - com.github.siom79.japicmp:*
+          - org.jacoco:*

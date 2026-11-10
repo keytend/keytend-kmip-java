@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "path": "oasis-replay/oasis-audit-provenance.json",
+      "what": "how the OASIS replay below was run: client source, runtime, fresh containers",
+      "server": "PyKMIP, PQCToday 010da23",
+      "recorded": "2026-11-07",
+      "why": "OasisReplay runs by hand against a dedicated, freshly started lab server; the release check does not run it"
+    },
+    {
+      "path": "oasis-replay/pykmip-oasis-1.3-jdk25.json",
+      "what": "OASIS replay of the KMIP 1.3 test cases, JDK 25",
+      "server": "PyKMIP 4815637",
+      "recorded": "2026-11-07",
+      "why": "OasisReplay runs by hand against a dedicated, freshly started lab server; the release check does not run it"
+    },
+    {
+      "path": "oasis-replay/pqctoday-oasis-3.0-jdk25.json",
+      "what": "OASIS replay of the KMIP 3.0 test cases, JDK 25",
+      "server": "PQCToday 010da23",
+      "recorded": "2026-11-07",
+      "why": "OasisReplay runs by hand against a dedicated, freshly started lab server; the release check does not run it"
+    },
+    {
+      "path": "live-server.json",
+      "what": "the latest result of the one live check against keytend-kmip-server the release check does not run: the Cassandra trunk dtest",
+      "server": "keytend-kmip-server, the pinned build (each entry names its build and image)",
+      "recorded": "2026-11-09",
+      "why": "the Cassandra dtest needs a patched Cassandra build. A release ships it only when it passed on the pinned image, and tools/record-live.sh records it again"
+    }
+  ]
+}

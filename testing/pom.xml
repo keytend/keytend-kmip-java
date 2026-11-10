@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dev.keytend</groupId>
+    <artifactId>keytend-kmip-parent</artifactId>
+    <version>0.10.0-rc.1</version>
+  </parent>
+  <artifactId>keytend-kmip-testing</artifactId>
+  <name>keytend-kmip in-memory test server</name>
+  <description>Experimental, not for production use. An in-memory KMIP server for testing code that uses keytend-kmip; a test dependency, never needed at run time</description>
+  <!--
+    Test and development only. Published on its own (a GitHub release asset beside the ZIPs) so that
+    applications can test against it, in test scope; it is not in the release ZIP's lib/, and no
+    main code of this project depends on it. Its package is outside the compatibility guarantee
+    (docs/compatibility.md, "The testing package").
+  -->
+  <properties>
+    <!-- An SBOM of the module, published on Central beside it as the other libraries' are. -->
+    <cyclonedx.skip>false</cyclonedx.skip>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The SDK's classes before package (./mvnw test, an IDE) require Caffeine, which the SDK JAR
+         bundles from package on (sdk/pom.xml, "The bundled Caffeine"): test scope only. -->
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!-- Doclint over the package, failing on any error or warning, "missing" included: every
+           published element is documented. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>doclint</id>
+            <goals>
+              <goal>javadoc-no-fork</goal>
+            </goals>
+            <phase>process-classes</phase>
+            <configuration>
+              <doclint>all</doclint>
+              <failOnWarnings>true</failOnWarnings>
+              <quiet>true</quiet>
+              <outputDirectory>${project.build.directory}/doclint</outputDirectory>
+              <staleDataPath>${project.build.directory}/doclint-stale-data.txt</staleDataPath>
+              <!-- A check only, whose HTML is not shipped: no links to the SDK's pages, which
+                   maven-javadoc-plugin 3.12.0 looks for under sdk/target/target. -->
+              <detectOfflineLinks>false</detectOfflineLinks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- SpotBugs with find-sec-bugs over the module's code, at the lowest threshold; each
+           exclusion in spotbugs-exclude.xml says why. -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <excludeFilterFile>${project.basedir}/spotbugs-exclude.xml</excludeFilterFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>spotbugs</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <!-- No SLF4J provider in these tests: the SDK's logs go nowhere, without SLF4J's notice. -->
+            <slf4j.internal.verbosity>ERROR</slf4j.internal.verbosity>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

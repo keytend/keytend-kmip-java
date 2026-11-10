@@ -1,0 +1,343 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Author: Jeremiah Jordan
+Date: Sun, 1 Nov 2026 18:39:37 -0600
+Subject: [PATCH 2/4] Transparent data encryption: key providers whose keys are
+ authorized for a limited time
+
+A KeyProvider may now say that its keys must not be cached (keysMayBeCached, default true), and
+resolve a new file's key and the alias its header records in one lookup (keyForNewFile). For such
+a provider CipherFactory keeps neither keys nor ciphers between files, and destroys each key once
+its cipher is initialized. A file still being appended to (a commit log segment) asks for its key
+again before each section it encrypts (keyForAppend, EncryptionContext.reauthorize), with the IV
+its header records, so a key whose authorization ends stops that file's writes, not only the next
+file's. A section with nothing to encrypt (the empty closing section at shutdown) asks for no key.
+Header aliases read back from files share the node's key provider instead of loading a new one.
+Providers that keep the defaults (JKSKeyProvider) are unchanged.
+---
+ .../db/commitlog/EncryptedSegment.java        |  9 +-
+ .../cassandra/security/CipherFactory.java     | 92 +++++++++++++++++++
+ .../cassandra/security/EncryptionContext.java | 63 +++++++++++++
+ .../cassandra/security/KeyProvider.java       | 57 +++++++++++-
+ 4 files changed, 217 insertions(+), 4 deletions(-)
+
+diff --git a/src/java/org/apache/cassandra/db/commitlog/EncryptedSegment.java b/src/java/org/apache/cassandra/db/commitlog/EncryptedSegment.java
+index a5be4a4..5a2427b 100644
+--- a/src/java/org/apache/cassandra/db/commitlog/EncryptedSegment.java
++++ b/src/java/org/apache/cassandra/db/commitlog/EncryptedSegment.java
+@@ -74,11 +74,11 @@ public class EncryptedSegment extends FileDirectSegment
+     public EncryptedSegment(AbstractCommitLogSegmentManager manager, ThrowingFunction<Path, FileChannel, IOException> channelFactory)
+     {
+         super(manager, channelFactory);
+-        this.encryptionContext = manager.getConfiguration().getEncryptionContext();
+-
+         try
+         {
+-            cipher = encryptionContext.getEncryptor();
++            EncryptionContext.NewFile file = manager.getConfiguration().getEncryptionContext().forNewFile();
++            this.encryptionContext = file.context;
++            cipher = file.cipher;
+         }
+         catch (IOException e)
+         {
+@@ -109,6 +109,9 @@ public class EncryptedSegment extends FileDirectSegment
+         final int blockSize = encryptionContext.getChunkLength();
+         try
+         {
++            // a segment can stay open for hours: its key is checked again before each section it encrypts
++            if (length > 0)
++                encryptionContext.reauthorize(cipher);
+             ByteBuffer inputBuffer = buffer.duplicate();
+             inputBuffer.limit(contentStart + length).position(contentStart);
+             ByteBuffer buffer = manager.getBufferPool().getThreadLocalReusableBuffer(DatabaseDescriptor.getCommitLogSegmentSize());
+diff --git a/src/java/org/apache/cassandra/security/CipherFactory.java b/src/java/org/apache/cassandra/security/CipherFactory.java
+index 9e14a90..df22c5e 100644
+--- a/src/java/org/apache/cassandra/security/CipherFactory.java
++++ b/src/java/org/apache/cassandra/security/CipherFactory.java
+@@ -30,6 +30,8 @@ import java.util.concurrent.CompletionException;
+ import javax.crypto.Cipher;
+ import javax.crypto.NoSuchPaddingException;
+ import javax.crypto.spec.IvParameterSpec;
++import javax.security.auth.DestroyFailedException;
++import javax.security.auth.Destroyable;
+ 
+ import com.github.benmanes.caffeine.cache.Caffeine;
+ import com.github.benmanes.caffeine.cache.LoadingCache;
+@@ -97,6 +99,22 @@ public class CipherFactory
+                        });
+     }
+ 
++    /**
++     * A cipher for one new file, and the alias its header must record ({@link KeyProvider#keyForNewFile}).
++     */
++    public FileCipher getEncryptorForNewFile(String transformation, String configuredAlias) throws IOException
++    {
++        if (keyProvider.keysMayBeCached())
++        {
++            String alias = keyProvider.currentAlias(configuredAlias);
++            return new FileCipher(alias, getEncryptor(transformation, alias));
++        }
++        KeyProvider.KeyForFile forFile = keyProvider.keyForNewFile(configuredAlias);
++        byte[] iv = new byte[ivLength];
++        secureRandom.nextBytes(iv);
++        return new FileCipher(forFile.alias, initialize(transformation, forFile.key, iv, Cipher.ENCRYPT_MODE));
++    }
++
+     public Cipher getEncryptor(String transformation, String keyAlias) throws IOException
+     {
+         byte[] iv = new byte[ivLength];
+@@ -113,6 +131,9 @@ public class CipherFactory
+     @VisibleForTesting
+     Cipher buildCipher(String transformation, String keyAlias, byte[] iv, int cipherMode) throws IOException
+     {
++        // keys authorized for a limited time: neither the key nor a cipher initialized from it is kept for later files
++        if (!keyProvider.keysMayBeCached())
++            return initialize(transformation, keyProvider.getSecretKey(keyAlias), iv, cipherMode);
+         try
+         {
+             CachedCipher cachedCipher = cipherThreadLocal.get();
+@@ -138,6 +159,64 @@ public class CipherFactory
+         }
+     }
+ 
++    /**
++     * Initializes the encryptor of a file still being appended to again, with its key asked for again
++     * ({@link KeyProvider#keyForAppend}) and the IV its header records, when the provider's keys may not be cached.
++     * Otherwise it does nothing: the key and the cipher may be kept for the file's life.
++     */
++    public void reauthorizeEncryptor(Cipher cipher, String keyAlias) throws IOException
++    {
++        if (keyProvider.keysMayBeCached())
++            return;
++        initialize(cipher, keyProvider.keyForAppend(keyAlias), cipher.getIV(), Cipher.ENCRYPT_MODE);
++    }
++
++    /** A new cipher initialized with {@code key}, which is destroyed afterwards when it can be. */
++    private static Cipher initialize(String transformation, Key key, byte[] iv, int cipherMode) throws IOException
++    {
++        try
++        {
++            return initialize(Cipher.getInstance(transformation), key, iv, cipherMode);
++        }
++        catch (NoSuchAlgorithmException | NoSuchPaddingException e)
++        {
++            destroy(key);
++            throw new IOException("cannot load cipher", e);
++        }
++    }
++
++    private static Cipher initialize(Cipher cipher, Key key, byte[] iv, int cipherMode) throws IOException
++    {
++        try
++        {
++            cipher.init(cipherMode, key, new IvParameterSpec(iv));
++            return cipher;
++        }
++        catch (InvalidAlgorithmParameterException | InvalidKeyException e)
++        {
++            throw new IOException("cannot load cipher", e);
++        }
++        finally
++        {
++            destroy(key);
++        }
++    }
++
++    private static void destroy(Key key)
++    {
++        if (key instanceof Destroyable)
++        {
++            try
++            {
++                ((Destroyable) key).destroy();
++            }
++            catch (DestroyFailedException ignored)
++            {
++                // a key that cannot be wiped is left to the garbage collector
++            }
++        }
++    }
++
+     private Key retrieveKey(String keyAlias) throws IOException
+     {
+         try
+@@ -152,6 +231,19 @@ public class CipherFactory
+         }
+     }
+ 
++    /** The cipher of a new file and the key alias its header records. */
++    public static final class FileCipher
++    {
++        public final String alias;
++        public final Cipher cipher;
++
++        FileCipher(String alias, Cipher cipher)
++        {
++            this.alias = alias;
++            this.cipher = cipher;
++        }
++    }
++
+     /**
+      * A simple struct to use with the thread local caching of Cipher as we can't get the mode (encrypt/decrypt) nor
+      * key_alias (or key!) from the Cipher itself to use for comparisons
+diff --git a/src/java/org/apache/cassandra/security/EncryptionContext.java b/src/java/org/apache/cassandra/security/EncryptionContext.java
+index 6b2ec09..e9dc819 100644
+--- a/src/java/org/apache/cassandra/security/EncryptionContext.java
++++ b/src/java/org/apache/cassandra/security/EncryptionContext.java
+@@ -87,6 +87,51 @@ public class EncryptionContext
+         cipherFactory = factory;
+     }
+ 
++    private EncryptionContext(TransparentDataEncryptionOptions tdeOptions, byte[] iv, CipherFactory cipherFactory)
++    {
++        this.tdeOptions = tdeOptions;
++        compressor = LZ4Compressor.create(Collections.<String, String>emptyMap());
++        chunkLength = tdeOptions.chunk_length_kb * 1024;
++        this.iv = iv;
++        this.cipherFactory = cipherFactory;
++    }
++
++    /**
++     * The context and the cipher for writing one new file: the configured key alias resolved once by the key provider
++     * ({@link KeyProvider#keyForNewFile}), so that the file's cipher and the alias in its header name the same key.
++     */
++    public NewFile forNewFile() throws IOException
++    {
++        if (!isEnabled() || cipherFactory == null)
++            throw new IllegalStateException("transparent data encryption is not enabled");
++        CipherFactory.FileCipher file = cipherFactory.getEncryptorForNewFile(tdeOptions.cipher, tdeOptions.key_alias);
++        EncryptionContext context = file.alias.equals(tdeOptions.key_alias)
++                                    ? this
++                                    : new EncryptionContext(withAlias(tdeOptions, file.alias), iv, cipherFactory);
++        return new NewFile(context, file.cipher);
++    }
++
++    /** The encryption of one new file: its context, whose header parameters name its key, and its cipher. */
++    public static final class NewFile
++    {
++        public final EncryptionContext context;
++        public final Cipher cipher;
++
++        private NewFile(EncryptionContext context, Cipher cipher)
++        {
++            this.context = context;
++            this.cipher = cipher;
++        }
++    }
++
++    private static TransparentDataEncryptionOptions withAlias(TransparentDataEncryptionOptions options, String alias)
++    {
++        TransparentDataEncryptionOptions copy = new TransparentDataEncryptionOptions(options.enabled, options.cipher, alias, options.key_provider);
++        copy.chunk_length_kb = options.chunk_length_kb;
++        copy.iv_length = options.iv_length;
++        return copy;
++    }
++
+     public ICompressor getCompressor()
+     {
+         return compressor;
+@@ -97,6 +142,17 @@ public class EncryptionContext
+         return cipherFactory.getEncryptor(tdeOptions.cipher, tdeOptions.key_alias);
+     }
+ 
++    /**
++     * Before a chunk is appended to the file of this context: initializes its encryptor again with the file's key, when
++     * the key provider's authorization of the key is limited in time ({@link CipherFactory#reauthorizeEncryptor}).
++     *
++     * @throws IOException when the key may no longer encrypt, or cannot be had now
++     */
++    public void reauthorize(Cipher encryptor) throws IOException
++    {
++        cipherFactory.reauthorizeEncryptor(encryptor, tdeOptions.key_alias);
++    }
++
+     public Cipher getDecryptor() throws IOException
+     {
+         if (iv == null || iv.length == 0)
+@@ -168,6 +224,13 @@ public class EncryptionContext
+ 
+         TransparentDataEncryptionOptions tdeOptions = new TransparentDataEncryptionOptions(cipher, keyAlias, encryptionContext.getTransparentDataEncryptionOptions().key_provider);
+         byte[] iv = ivString != null ? Hex.hexToBytes(ivString) : null;
++        // share the application-wide key provider and key cache rather than loading a provider per file
++        if (encryptionContext.cipherFactory != null)
++        {
++            tdeOptions.chunk_length_kb = encryptionContext.tdeOptions.chunk_length_kb;
++            tdeOptions.iv_length = encryptionContext.tdeOptions.iv_length;
++            return new EncryptionContext(tdeOptions, iv, encryptionContext.cipherFactory);
++        }
+         return new EncryptionContext(tdeOptions, iv, true);
+     }
+ }
+diff --git a/src/java/org/apache/cassandra/security/KeyProvider.java b/src/java/org/apache/cassandra/security/KeyProvider.java
+index f380aed..dd21888 100644
+--- a/src/java/org/apache/cassandra/security/KeyProvider.java
++++ b/src/java/org/apache/cassandra/security/KeyProvider.java
+@@ -21,7 +21,8 @@ import java.io.IOException;
+ import java.security.Key;
+ 
+ /**
+- * Customizable key retrieval mechanism. Implementations should expect that retrieved keys will be cached.
++ * Customizable key retrieval mechanism. Implementations should expect that retrieved keys will be cached, unless
++ * {@link #keysMayBeCached()} says otherwise.
+  * Further, each key will be requested non-concurrently (that is, no stampeding herds for the same key), although
+  * unique keys may be requested concurrently (unless you mark {@code getSecretKey} synchronized).
+  *
+@@ -30,4 +31,58 @@ import java.security.Key;
+ public interface KeyProvider
+ {
+     Key getSecretKey(String alias) throws IOException;
++
++    /**
++     * The alias a new file is encrypted under, and records in its header, for the configured {@code key_alias}.
++     * A provider whose keys rotate returns an alias naming one version of the key, so that the file can still be
++     * decrypted after the configured alias moves on to a newer version. By default the configured alias itself.
++     */
++    default String currentAlias(String configuredAlias) throws IOException
++    {
++        return configuredAlias;
++    }
++
++    /**
++     * The key one new file is encrypted under and the alias its header records, from one lookup, so that the two
++     * always name the same key. The caller owns the key and initializes its cipher with it at once.
++     */
++    default KeyForFile keyForNewFile(String configuredAlias) throws IOException
++    {
++        String alias = currentAlias(configuredAlias);
++        return new KeyForFile(alias, getSecretKey(alias));
++    }
++
++    /**
++     * The key of a file still being appended to (a commit log segment, a hints file), asked for again before each
++     * chunk with the alias its header records. A provider whose keys are authorized for a limited time hands it out
++     * only while it may still encrypt, so that an authorization that ends stops the file's writes, not only the next
++     * file's. The caller owns the key and initializes its cipher with it at once.
++     */
++    default Key keyForAppend(String alias) throws IOException
++    {
++        return getSecretKey(alias);
++    }
++
++    /**
++     * Whether {@link CipherFactory} may keep this provider's keys, and ciphers initialized from them, for later files.
++     * A provider whose keys are authorized for a limited time (a KMIP lease, a cache TTL) returns false: each file
++     * then asks the provider for its key, and nothing outlives the file's cipher.
++     */
++    default boolean keysMayBeCached()
++    {
++        return true;
++    }
++
++    /** A key and the alias that names it. */
++    final class KeyForFile
++    {
++        public final String alias;
++        public final Key key;
++
++        public KeyForFile(String alias, Key key)
++        {
++            this.alias = alias;
++            this.key = key;
++        }
++    }
+ }

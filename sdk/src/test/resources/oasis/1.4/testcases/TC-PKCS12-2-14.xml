@@ -1,0 +1,760 @@
+<KMIP>
+<!--
+
+     Key Management Interoperability Protocol Test Cases Version 1.4
+     Committee Note 01
+     03 August 2017
+     Copyright (c) OASIS Open 2017. All Rights Reserved.
+     Source: http://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/
+     Latest version of the specification: http://docs.oasis-open.org/kmip/testcases/v1.4/kmip-testcases-v1.4.html
+     TC IPR Statement: https://www.oasis-open.org/committees/kmip/ipr.php
+-->
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <RequestPayload>
+      <ObjectType type="Enumeration" value="SecretData"/>
+      <TemplateAttribute>
+        <Attribute>
+          <AttributeName type="TextString" value="x-ID"/>
+          <AttributeValue type="TextString" value="TC-PKCS12-2-14-Pkcs12Password"/>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Cryptographic Usage Mask"/>
+          <AttributeValue type="Integer" value="DeriveKey"/>
+        </Attribute>
+      </TemplateAttribute>
+      <SecretData>
+        <SecretDataType type="Enumeration" value="Password"/>
+        <KeyBlock>
+          <KeyFormatType type="Enumeration" value="Opaque"/>
+          <KeyValue>
+            <KeyMaterial type="ByteString" value="70617373776f7264"/>
+          </KeyValue>
+        </KeyBlock>
+      </SecretData>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <RequestPayload>
+      <ObjectType type="Enumeration" value="PrivateKey"/>
+      <TemplateAttribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Cryptographic Usage Mask"/>
+          <AttributeValue type="Integer" value="Decrypt Sign"/>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Link"/>
+          <AttributeValue>
+            <LinkType type="Enumeration" value="PKCS_12PasswordLink"/>
+            <LinkedObjectIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+          </AttributeValue>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="PKCS#12 Friendly Name"/>
+          <AttributeValue type="TextString" value="alias"/>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="x-ID"/>
+          <AttributeValue type="TextString" value="TC-PKCS12-2-14-PrivateKey"/>
+        </Attribute>
+      </TemplateAttribute>
+      <PrivateKey>
+        <KeyBlock>
+          <KeyFormatType type="Enumeration" value="PKCS_12"/>
+          <KeyValue type="ByteString" value="30820ffc02010330820fc206092a864886f70d010701a0820fb304820faf30820fab308205bf06092a864886f70d010706a08205b0308205ac020100308205a506092a864886f70d010701301c060a2a864886f70d010c0103300e0408e7f4d8d273c0b0c902020800808205784bafda68c4851f511dbb3d22d1b6ae746ee236691078f6e516b7b4754af58643bf7f0996f22c21675bc88daf6435e105a22b65b3fd2a3c5f9b7269c4085b1388dd28ade925cf541d9aaf0a77b1e9276961673f05851c2ac1cb0494347841c62510965db8d6babf5ef44296eef9963581ca8a3724909f5b8d9a37d4a6c8d76d99f37e5eb5aeeea117c5ebcf018ca5f0dd0e1f45b15e47fa19ea5b8945d16fe816caa95e616eb0f8742c340c89888ec42fe3c09c46bf92bc16c02a34b53351a49091207e10a4d24c1687bcfd3c0cf86e7476317ea7f747a5c8d4f69d4208537de1944e2f5c52c525c8643baa9f41235ffaad4d3c9c9571508a66d68dd22642bc4b0ecd9b5d702bef2bf5e34a54212bcec3fef9793c84d3feb41be99dc7c6b363088f575ce00f74d8315789f1a73c26b72179f09365569a0cf86dd22b3735161fb39443c3f61c8965570430f48c8ca82bee8c802c39363b7e7a52d083b56573a5abe4dd3317ae418fac3f96b5fad6437b06d59855100ac5dd25f3c3695328c01befce379d60840c57b909820890f750849606d3e42c81ce66921b5c0849429fbfa41142dfdc5ad4e90b03ed2b08e199cf6ce99e321152304d84c10ae3994b3f3a49e5f6ac1320355371d851bc4cb9772a5258f819299c590c494a3724e3fc09ae04e1a1a1b46cf29a79c61f70d7194a26b5b2379248bac1d12b0769d76c7fca2dc534e64be73850e2ad634bc839f25ed5b7fb8565bc61216cca9f79a8f7dade213d8cd955186f192db1419de7782f596392c11af86e3a37a9649a842241eb890db656caa10f0bce31ce0a4164274be541d4f76f31b870db9dbe7a7d6e3f148bd9e5299373c21fb1c3b55374b54c8a92dac83515bb0b8aa84dbd9cb0da5c6c70ba5ff3ed55a1206e32033f64fa1d2c9aa7312b5bdff4ac43a76c95861493d3d55389365a89d3e50b9df35ee9b4ba6cd79256661d350ac001ea6a306e9233ae26e0d649dda3d6f0c7f76dc892774b6c6ee73bca419254e75518ea81ffac5e36c6ae593830aa4551bb94b605b23eaf2230cdd67e3bae0ea5dccc5a8c2d43ac90bb9a28d7ca444079d32a08bcef56eb178ad2df20ed43e3fbc342a93a95b043c3794b084f642a50e757c9068f97fcb21baa1c4347fbe226798f945cf5cfb489fb069ccd64e7b532a0f76be0ca4b2d441aba6864d777d68257d721f0d158b9660fbf88d0ffe913e2665879a5056eb7751820c9e1bf97e1f3255a12a0d87922e482447d4d8c8489c1ddc2a623195795749c5c6a8f4168a5ffcdd921aa598e35023d4cda584097d7d4b3a2bb146652a15fb3ff11f75928f362c773712822038aad0341423d618ee53645ab512dde5cd5772636af793e86a725912fd42517c3af34415038c3b50650e717ea3647fe2874607b7b13aa413ab18fe56caa14b16b102591dba72cccdfa398995143b073755583efd9cb75d6a101b73c8595ea94446aac25c5831a98c6d6a8c7a8d2fca30ac9a347dc3900a12ef934904f1a4d80d06586c20cd50078c9ab96934479db41b5059f5b592a628004f9b43d5837b08abdede26b6e80eb31d0f38c2b060be94f61b25006c1176fefe21f3e7f21f3ccb61acc79fcfe562ff0775efde35bfd0c6889033682add488810e67b46d70a5c4c3942978600cdefa67886a083e567961eb97c8df05d9d578d87e7129cae70dfdb93b0cbb8dec293c8ae2466d0549d58954723640c291b0aac19c8360d0826e9e1126a3447be2906d6459c021fd87f0895a4b03ae46b29bc45196ee5c86a17de51548853a79950db173792037a4e6ee7d65e242b659a9e2786b533eacce5484d5353bdb031f11bc91a6ac0cf8286723f2f2349feb9cf01dbeb2657fe58b3132d558332e79608c02447f86f4e7cdf91fef79edf933740952daa9f573c7423ce3b048e6c910e37fc24f4ec0715c34b49ff1010ec4064e12ed45906330b18ad05a8f308209e406092a864886f70d010701a08209d5048209d1308209cd308209c9060b2a864886f70d010c0a0102a082097630820972301c060a2a864886f70d010c0103300e0408c949fe972cc515a202020800048209501f0a4b3c090d19ea25508d818f92238f789cf3eba5c71f02e20f3c632060b5ad366b2ac166f127da3d484566baa426b3a6ddec9ebb2383f3fda09cff89bde3a55fac8b15167b2d76e07c82d1ecf802b661b00862504a062e4fcfca7c305ee197eb21627ffcca3676ccb6c71f1f604fa125ab49437d1af0cc030676cc741a768862f624179f0674ca3641f69b864ce902e9d7446722a12dbd15bcedc19c033ded0bac0ed22b4a7a57f5b581e91236043963cb0ef4031e8ef8ff6945d6aff4b40259dd6b377983c8ec20b9582b378436cda3c56517fa2b11cf7133ecdaccd4533d13522d93346c2dc8b579b7038cd289dffdb04482521a62b04fd0269c51c19026466b5cadd8f431fb3c0fd20bdccf3bca0ff25c12f3b6db1c02476abbb6eb49900b6649306064701f5049df352013f7606286babe0b38323af975a5a92bf065d9f67b16a8fcb02e4395a1ea46effb52de10d8558c71927adc72d0579173b565a92e0f6a0e046b822b73d49ef2d294face550dd3437f52f1fb1e7611693a4e08e605811b70f7652d1e876cbbb1a46f324cbb3686cddcf6004c26c5880d7f74578ed83d22e2b09bfb5e195f4c95498289d692e1500ded7c1dc8c1c9bdb061bbc5930930d6d10282d2bfc056cec4af684d29e3a3b81989d873e5f06d74c20780bba80dd600aaec0c3caa3c2b20a96bfdb6e508eb63602293f9d258e27bbe6ae41d0ee209d90514e1d4d43c8cb9cbaa600ca4406e81d40243f35576c8ecc2d54d6affb15e60d96eee86d9886b9ebcfe06d8043d30e151c6e91c29e248b9281efd675c27ec93a0d6d50f6c5998d3e4cc730b9f79d1a4709cbfc1b62189ddfe75649da09a28d66939a8a956af0469d95e05c54395bb3862f9894da5f4157cc7eb089c506a52504d4c978f3ba30067e28b992b2d23862c2203151b929c85b1259576671f199254fa6c1dc833756c993f86ef7ae8b2268b27a483a73f49ca1d9d6f049c5c847a49e78207a01e968c48710e4c8e067e078ba7cbdbd211517976f60141b478d303cb35dc76b0be126e10209998eb2490fbd152cdb8c43fa2a08f0b98892f4221ea3069d9da97d66409aa9802dbe28786c0a484da0283c02967f15e3d9e40fccb452600efc8676d6efce4d9459880ae3e304bfb52cffeed310cc046b33d73639e328ca02bed93a134b4774e331bf14d0b1ae93e5f938b49cd91fc0426f2df0cb58c0f0b8ef98d3c6f9745c8d3393cb2f932195154eca64290aaa7b25271c9da6147db1ceb96b9afbf4393d537cd704bf8677949db364bd0a4b8770b8a46d1fdf6854d2ccd1026a174f893200e068d12804b97b3f87e6bcdc1eab848c76684ea492b302f69500277daa54b0f55f9bce3eac795ca34be4196ae37a610230a14d4069b4812db4cb1f986cd125601988b443a89000e4e2c71b07062a3e8d3af6afccfddd1c9efbaf4a6c594cc3d10bef903dadc1f80b51c89e07be2a4ba13eb2d92293f7b71d7d68ea4470c3c9599b5420af31495e22dbed067dd3462cb8d727bf601c777d7c35753170633b44e2fc50a26db05d5bcfbcfb697f9ff5ca3b228176c6022fca2c0bfbc6acd7ce296cd962c21b1d5665276aaac4d95ae77b5e219c60254fbd13aafa96ad17dd08d21324bf86379788494dfeca839dc5eb237f5679b008ef533e6d0dbad29405055a30783b8ba8a5182a2f4710e8f6d757500b50e9b5126229cfcf0ca2aeb6695ef21bccfa52ba2b0a1a03bc736a9529c4ca4d064dbe76edbfbefe7ac2d9d308e8ddef2bbc79a7c4e9126953776c384327aba94fe774dd8bd2025453ff143c74c07faed083e361b087422cfdeb43e0f4bb7a4b44bdc71647c7fa40a2889c0c76e3c2c88c7b8cd77e0ef64e4282455df866c00a04a72d5515fb450d42b42718d62632214d1d097210df65153815039aad2da3bdc8deb25fca7b802245714bc0de8cdd84e8cf3b063d66d5dc86aa59025e0be67e08853bbeea70599c59aeb44fb95bf5045366916478929385d264e6be05f9ae6baa094372f0fb0f30bb3ecd358d946d0c63bc88f68f27298127248c03a024491d70411aedd79c9f194a1b209c7bd359d87deed53c0200e28b3b93aced60ac7c474a47bcacbc6af2d69758fb5e6c1b9ba98f5118d43708d5fea443b01621af5b81b023889d4352660a4a6d01de792cbbba87ac63c32663a658d199b3a22b0c62c1c318099bb257074a056481dc643678d7e7e83877ca52dd287d935410fbfc0632da0bcef51425daa6dfd420384765adb520b18a7ecb9b437ff1e0b2248b7c6a120901e15179aacfad8db6432dc4369c5fdd5c9e5ca934f116110a085adbf5259c5582b45d3096b67612081c026f6c79fdaff544f979fe5a7374d3b9bc6583ae5fc44be8e47ba4d13bda9c6a4c4a1d5a2cbb8e5d77f5c69000f51997babb3c9e07b743857f5efa9d7fdbaf10af5356658cd358e09f56b9dc7cfd4f7958dcee462f670f40fdba10e92bba65cfb1ca80b579445f3e4493c1dfcccc8e8d87ca09b5d8207e53babd512e084cd2003edaa6829413991125659cc7c7b916d91ffd9a8f288a7f95469888a1ecba00e0b393112406cfc1af3b02a23f0d50d99285dbbb7bd6117dd59b3d6d9c12b5055a1aa1c823b67c11ce902b2176ec054a47b31eb01d204485e06660379d3e148a1ea668b843baadfcc47da8a432f1a36e4f001655751611f7d9dbb85074948c5f0560327bb8c884751bb1eefe258b3f2e460a85a1c46cd6ac048d6e1ad01407e78b808198b46925ba10157b2b41c97187cdbeec41e0fda71529d8a01f6336da4a9259e27e415e3dd093c4791657b07a1feaae7594aa32c9f68264f0d84ccc4d8c15102fc21f27edc1bf635a3d8d0b4e11623173cd245f1b504924b50071befb4beba0296b2e587c946f491cf71cce31cda9c22448ac2673e1bdc44a22ab5c843e508940059e29ff8efb0c10de820f4ea67d31461722885c011c3db817d2d78c3665bd598f0fcb41db7c5a9e5e47b16dc09ffcfa828465797794df76f7b9330a3193ed19beaa0cdd0a519d5e3d8f08c2cf479808a2c390e4fc057dd0311fd11f8e39b81f72849e152270a498bc748fd07ea67a2ec4a26d311b777d65a7041771d5396e2bfa675316d6bb56db65302fa12f2a3555712bf14b9c9a8686b18ba619e8031e9844d0c066d7450fe6c2bbe3f8600cdf428b8a4f6981b11e869287e632a2086f70fdb978aee762310e31dfefcf1379cb05fc3334fdb1dd5eae8ef6620094736a242ec95ee252acecc9d7a9f4ac83047f39e1d198eac0559651efc4fed90108c693f8fef82beb8cac925f0ad46846019f4abaa49e50e2f9d0399b75c77a7c93512d91193a0f26bdd3140301906092a864886f70d010914310c1e0a0061006c006900610073302306092a864886f70d01091531160414c625b6d45d66b971deb72faee5ff9d1551c1d8da30313021300906052b0e03021a0500041493b19ee118d94eb6bd063196f98988280adc3a3b0408668ec6686ae6e7d202020800"/>
+        </KeyBlock>
+      </PrivateKey>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <ResultStatus type="Enumeration" value="OperationFailed"/>
+    <ResultReason type="Enumeration" value="PermissionDenied"/>
+    <ResultMessage type="TextString" value="Kmip Error"/>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Activate"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Activate"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <RequestPayload>
+      <ObjectType type="Enumeration" value="PrivateKey"/>
+      <TemplateAttribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Cryptographic Usage Mask"/>
+          <AttributeValue type="Integer" value="Decrypt Sign"/>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Link"/>
+          <AttributeValue>
+            <LinkType type="Enumeration" value="PKCS_12PasswordLink"/>
+            <LinkedObjectIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+          </AttributeValue>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="PKCS#12 Friendly Name"/>
+          <AttributeValue type="TextString" value="alias"/>
+        </Attribute>
+        <Attribute>
+          <AttributeName type="TextString" value="x-ID"/>
+          <AttributeValue type="TextString" value="TC-PKCS12-2-14-PrivateKey"/>
+        </Attribute>
+      </TemplateAttribute>
+      <PrivateKey>
+        <KeyBlock>
+          <KeyFormatType type="Enumeration" value="PKCS_12"/>
+          <KeyValue type="ByteString" value="30820ffc02010330820fc206092a864886f70d010701a0820fb304820faf30820fab308205bf06092a864886f70d010706a08205b0308205ac020100308205a506092a864886f70d010701301c060a2a864886f70d010c0103300e0408e7f4d8d273c0b0c902020800808205784bafda68c4851f511dbb3d22d1b6ae746ee236691078f6e516b7b4754af58643bf7f0996f22c21675bc88daf6435e105a22b65b3fd2a3c5f9b7269c4085b1388dd28ade925cf541d9aaf0a77b1e9276961673f05851c2ac1cb0494347841c62510965db8d6babf5ef44296eef9963581ca8a3724909f5b8d9a37d4a6c8d76d99f37e5eb5aeeea117c5ebcf018ca5f0dd0e1f45b15e47fa19ea5b8945d16fe816caa95e616eb0f8742c340c89888ec42fe3c09c46bf92bc16c02a34b53351a49091207e10a4d24c1687bcfd3c0cf86e7476317ea7f747a5c8d4f69d4208537de1944e2f5c52c525c8643baa9f41235ffaad4d3c9c9571508a66d68dd22642bc4b0ecd9b5d702bef2bf5e34a54212bcec3fef9793c84d3feb41be99dc7c6b363088f575ce00f74d8315789f1a73c26b72179f09365569a0cf86dd22b3735161fb39443c3f61c8965570430f48c8ca82bee8c802c39363b7e7a52d083b56573a5abe4dd3317ae418fac3f96b5fad6437b06d59855100ac5dd25f3c3695328c01befce379d60840c57b909820890f750849606d3e42c81ce66921b5c0849429fbfa41142dfdc5ad4e90b03ed2b08e199cf6ce99e321152304d84c10ae3994b3f3a49e5f6ac1320355371d851bc4cb9772a5258f819299c590c494a3724e3fc09ae04e1a1a1b46cf29a79c61f70d7194a26b5b2379248bac1d12b0769d76c7fca2dc534e64be73850e2ad634bc839f25ed5b7fb8565bc61216cca9f79a8f7dade213d8cd955186f192db1419de7782f596392c11af86e3a37a9649a842241eb890db656caa10f0bce31ce0a4164274be541d4f76f31b870db9dbe7a7d6e3f148bd9e5299373c21fb1c3b55374b54c8a92dac83515bb0b8aa84dbd9cb0da5c6c70ba5ff3ed55a1206e32033f64fa1d2c9aa7312b5bdff4ac43a76c95861493d3d55389365a89d3e50b9df35ee9b4ba6cd79256661d350ac001ea6a306e9233ae26e0d649dda3d6f0c7f76dc892774b6c6ee73bca419254e75518ea81ffac5e36c6ae593830aa4551bb94b605b23eaf2230cdd67e3bae0ea5dccc5a8c2d43ac90bb9a28d7ca444079d32a08bcef56eb178ad2df20ed43e3fbc342a93a95b043c3794b084f642a50e757c9068f97fcb21baa1c4347fbe226798f945cf5cfb489fb069ccd64e7b532a0f76be0ca4b2d441aba6864d777d68257d721f0d158b9660fbf88d0ffe913e2665879a5056eb7751820c9e1bf97e1f3255a12a0d87922e482447d4d8c8489c1ddc2a623195795749c5c6a8f4168a5ffcdd921aa598e35023d4cda584097d7d4b3a2bb146652a15fb3ff11f75928f362c773712822038aad0341423d618ee53645ab512dde5cd5772636af793e86a725912fd42517c3af34415038c3b50650e717ea3647fe2874607b7b13aa413ab18fe56caa14b16b102591dba72cccdfa398995143b073755583efd9cb75d6a101b73c8595ea94446aac25c5831a98c6d6a8c7a8d2fca30ac9a347dc3900a12ef934904f1a4d80d06586c20cd50078c9ab96934479db41b5059f5b592a628004f9b43d5837b08abdede26b6e80eb31d0f38c2b060be94f61b25006c1176fefe21f3e7f21f3ccb61acc79fcfe562ff0775efde35bfd0c6889033682add488810e67b46d70a5c4c3942978600cdefa67886a083e567961eb97c8df05d9d578d87e7129cae70dfdb93b0cbb8dec293c8ae2466d0549d58954723640c291b0aac19c8360d0826e9e1126a3447be2906d6459c021fd87f0895a4b03ae46b29bc45196ee5c86a17de51548853a79950db173792037a4e6ee7d65e242b659a9e2786b533eacce5484d5353bdb031f11bc91a6ac0cf8286723f2f2349feb9cf01dbeb2657fe58b3132d558332e79608c02447f86f4e7cdf91fef79edf933740952daa9f573c7423ce3b048e6c910e37fc24f4ec0715c34b49ff1010ec4064e12ed45906330b18ad05a8f308209e406092a864886f70d010701a08209d5048209d1308209cd308209c9060b2a864886f70d010c0a0102a082097630820972301c060a2a864886f70d010c0103300e0408c949fe972cc515a202020800048209501f0a4b3c090d19ea25508d818f92238f789cf3eba5c71f02e20f3c632060b5ad366b2ac166f127da3d484566baa426b3a6ddec9ebb2383f3fda09cff89bde3a55fac8b15167b2d76e07c82d1ecf802b661b00862504a062e4fcfca7c305ee197eb21627ffcca3676ccb6c71f1f604fa125ab49437d1af0cc030676cc741a768862f624179f0674ca3641f69b864ce902e9d7446722a12dbd15bcedc19c033ded0bac0ed22b4a7a57f5b581e91236043963cb0ef4031e8ef8ff6945d6aff4b40259dd6b377983c8ec20b9582b378436cda3c56517fa2b11cf7133ecdaccd4533d13522d93346c2dc8b579b7038cd289dffdb04482521a62b04fd0269c51c19026466b5cadd8f431fb3c0fd20bdccf3bca0ff25c12f3b6db1c02476abbb6eb49900b6649306064701f5049df352013f7606286babe0b38323af975a5a92bf065d9f67b16a8fcb02e4395a1ea46effb52de10d8558c71927adc72d0579173b565a92e0f6a0e046b822b73d49ef2d294face550dd3437f52f1fb1e7611693a4e08e605811b70f7652d1e876cbbb1a46f324cbb3686cddcf6004c26c5880d7f74578ed83d22e2b09bfb5e195f4c95498289d692e1500ded7c1dc8c1c9bdb061bbc5930930d6d10282d2bfc056cec4af684d29e3a3b81989d873e5f06d74c20780bba80dd600aaec0c3caa3c2b20a96bfdb6e508eb63602293f9d258e27bbe6ae41d0ee209d90514e1d4d43c8cb9cbaa600ca4406e81d40243f35576c8ecc2d54d6affb15e60d96eee86d9886b9ebcfe06d8043d30e151c6e91c29e248b9281efd675c27ec93a0d6d50f6c5998d3e4cc730b9f79d1a4709cbfc1b62189ddfe75649da09a28d66939a8a956af0469d95e05c54395bb3862f9894da5f4157cc7eb089c506a52504d4c978f3ba30067e28b992b2d23862c2203151b929c85b1259576671f199254fa6c1dc833756c993f86ef7ae8b2268b27a483a73f49ca1d9d6f049c5c847a49e78207a01e968c48710e4c8e067e078ba7cbdbd211517976f60141b478d303cb35dc76b0be126e10209998eb2490fbd152cdb8c43fa2a08f0b98892f4221ea3069d9da97d66409aa9802dbe28786c0a484da0283c02967f15e3d9e40fccb452600efc8676d6efce4d9459880ae3e304bfb52cffeed310cc046b33d73639e328ca02bed93a134b4774e331bf14d0b1ae93e5f938b49cd91fc0426f2df0cb58c0f0b8ef98d3c6f9745c8d3393cb2f932195154eca64290aaa7b25271c9da6147db1ceb96b9afbf4393d537cd704bf8677949db364bd0a4b8770b8a46d1fdf6854d2ccd1026a174f893200e068d12804b97b3f87e6bcdc1eab848c76684ea492b302f69500277daa54b0f55f9bce3eac795ca34be4196ae37a610230a14d4069b4812db4cb1f986cd125601988b443a89000e4e2c71b07062a3e8d3af6afccfddd1c9efbaf4a6c594cc3d10bef903dadc1f80b51c89e07be2a4ba13eb2d92293f7b71d7d68ea4470c3c9599b5420af31495e22dbed067dd3462cb8d727bf601c777d7c35753170633b44e2fc50a26db05d5bcfbcfb697f9ff5ca3b228176c6022fca2c0bfbc6acd7ce296cd962c21b1d5665276aaac4d95ae77b5e219c60254fbd13aafa96ad17dd08d21324bf86379788494dfeca839dc5eb237f5679b008ef533e6d0dbad29405055a30783b8ba8a5182a2f4710e8f6d757500b50e9b5126229cfcf0ca2aeb6695ef21bccfa52ba2b0a1a03bc736a9529c4ca4d064dbe76edbfbefe7ac2d9d308e8ddef2bbc79a7c4e9126953776c384327aba94fe774dd8bd2025453ff143c74c07faed083e361b087422cfdeb43e0f4bb7a4b44bdc71647c7fa40a2889c0c76e3c2c88c7b8cd77e0ef64e4282455df866c00a04a72d5515fb450d42b42718d62632214d1d097210df65153815039aad2da3bdc8deb25fca7b802245714bc0de8cdd84e8cf3b063d66d5dc86aa59025e0be67e08853bbeea70599c59aeb44fb95bf5045366916478929385d264e6be05f9ae6baa094372f0fb0f30bb3ecd358d946d0c63bc88f68f27298127248c03a024491d70411aedd79c9f194a1b209c7bd359d87deed53c0200e28b3b93aced60ac7c474a47bcacbc6af2d69758fb5e6c1b9ba98f5118d43708d5fea443b01621af5b81b023889d4352660a4a6d01de792cbbba87ac63c32663a658d199b3a22b0c62c1c318099bb257074a056481dc643678d7e7e83877ca52dd287d935410fbfc0632da0bcef51425daa6dfd420384765adb520b18a7ecb9b437ff1e0b2248b7c6a120901e15179aacfad8db6432dc4369c5fdd5c9e5ca934f116110a085adbf5259c5582b45d3096b67612081c026f6c79fdaff544f979fe5a7374d3b9bc6583ae5fc44be8e47ba4d13bda9c6a4c4a1d5a2cbb8e5d77f5c69000f51997babb3c9e07b743857f5efa9d7fdbaf10af5356658cd358e09f56b9dc7cfd4f7958dcee462f670f40fdba10e92bba65cfb1ca80b579445f3e4493c1dfcccc8e8d87ca09b5d8207e53babd512e084cd2003edaa6829413991125659cc7c7b916d91ffd9a8f288a7f95469888a1ecba00e0b393112406cfc1af3b02a23f0d50d99285dbbb7bd6117dd59b3d6d9c12b5055a1aa1c823b67c11ce902b2176ec054a47b31eb01d204485e06660379d3e148a1ea668b843baadfcc47da8a432f1a36e4f001655751611f7d9dbb85074948c5f0560327bb8c884751bb1eefe258b3f2e460a85a1c46cd6ac048d6e1ad01407e78b808198b46925ba10157b2b41c97187cdbeec41e0fda71529d8a01f6336da4a9259e27e415e3dd093c4791657b07a1feaae7594aa32c9f68264f0d84ccc4d8c15102fc21f27edc1bf635a3d8d0b4e11623173cd245f1b504924b50071befb4beba0296b2e587c946f491cf71cce31cda9c22448ac2673e1bdc44a22ab5c843e508940059e29ff8efb0c10de820f4ea67d31461722885c011c3db817d2d78c3665bd598f0fcb41db7c5a9e5e47b16dc09ffcfa828465797794df76f7b9330a3193ed19beaa0cdd0a519d5e3d8f08c2cf479808a2c390e4fc057dd0311fd11f8e39b81f72849e152270a498bc748fd07ea67a2ec4a26d311b777d65a7041771d5396e2bfa675316d6bb56db65302fa12f2a3555712bf14b9c9a8686b18ba619e8031e9844d0c066d7450fe6c2bbe3f8600cdf428b8a4f6981b11e869287e632a2086f70fdb978aee762310e31dfefcf1379cb05fc3334fdb1dd5eae8ef6620094736a242ec95ee252acecc9d7a9f4ac83047f39e1d198eac0559651efc4fed90108c693f8fef82beb8cac925f0ad46846019f4abaa49e50e2f9d0399b75c77a7c93512d91193a0f26bdd3140301906092a864886f70d010914310c1e0a0061006c006900610073302306092a864886f70d01091531160414c625b6d45d66b971deb72faee5ff9d1551c1d8da30313021300906052b0e03021a0500041493b19ee118d94eb6bd063196f98988280adc3a3b0408668ec6686ae6e7d202020800"/>
+        </KeyBlock>
+      </PrivateKey>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+      <Attribute>
+        <AttributeName type="TextString" value="Unique Identifier"/>
+        <AttributeValue type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="x-ID"/>
+	<AttributeValue type="TextString" value="TC-PKCS12-2-14-PrivateKey"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Object Type"/>
+        <AttributeValue type="Enumeration" value="PrivateKey"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Algorithm"/>
+        <AttributeValue type="Enumeration" value="RSA"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Length"/>
+        <AttributeValue type="Integer" value="4096"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Digest"/>
+        <AttributeValue>
+          <HashingAlgorithm type="Enumeration" value="SHA_256"/>
+          <DigestValue type="ByteString" value="67ec992a2a40af7e75b40442a55e3a026a71018eea7201de523a43df036024ac"/>
+          <KeyFormatType type="Enumeration" value="PKCS_8"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Usage Mask"/>
+        <AttributeValue type="Integer" value="Decrypt Sign"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Lease Time"/>
+        <AttributeValue type="Interval" value="3600"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Initial Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="State"/>
+        <AttributeValue type="Enumeration" value="PreActive"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Fresh"/>
+        <AttributeValue type="Boolean" value="true"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Link"/>
+        <AttributeValue>
+          <LinkType type="Enumeration" value="PKCS_12PasswordLink"/>
+          <LinkedObjectIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Link"/>
+        <AttributeIndex type="Integer" value="1"/>
+        <AttributeValue>
+          <LinkType type="Enumeration" value="PKCS_12CertificateLink"/>
+          <LinkedObjectIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Last Change Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="PKCS#12 Friendly Name"/>
+        <AttributeValue type="TextString" value="alias"/>
+      </Attribute>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <ObjectType type="Enumeration" value="PrivateKey"/>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+      <PrivateKey>
+        <KeyBlock>
+          <KeyFormatType type="Enumeration" value="PKCS_8"/>
+          <KeyValue>
+            <KeyMaterial type="ByteString" value="30820944020100300d06092a864886f70d01010105000482092e3082092a0201000282020100cafdff4b017f7392eaa3c87c98c391e8e57e1538a82a4d00c91469ad954027582ea1c179767c900b2a355db99499969d37959f2a94496b51b8dfab51dc4dd7772e882afc4a7726b064fbabbfa374e0153f4bd3caa1968f8517be66e875844ad8993447126db569793aaeae691409cf1c8584f00ae7badb9e9e7411574e0ecb7a64689e520020f2ec7e5f0a81356741abc70b26f114749906c4f679372a3686cbb9a1bc675e2ee79c6bd0fb78581589d7beaca05193f40314b464a8f62aece7de3dd147176a46782b76d6edc8bcd925660bdb2ee50669bde1dcb447201dd7b629bf51270ffd7b15a1b0817b0a76a2b344c6d08b1af7e1c0ad0634338106292d59631a39d8427a927f329ef71ffa263eae5594ae9d06995c11e13dc0bcbd7c4be8d51dd7355a5bded29f761ccba7cedf19491741be24022379ffd9ef76d2c38552efaa4cbe18447f007a56ec06b3becc8913a7bab0858e09f930dd589cb109bd247e7b8c15e705b972c6737de6f41b3e9fe1271fe05ce63d3a33260859d6c32e654ea051c2b01bf15aec453614964999c8817a73e9f0d8e3433a1855303442f0c3bb3b1247e598d5b68649848881b814c2b0a1053989fd85f0a37ec4c6483cba44c971195814d0839598d43cc4edd9e4f4acfb41c9eb91ffcb3ce1419583ae6ba29ad87650a0e58e0696fc1d217be53c41fc2d287eed938b48b7f8e9ce9bb0fb5f02030100010282020100ac10a155f2ef160872dc62153b688b45df4200bb05d0d574d4fd7896aaecb66d091a13e5e189b48fc2377a3ad4bb5befe82debbd2bf5100335b262860137fa6c0c05606a7ab48517008254131d7af4770e3038568aa21505bc1aa920627cc0f4d8e8775627a89ebf23feedd824242c6b00c2aeb68fb6d4729fddc2d53e554c2572f73b3c46dfa70ad013bfd3c670c039db7e9883c1d313e3a91143ae7f19b928f73121827d5345005263d2c52fe511f2cead8537a132356a577efbb9aea921e2408424beb4570785d0365f58c8bb47f8381492ab8fc4123061e46e65cae60e8354a8757418693cecd1b0ef9aeef4fb005186746367baf497b5aa89fdd43b13342ef1078db79cedda635f5c9af6db849357ecf9c4c1169d45fcf3c1161d3a64557ea5cbbccfca45b119217954559a20964152b49c500868904a3207b50163a15f37bd544844e8db52396c94ec04bed0f7deab467dbbd590e8a5a2bb8472e6ee34b3a8e7e153ec1c3d71c3585c5d895c81151c4ca877f8ff28ba97abea8de9145f65046c30bca655b03c7945274429fb4ca34ddc0329cd018af3e4eacca7653f968b07632760397afb68e893693cd305a4ff9d7815f238c2da88161a4c33ee153fa790ddd4e3cb2c8fb7059cc139555c02951606eb98bd4f3519fe46b23af35d7ebf4c27fc425fcd4c22f00d00052cce11b8bc8c2f6c946c3cf633925c42b330010282010100ee812d68e8708072fb18ae6057d6c51281e813eb1dbe9cc13c1e8652049bda08650ebba7725fdde99c8cd93431a04c3c5b6a1439d9fea6af5338cf35eefd776d59f657a9734193b275e49a7a713739db5a265c60787505a005babab7fda767ef5d9f3eda6cbffe943ccdb2ad793b0f11cb4bce73f4b38ac552a5adeb36f0859a42e0403efa218284b291bd9a740241a07e4e7ab44e9ecea7f327df5c109753abd0f6ca9a61670ad7cb321d1a100d12f4823fa9a53f08b6acdc1e1839629df8ae04f19d3f85d2456c15806f19d83fb9aff4b173434b74b60a9bf33a4c34da395739c401ce2897dbd86a8a65da27ce741f889f73a7555f8eccb7561238fdc4a6c90282010100d9e1f0b79d1648f1e37f8038c2cbf4f8024597843810946b1163f4c4895119ea025dce6afa3cca130b60ebbfcc61efd6941fa84948132725de76474ca522809c9f025a82d52757912a7f863a269bd2b8b664e240b43c0e16da458f8e5df2fdc7d90e50226d8747109c85028680e53a1fd8f72e4e01ff6b84897eb37db1b9232681433bbd543ff3bf2318545878062ac7b951234e619000255a7aa43305f28328ad5f7ee8c82c103ae0f8bf889e38447f1d8ed0b98dd67b6a5d45f8c785cb3f9bcbcb8d52a7079af10468a70037b5cb4e39f1c9ccac502086565ed61ab385a1d7a23599ed55aad26b97858ce1c9dad276c52f02cbd4a56b97dcb9cea9debc9ce7028201002ab2fbc33d61eecd27011b2eea6aebeb4d5094485291ee9475c3ed3e3fcefb30e78ec4afccbd37087cdb86835ea31922f126c3aa3bc9e863991da193414f25937138b6270318696dd8c76d94a03247ec6a6e55b97bb74fa37f8317ac9affde8eaf0f347c7c5dbf2120e59ea889fcb5ccf4bd849fa3de84e8a0cc429fcabd32de143cfba38aba771874b3bce32b03c0661056d286f7505d251a563819ce6a9933387d0676af1b78887bbb6414676d3fc8808d0f3d2354d707897ce5cf584579e105c78fe4707bddabe509925a6929b77fb5ea12fda843a3d7b065d2391479412cc98dbad902d1752d809d78709f11ca1e5f2254dd4f5e853d4751647fc986ec690282010100b12e0900679feda5b6a8c26e660a51a534c3bed8e876a31b064350925a50375092a811e9f0a06a7b5e2f6cc6c5bf86b7ea306c3b5b7f27c0a5cd6d61a8900c2251342ac265efde47d0556fa3ee2d9d08545a699ad0765dc6bbad01767673d96820dc80d1de5bb9b08a77a77c15695300ff00d308e09b02a5fee1a7b8b943a28ff761e33cad3c6c4cac8f6657a312f0cb05aa3399d3c0b43dabfc3b76ba89619b3c9181b46ec356576b071d4a4dcfd7f3bee79a58aa3d169382521a62b62c78078b8c75da16b61a8b90584225ed27cab24c7090f7fdd01302eb4da7b282f6528bf5febcb3c18c6e1ccc54f021d4723be015ad8b0a925c0ac8add7f375340a11550282010100817c322fb1bc672f75930d8aa435ab56866ff4cf5116e8aef53c74560171a90374591f0b2bf4fa995017a83ac915aba88fcc1f29bdfb784646ff7b73578b682ae7b82549fc30128fd6040fa302da31562f4015b8c662d214285db509b95c1d08b4d11ffb64c22c933071927d26b38dc7629bd39ceb717557e9f1abb19e0d54ee4a59b0f5259d8a2910171ba6f7a9ce7f7fd33574f17c8f76829eaaa742db967651e473a7e38261629a8b41e7537dc6c9104fce766507bcae56f0ace614f96eb9bb64d9eab1055809939a1862a84156312a8ea5656ff23ead13939412599d037b6a9a3b968d2447c3e100f71c0501c7b204ece1986236a2b32a178d059b7ad20b"/>
+          </KeyValue>
+          <CryptographicAlgorithm type="Enumeration" value="RSA"/>
+          <CryptographicLength type="Integer" value="4096"/>
+        </KeyBlock>
+      </PrivateKey>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Locate"/>
+    <RequestPayload>
+      <MaximumItems type="Integer" value="1"/>
+      <Attribute>
+	<AttributeName type="TextString" value="X.509 Certificate Identifier"/>
+	<AttributeValue>
+	  <IssuerDistinguishedName type="ByteString" value="30143112301006035504030c096c6f63616c686f7374"/>
+	  <CertificateSerialNumber type="ByteString" value="020900d2f5bad76a5ac8f9"/>
+	</AttributeValue>
+      </Attribute>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Locate"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <ObjectType type="Enumeration" value="Certificate"/>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+      <Certificate>
+        <CertificateType type="Enumeration" value="X_509"/>
+        <CertificateValue type="ByteString" value="308204fb308202e3a003020102020900d2f5bad76a5ac8f9300d06092a864886f70d01010b050030143112301006035504030c096c6f63616c686f7374301e170d3136303330383231333131335a170d3138313230333231333131335a30143112301006035504030c096c6f63616c686f737430820222300d06092a864886f70d01010105000382020f003082020a0282020100cafdff4b017f7392eaa3c87c98c391e8e57e1538a82a4d00c91469ad954027582ea1c179767c900b2a355db99499969d37959f2a94496b51b8dfab51dc4dd7772e882afc4a7726b064fbabbfa374e0153f4bd3caa1968f8517be66e875844ad8993447126db569793aaeae691409cf1c8584f00ae7badb9e9e7411574e0ecb7a64689e520020f2ec7e5f0a81356741abc70b26f114749906c4f679372a3686cbb9a1bc675e2ee79c6bd0fb78581589d7beaca05193f40314b464a8f62aece7de3dd147176a46782b76d6edc8bcd925660bdb2ee50669bde1dcb447201dd7b629bf51270ffd7b15a1b0817b0a76a2b344c6d08b1af7e1c0ad0634338106292d59631a39d8427a927f329ef71ffa263eae5594ae9d06995c11e13dc0bcbd7c4be8d51dd7355a5bded29f761ccba7cedf19491741be24022379ffd9ef76d2c38552efaa4cbe18447f007a56ec06b3becc8913a7bab0858e09f930dd589cb109bd247e7b8c15e705b972c6737de6f41b3e9fe1271fe05ce63d3a33260859d6c32e654ea051c2b01bf15aec453614964999c8817a73e9f0d8e3433a1855303442f0c3bb3b1247e598d5b68649848881b814c2b0a1053989fd85f0a37ec4c6483cba44c971195814d0839598d43cc4edd9e4f4acfb41c9eb91ffcb3ce1419583ae6ba29ad87650a0e58e0696fc1d217be53c41fc2d287eed938b48b7f8e9ce9bb0fb5f0203010001a350304e301d0603551d0e041604143e8a9ca24cc7d87463cf96b08d32fba9c59926c0301f0603551d230418301680143e8a9ca24cc7d87463cf96b08d32fba9c59926c0300c0603551d13040530030101ff300d06092a864886f70d01010b050003820201007787a8e4683a7e3a9acd113c80add95b4ff9b8c057460cdced35fd46863900f308240c830c5d9fa184fb5a69258d406ff8e09de2f39c2d3ef56d384573c1ee7efe9aac2379c8f4f5c99ddab39fd6c1a34428a2343dcb15b4ff9f2ac2b23e4cde040a0afb4050dd1a1aedc2448af4eac25a870ce64d60e53bf7faae60fd8287a2131c7b070b4ff1df6dcb38cab94004f5f3aa129d5a7a5de0d726e3d51a714d9c87e839e9a015f39761e461d9ea66df6c7c7bacb9a109ad43329215ec859eb5ea264ce6e2be9c86fbd5b8456d51457636898c4c46b24215d290e5b892075aac734f429ce1796e6d946e9d0c08808af1e3d67eefcbd94c55f213a84921457baae1cdcb35079560fe5ef0a6b9d0cc778d44c4760b7393b003e750f621f2b50b018769dd7fa57c04e6120ed384b3751fca1f3a55f6d7c153f6a8edf0246e8731812c59ce8fa89396c499c81783f90feb576bf5457f6863336a9f86c6e280f1b9cdf188c3a11f58b1197887e6dbd5b8d72e3e1e9ce65ad4d6f13234d0b07049254f2fdfcbb2b5404e807347abbf5e1176b3c36cd674e595b85cb77386d9be7a6d478f435c293efccf3182c9cfadb107e675f6effc61c6e28da8b88ad9d5fcd66bdd4504a1172e950504e6d7687ab154d0d061eb8265a1561135987a826fd158131014a3ddd8a257f8fbe95774a1e292b6df89f02d21c5e25d7a1206b64776b9e3a365"/>
+      </Certificate>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+      <Attribute>
+        <AttributeName type="TextString" value="Unique Identifier"/>
+        <AttributeValue type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Object Type"/>
+        <AttributeValue type="Enumeration" value="Certificate"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Length"/>
+        <AttributeValue type="Integer" value="4096"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Type"/>
+        <AttributeValue type="Enumeration" value="X_509"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Length"/>
+        <AttributeValue type="Integer" value="1279"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Identifier"/>
+        <AttributeValue>
+          <IssuerDistinguishedName type="ByteString" value="30143112301006035504030c096c6f63616c686f7374"/>
+          <CertificateSerialNumber type="ByteString" value="00d2f5bad76a5ac8f9"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Subject"/>
+        <AttributeValue>
+          <SubjectDistinguishedName type="ByteString" value="30143112301006035504030c096c6f63616c686f7374"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Issuer"/>
+        <AttributeValue>
+          <IssuerDistinguishedName type="ByteString" value="30143112301006035504030c096c6f63616c686f7374"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Identifier"/>
+        <AttributeValue>
+          <Issuer type="TextString" value="CN=localhost"/>
+          <SerialNumber type="TextString" value="00d2f5bad76a5ac8f9"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Subject"/>
+        <AttributeValue>
+          <CertificateSubjectDistinguishedName type="TextString" value="CN=localhost"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Issuer"/>
+        <AttributeValue>
+          <CertificateIssuerDistinguishedName type="TextString" value="CN=localhost"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Digital Signature Algorithm"/>
+        <AttributeValue type="Enumeration" value="SHA_256WithRSAEncryption"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Digest"/>
+        <AttributeValue>
+          <HashingAlgorithm type="Enumeration" value="SHA_256"/>
+          <DigestValue type="ByteString" value="ddad0c0aafd8891c962afa2900ed9c2c17222550e2d769176f0b04872bdc5570"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Lease Time"/>
+        <AttributeValue type="Interval" value="3600"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Initial Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="State"/>
+        <AttributeValue type="Enumeration" value="PreActive"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Last Change Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="PKCS#12 Friendly Name"/>
+        <AttributeValue type="TextString" value="alias"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Fresh"/>
+        <AttributeValue type="Boolean" value="false"/>
+      </Attribute>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+      <KeyFormatType type="Enumeration" value="PKCS_12"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Get"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <ObjectType type="Enumeration" value="PrivateKey"/>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+      <PrivateKey>
+        <KeyBlock>
+          <KeyFormatType type="Enumeration" value="PKCS_12"/>
+          <KeyValue type="ByteString" value="$KEY_VALUE"/>
+        </KeyBlock>
+      </PrivateKey>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Revoke"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+      <RevocationReason>
+        <RevocationReasonCode type="Enumeration" value="CessationOfOperation"/>
+      </RevocationReason>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Revoke"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_2"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Destroy"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_1"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+</KMIP>
+

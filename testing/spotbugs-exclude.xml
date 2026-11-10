@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+  What SpotBugs (with find-sec-bugs) reports on the in-memory test server and is not a defect.
+  Each entry says why.
+-->
+<FindBugsFilter
+    xmlns="https://github.com/spotbugs/filter/3.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
+
+  <!-- The in-memory test server runs the block cipher modes the request asks for, with its IV. -->
+  <Match>
+    <Bug pattern="STATIC_IV"/>
+    <Class name="~dev\.keytend\.kmip\.testing\.InMemoryKmipServer(\$.*)?"/>
+  </Match>
+  <!--
+    The TLS listener accepts TCP and layers TLS on each connection in server mode (every byte
+    after the accept is TLS), so close() can close the TCP socket without waiting on TLS locks.
+  -->
+  <Match>
+    <Bug pattern="UNENCRYPTED_SERVER_SOCKET"/>
+    <Class name="dev.keytend.kmip.testing.TlsListener"/>
+  </Match>
+  <!-- The TLS listener's socket from SSLSocketFactory.createSocket is an SSLSocket, as the factory
+       guarantees. -->
+  <Match>
+    <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE"/>
+    <Class name="dev.keytend.kmip.testing.TlsListener"/>
+  </Match>
+
+  <!-- TlsListener.server() returns the server it serves, by design: tests use that server. -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP"/>
+    <Class name="dev.keytend.kmip.testing.TlsListener"/>
+    <Method name="server"/>
+  </Match>
+</FindBugsFilter>

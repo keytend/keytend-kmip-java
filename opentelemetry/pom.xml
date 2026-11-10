@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dev.keytend</groupId>
+    <artifactId>keytend-kmip-parent</artifactId>
+    <version>0.10.0-rc.1</version>
+  </parent>
+  <artifactId>keytend-kmip-opentelemetry</artifactId>
+  <name>keytend-kmip OpenTelemetry metrics and traces</name>
+  <description>Experimental, not for production use. Opt-in OpenTelemetry instruments and spans for keytend-kmip: calls, attempts, endpoints, connections, LocalKeys, leases and TLS identities</description>
+  <properties>
+    <!-- An SBOM of the module and its runtime graph (the OpenTelemetry API), shipped and published beside it. -->
+    <cyclonedx.skip>false</cyclonedx.skip>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- The API only, never the SDK: the application brings its own OpenTelemetry (an SDK, the Java
+         agent's, or none, when every call does nothing). A normal dependency, never shaded. -->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The in-memory KMIP server, for tests only (never at run time). -->
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip-testing</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- The tests read what the module records through the SDK's in-memory reader and exporter. -->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The SDK's classes before package (./mvnw test, an IDE) require Caffeine, which the SDK JAR
+         bundles from package on (sdk/pom.xml, "The bundled Caffeine"): test scope only. -->
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <!-- version.properties: the module's version, which names its instrumentation scope. -->
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources-filtered</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <!--
+        What the module may bring at run time: the SDK (and its slf4j-api) and the OpenTelemetry API
+        with the two artifacts it requires, nothing else. The OpenTelemetry SDK, an exporter or the
+        semantic-conventions artifact outside test scope fails the build; docs/dependencies.md
+        lists each, and a new one is reviewed against the policy there first.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>runtime-dependency-allowlist</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>*:*:*:*:compile</exclude>
+                    <exclude>*:*:*:*:runtime</exclude>
+                    <exclude>*:*:*:*:provided</exclude>
+                    <exclude>*:*:*:*:system</exclude>
+                  </excludes>
+                  <includes>
+                    <include>dev.keytend:keytend-kmip:*:*:compile</include>
+                    <include>org.slf4j:slf4j-api:*:*:compile</include>
+                    <include>io.opentelemetry:opentelemetry-api:*:*:compile</include>
+                    <include>io.opentelemetry:opentelemetry-context:*:*:compile</include>
+                    <include>io.opentelemetry:opentelemetry-common:*:*:compile</include>
+                  </includes>
+                  <message>The module's runtime dependencies are the SDK and the OpenTelemetry API, as docs/dependencies.md lists them: review a new one and list it there and here.</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Doclint over the module's package, failing on any error or warning, as in the SDK. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>doclint</id>
+            <goals>
+              <goal>javadoc-no-fork</goal>
+            </goals>
+            <phase>process-classes</phase>
+            <configuration>
+              <doclint>all</doclint>
+              <failOnWarnings>true</failOnWarnings>
+              <quiet>true</quiet>
+              <outputDirectory>${project.build.directory}/doclint</outputDirectory>
+              <staleDataPath>${project.build.directory}/doclint-stale-data.txt</staleDataPath>
+              <!-- A check only, whose HTML is not shipped: no links to the SDK's pages, which
+                   maven-javadoc-plugin 3.12.0 looks for under sdk/target/target. -->
+              <detectOfflineLinks>false</detectOfflineLinks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- SpotBugs with find-sec-bugs over the module's code, at the lowest threshold. -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>spotbugs</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- The tests also compile the guide's examples, with javax.tools (java.compiler), which this
+           module does not need. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-testCompile</id>
+            <configuration>
+              <compilerArgs combine.children="append">
+                <arg>--add-modules=java.compiler</arg>
+                <arg>--add-reads=dev.keytend.kmip.opentelemetry=java.compiler</arg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>@{jacocoArgLine} --add-modules java.compiler --add-reads dev.keytend.kmip.opentelemetry=java.compiler</argLine>
+          <systemPropertyVariables>
+            <!-- No SLF4J provider in these tests: the SDK's logs go nowhere, without SLF4J's notice. -->
+            <slf4j.internal.verbosity>ERROR</slf4j.internal.verbosity>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

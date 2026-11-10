@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dev.keytend</groupId>
+    <artifactId>keytend-kmip-parent</artifactId>
+    <version>0.10.0-rc.1</version>
+  </parent>
+  <artifactId>keytend-kmip</artifactId>
+  <name>keytend-kmip SDK</name>
+  <description>Experimental, not for production use. Java 17 KMIP client: KMIP 1.1–1.4, 2.0, 2.1 and the 3.0 draft, with a key-management API</description>
+  <properties>
+    <cyclonedx.skip>false</cyclonedx.skip>
+    <!-- JDK modules the tests use and the SDK does not (see the compiler and Surefire below). -->
+    <test.jdk.modules>java.compiler,jdk.httpserver</test.jdk.modules>
+    <!--
+      The release the API check compares against (the api-compat profile below) is pinned here, and
+      only here, by three properties: api.baseline.name (keytend-kmip), api.baseline.version (X.Y.Z)
+      and api.baseline.sha256, the SHA-256 of the SDK JAR in its ZIP's lib/.
+      tools/api-baseline.sh reads them, and tools/release-check.sh reads the version from it;
+      ApiBaselinePinTest fails if another file pins one. None is pinned: the tree builds the first
+      release, 0.10.0, which has no earlier release to compare with (tools/api-baseline.sh). Once
+      0.10.0 is published, it becomes the baseline (docs/releasing.md).
+    -->
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <!-- Bundled: the shade execution below relocates it into the SDK's JAR, and the published POM
+         does not list it. Optional, so that the reactor's other modules see the SDK as an
+         application does, without Caffeine (Maven's reactor gives them this POM's dependencies, not
+         the published one's). From package on they run the SDK JAR, which has it; before package
+         (./mvnw test, an IDE) they run this module's classes, whose descriptor requires it, so
+         each of them takes Caffeine in test scope too. Its two annotation libraries are not
+         bundled (the parent POM excludes them). -->
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The tests' certificates (TestX509), and an independent encoder of the PEM, PKCS#8, PKCS#1
+         and SEC1 forms the SDK reads. On the tests' class path, read through ALL-UNNAMED as JUnit
+         is; never a dependency of the SDK itself. -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Eventual conditions in the tests (TestAwait), with Hamcrest; on the class path, read through
+         ALL-UNNAMED (Awaitility has no module name). -->
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Property tests of the codecs (codec/*PropertiesTest), a JUnit Platform engine of its own;
+         on the class path, as JUnit. -->
+    <dependency>
+      <groupId>net.jqwik</groupId>
+      <artifactId>jqwik</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!--
+        The SDK's runtime dependencies are an allowlist, each entry explained in docs/dependencies.md:
+        slf4j-api (a normal dependency, never shaded: applications bind it to their logging) and
+        Caffeine (bundled in the JAR, relocated; see "The bundled Caffeine" below). Anything else
+        outside test scope, also transitively, fails the build until it is reviewed and listed there.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>runtime-dependency-allowlist</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>*:*:*:*:compile</exclude>
+                    <exclude>*:*:*:*:runtime</exclude>
+                    <exclude>*:*:*:*:provided</exclude>
+                    <exclude>*:*:*:*:system</exclude>
+                  </excludes>
+                  <includes>
+                    <include>org.slf4j:slf4j-api:*:*:compile</include>
+                    <include>com.github.ben-manes.caffeine:caffeine:*:*:compile</include>
+                  </includes>
+                  <message>The SDK's runtime dependencies are those docs/dependencies.md lists: review a new one and list it there and here.</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        The in-memory KMIP server (keytend-kmip-testing, which depends on this module) is compiled
+        into the SDK's own tests from its sources: its package, without the testing module's
+        descriptor, is copied here and patched into dev.keytend.kmip with the tests, as Maven
+        allows no dependency cycle. The SDK's main code and JAR never contain it.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>in-memory-server-sources</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/generated-test-sources/in-memory-server</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/../testing/src/main/java</directory>
+                  <includes>
+                    <include>dev/keytend/kmip/testing/**</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        The tests are compiled into the module (src/main/java/module-info.java) and run in it, as
+        Surefire patches them in; they also use two JDK modules the SDK does not need: javax.tools
+        (java.compiler) and com.sun.net.httpserver (jdk.httpserver). The SDK's own descriptor stays
+        as small as its code.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-testCompile</id>
+            <configuration>
+              <compileSourceRoots>
+                <root>${project.basedir}/src/test/java</root>
+                <root>${project.build.directory}/generated-test-sources/in-memory-server</root>
+              </compileSourceRoots>
+              <compilerArgs combine.children="append">
+                <arg>--add-modules=${test.jdk.modules}</arg>
+                <arg>--add-reads=dev.keytend.kmip=${test.jdk.modules}</arg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>@{jacocoArgLine} --add-modules ${test.jdk.modules} --add-reads dev.keytend.kmip=${test.jdk.modules}</argLine>
+          <systemPropertyVariables>
+            <!-- The tests' SLF4J provider, which records what the SDK logs (kms/TestLogs). -->
+            <slf4j.provider>dev.keytend.kmip.kms.TestLogs</slf4j.provider>
+            <slf4j.internal.verbosity>WARN</slf4j.internal.verbosity>
+            <!-- jqwik's record of failed tries, under target/ rather than in the source tree, one
+                 per test JVM (JUnit reads its configuration parameters from system properties). -->
+            <jqwik.database>${project.build.directory}/jqwik-database-${surefire.forkNumber}</jqwik.database>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <!--
+        Javadoc's doclint over every package of the SDK, failing on any error or warning, in every
+        build (a few seconds, before the tests). Every group except "missing": the protocol
+        packages leave self-describing members (one enum constant per KMIP value, the tags) without
+        a comment. PublicJavadocTest runs doclint with "missing" too, on kms and testing, where every
+        published element is documented. The HTML goes to target/doclint, apart from the
+        distribution's Javadoc.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>doclint</id>
+            <goals>
+              <goal>javadoc-no-fork</goal>
+            </goals>
+            <phase>process-classes</phase>
+            <configuration>
+              <doclint>all,-missing</doclint>
+              <failOnWarnings>true</failOnWarnings>
+              <quiet>true</quiet>
+              <outputDirectory>${project.build.directory}/doclint</outputDirectory>
+              <staleDataPath>${project.build.directory}/doclint-stale-data.txt</staleDataPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        SpotBugs with find-sec-bugs over the SDK's main code, at the lowest threshold, failing verify
+        on any finding not in spotbugs-exclude.xml (each exclusion says why). Not over the tests,
+        and not over the interoperability application, which exercises servers with test passwords,
+        unauthenticated modes and plain sockets on purpose.
+      -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <excludeFilterFile>${project.basedir}/spotbugs-exclude.xml</excludeFilterFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>spotbugs</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        The bundled Caffeine. The SDK compiles and tests against Caffeine itself (module-info.java
+        requires it); the JAR it publishes bundles it, relocated:
+          process-resources: target/published-descriptor/module-info.java is the source descriptor
+            without its line "requires com.github.benmanes.caffeine;" (the one source of the
+            module's exports and requires); Caffeine's pom.properties and POM go to
+            META-INF/maven/com.github.ben-manes.caffeine/caffeine/ in the JAR, so that scanners that
+            read a JAR's contents find the bundled version (its own JAR has none). Its license is
+            src/main/resources/META-INF/licenses/caffeine/LICENSE, and NOTICE names it.
+          package, after the JAR plugin: shade copies Caffeine into the JAR with its packages
+            relocated to dev.keytend.kmip.internal.shaded.caffeine, which no descriptor exports or
+            opens, and rewrites the SDK's references to it. Nothing else is bundled (slf4j-api never
+            is). Shade drops every module-info.class, and Caffeine's manifest, license, signatures and
+            service files (the SDK constructs Caffeine directly; nothing is looked up). Not minimized:
+            Caffeine loads its generated cache and node classes by name. The published POM is the
+            dependency-reduced one (target/dependency-reduced-pom.xml), which lists slf4j-api only.
+          package, after shade: moditect compiles the published descriptor into the JAR. It writes no
+            ModulePackages attribute, so the module system finds the relocated packages in the JAR.
+        integration-tests' ModularConsumerIT checks the JAR's descriptor and contents.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>bundled-caffeine-metadata</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <target>
+                <copy encoding="UTF-8" file="${project.basedir}/src/main/java/module-info.java" overwrite="true" todir="${project.build.directory}/published-descriptor">
+                  <filterchain>
+                    <linecontainsregexp negate="true">
+                      <regexp pattern="^\s*requires\s+com\.github\.benmanes\.caffeine\s*;"/>
+                    </linecontainsregexp>
+                  </filterchain>
+                </copy>
+                <echo encoding="UTF-8" file="${project.build.outputDirectory}/META-INF/maven/com.github.ben-manes.caffeine/caffeine/pom.properties">artifactId=caffeine
+groupId=com.github.ben-manes.caffeine
+version=${caffeine.version}</echo>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>bundled-caffeine-pom</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.github.ben-manes.caffeine</groupId>
+                  <artifactId>caffeine</artifactId>
+                  <version>${caffeine.version}</version>
+                  <type>pom</type>
+                  <outputDirectory>${project.build.outputDirectory}/META-INF/maven/com.github.ben-manes.caffeine/caffeine</outputDirectory>
+                  <destFileName>pom.xml</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <!-- The SDK's runtime dependencies (slf4j-api) in target/lib/, for the tools that run the SDK
+               JAR outside Maven (tools/server-probe, tools/bench): the class path is the JAR and
+               lib/*.jar. Not Caffeine: the JAR bundles it. -->
+          <execution>
+            <id>runtime-libraries</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <includeScope>runtime</includeScope>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <excludeArtifactIds>caffeine</excludeArtifactIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <!-- The module name, dev.keytend.kmip, is in src/main/java/module-info.java. -->
+        <executions>
+          <!-- The kms sample applications also run against real servers in integration-tests. -->
+          <execution>
+            <id>samples</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>dev/keytend/kmip/kms/samples/**</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>bundle-caffeine</id>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>com.github.ben-manes.caffeine:caffeine</include>
+                </includes>
+              </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>com.github.benmanes.caffeine</pattern>
+                  <shadedPattern>dev.keytend.kmip.internal.shaded.caffeine</shadedPattern>
+                </relocation>
+              </relocations>
+              <filters>
+                <!-- The SDK's own descriptor goes too: moditect adds the published one. -->
+                <filter>
+                  <artifact>${project.groupId}:${project.artifactId}</artifact>
+                  <excludes>
+                    <exclude>module-info.class</exclude>
+                  </excludes>
+                </filter>
+                <filter>
+                  <artifact>com.github.ben-manes.caffeine:caffeine</artifact>
+                  <excludes>
+                    <exclude>module-info.class</exclude>
+                    <exclude>module-info.java</exclude>
+                    <exclude>META-INF/versions/*/module-info.class</exclude>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/*.EC</exclude>
+                    <exclude>META-INF/SIG-*</exclude>
+                    <exclude>META-INF/services/**</exclude>
+                    <exclude>META-INF/LICENSE*</exclude>
+                    <exclude>META-INF/NOTICE*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <minimizeJar>false</minimizeJar>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.moditect</groupId>
+        <artifactId>moditect-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>published-descriptor</id>
+            <goals>
+              <goal>add-module-info</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+              <overwriteExistingFiles>true</overwriteExistingFiles>
+              <module>
+                <moduleInfoFile>${project.build.directory}/published-descriptor/module-info.java</moduleInfoFile>
+              </module>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <!--
+      The distribution's -sources JAR and SBOM, for the bundled Caffeine (see "The bundled Caffeine"
+      above). The -sources JAR is shade's: the SDK's sources, which the source plugin packaged
+      first, with Caffeine's sources (its -sources artifact) relocated as its classes are, and the
+      SDK's imports of it rewritten the same way; module-info.java stays as committed. The
+      -javadoc JAR is built from the SDK's sources only, so it documents no Caffeine package.
+      The SBOM, written from this POM's dependency graph before shade runs (the parent's plugins
+      run first), lists Caffeine under its own coordinates. Here its entry gets the property
+      keytend:shaded, the package the JAR bundles it under, and the scope required: the JAR always
+      has it, the dependency is optional for the reactor's sake only.
+    -->
+    <profile>
+      <id>distribution</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sbom-bundled-caffeine</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <property name="sbom" value="${project.build.directory}/${project.build.finalName}-cyclonedx.json"/>
+                    <replaceregexp byline="true" encoding="UTF-8" file="${sbom}">
+                      <regexp pattern="^( *)(&quot;purl&quot; : &quot;pkg:maven/com\.github\.ben-manes\.caffeine/caffeine@)"/>
+                      <substitution expression="\1&quot;properties&quot; : [ \1  { \1    &quot;name&quot; : &quot;keytend:shaded&quot;, \1    &quot;value&quot; : &quot;dev.keytend.kmip.internal.shaded.caffeine&quot; \1  } \1], \1\2"/>
+                    </replaceregexp>
+                    <replaceregexp encoding="UTF-8" file="${sbom}" flags="m">
+                      <regexp pattern="(&quot;bom-ref&quot; : &quot;pkg:maven/com\.github\.ben-manes\.caffeine/caffeine@[^&quot;]*&quot;,\n(?:[^{}\[\]\n]*\n)*? *&quot;scope&quot; : )&quot;optional&quot;"/>
+                      <substitution expression="\1&quot;required&quot;"/>
+                    </replaceregexp>
+                    <fail message="${sbom}: Caffeine is not marked bundled and required">
+                      <condition>
+                        <or>
+                          <not>
+                            <resourcecontains resource="${sbom}" substring="&quot;keytend:shaded&quot;"/>
+                          </not>
+                          <resourcecontains resource="${sbom}" substring="&quot;optional&quot;"/>
+                        </or>
+                      </condition>
+                    </fail>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- The other modules' link to this Javadoc (the parent POM), which this one does not need. -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <offlineLinks combine.self="override"/>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>bundle-caffeine</id>
+                <configuration>
+                  <createSourcesJar>true</createSourcesJar>
+                  <shadeSourcesContent>true</shadeSourcesContent>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+      The API check against the release api.baseline.version names above (docs/compatibility.md):
+      tools/api-baseline.sh first puts that release's JAR in target/api-baseline/. It reports, under
+      sdk/target/japicmp/, every binary and source incompatible change, and fails the build on one
+      (-Dapi.compat.fail=false reports only; tools/release-check.sh reports only against a baseline
+      of an earlier 0.x minor version, or from 1.0 an earlier major: see tools/api-baseline.sh).
+      The testing package is not in the SDK (it is
+      keytend-kmip-testing, outside the guarantee), and is excluded. A build plugin only: nothing
+      is added to the SDK's dependencies.
+    -->
+    <profile>
+      <id>api-compat</id>
+      <properties>
+        <api.baseline.jar>${project.basedir}/../target/api-baseline/keytend-kmip-${api.baseline.version}.jar</api.baseline.jar>
+        <api.compat.fail>true</api.compat.fail>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.siom79.japicmp</groupId>
+            <artifactId>japicmp-maven-plugin</artifactId>
+            <version>0.27.0</version>
+            <configuration>
+              <oldVersion>
+                <file>
+                  <path>${api.baseline.jar}</path>
+                </file>
+              </oldVersion>
+              <newVersion>
+                <file>
+                  <path>${project.build.directory}/${project.build.finalName}.jar</path>
+                </file>
+              </newVersion>
+              <parameter>
+                <onlyModified>true</onlyModified>
+                <accessModifier>protected</accessModifier>
+                <breakBuildOnBinaryIncompatibleModifications>${api.compat.fail}</breakBuildOnBinaryIncompatibleModifications>
+                <breakBuildOnSourceIncompatibleModifications>${api.compat.fail}</breakBuildOnSourceIncompatibleModifications>
+                <!-- A covered type that breaks because of an excluded one still fails. -->
+                <breakBuildIfCausedByExclusion>true</breakBuildIfCausedByExclusion>
+                <excludes>
+                  <exclude>dev.keytend.kmip.testing</exclude>
+                </excludes>
+                <skipMarkdownReport>false</skipMarkdownReport>
+              </parameter>
+            </configuration>
+            <executions>
+              <execution>
+                <id>api-compat</id>
+                <goals>
+                  <goal>cmp</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+      -Dsdk.skipTests: compile the SDK's tests (the samples' test JAR holds some) but do not run
+      them. tools/release-check.sh's test-jdk17 passes it, since its verify-jdk17 runs the same
+      tests on the same JDK and classes; -DskipTests skips every module's.
+    -->
+    <profile>
+      <id>sdk-tests-skipped</id>
+      <activation>
+        <property>
+          <name>sdk.skipTests</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>true</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

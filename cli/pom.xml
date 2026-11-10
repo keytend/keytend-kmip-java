@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 Jeremiah Jordan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>dev.keytend</groupId>
+    <artifactId>keytend-kmip-parent</artifactId>
+    <version>0.10.0-rc.1</version>
+  </parent>
+  <artifactId>keytend-kmip-cli</artifactId>
+  <name>keytend-kmip CLI</name>
+  <description>Experimental, not for production use. Command-line tool for operators to manage keys on a KMIP server, built on keytend-kmip; shipped in the GitHub release, not published to Maven Central</description>
+  <properties>
+    <!-- Not published: maven-deploy-plugin and the central profile both skip this module. -->
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <!-- An SBOM of the application and the runtime JARs the release ZIP's lib/ carries for it. -->
+    <cyclonedx.skip>false</cyclonedx.skip>
+    <sbom.projectType>application</sbom.projectType>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- Command-line parsing and help. -->
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+    </dependency>
+    <!-- The JSON output (jackson-core only: the streaming generator). The tests parse it too. -->
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <!-- The SDK's logs, to standard error (src/main/resources/simplelogger.properties). -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The certificates of the renew-certificate test, which runs over TLS; test scope only. -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- The in-memory KMIP server, for tests only (never at run time). -->
+    <dependency>
+      <groupId>dev.keytend</groupId>
+      <artifactId>keytend-kmip-testing</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- The SDK's classes before package (./mvnw test, an IDE) require Caffeine, which the SDK JAR
+         bundles from package on (sdk/pom.xml, "The bundled Caffeine"): test scope only. -->
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!--
+        A runnable JAR: its manifest names the main class and lists each runtime JAR (the SDK,
+        picocli, jackson-core, slf4j-api, slf4j-simple) twice on its class path: lib/X.jar, where
+        the package phase copies them in cli/target/, and X.jar, beside the CLI JAR in the release
+        ZIP's flat lib/. The JDK skips the entries that do not exist. So
+        `java -jar cli/target/keytend-kmip-cli-VERSION.jar` runs from the build, and cli/bin/keytend-kmip-cli
+        runs it from a checkout and from the release ZIP, with only these JARs on the class path.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>dev.keytend.kmip.cli.Main</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathLayoutType>custom</classpathLayoutType>
+              <customClasspathLayout>lib/$${artifact.artifactId}-$${artifact.baseVersion}$${dashClassifier?}.$${artifact.extension} $${artifact.artifactId}-$${artifact.baseVersion}$${dashClassifier?}.$${artifact.extension}</customClasspathLayout>
+              <!-- Implementation-Version, which the version option prints. -->
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>runtime-class-path</id>
+            <goals>
+              <goal>build-classpath</goal>
+            </goals>
+            <phase>generate-test-resources</phase>
+            <configuration>
+              <!-- What lib/ and the manifest's Class-Path are made of, for MainTest. -->
+              <includeScope>runtime</includeScope>
+              <outputFile>${project.build.directory}/runtime-class-path.txt</outputFile>
+            </configuration>
+          </execution>
+          <execution>
+            <id>runtime-libraries</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <includeScope>runtime</includeScope>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

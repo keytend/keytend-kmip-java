@@ -1,0 +1,72 @@
+{
+  "as_of": "2026-11-07",
+  "catalog_sha256": "c374d33d9adf3bdf4900d9a102cdea6ad42f8cc088ba4c27f53599927a1a17ca",
+  "servers": [
+    {
+      "id": "pykmip",
+      "name": "PyKMIP",
+      "pin": "0.11.0 package and v0.11.0 source",
+      "access": "Apache 2.0; repeatable local development and CI",
+      "documented_versions": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4",
+        "2.0"
+      ],
+      "sources": [
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "documented_versions_are_claims": true,
+      "availability": "LOCAL_DOWNLOAD_RUNNABLE",
+      "lane": "pykmip"
+    },
+    {
+      "id": "krypton",
+      "name": "OpenKCM Krypton",
+      "pin": "7ca8dc58615f506b8ce7e9359e625df5cf72a7e5",
+      "access": "Apache 2.0; backend licenses apply separately",
+      "documented_versions": [
+        "1.4"
+      ],
+      "sources": [
+        "S38",
+        "S39",
+        "S40"
+      ],
+      "documented_versions_are_claims": true,
+      "availability": "LOCAL_DOWNLOAD_RUNNABLE",
+      "lane": "krypton",
+      "persistence_scope": "Retained root sealer and existing SQLite ciphertext across real process restart; fixed fixture metadata, no full administrative deployment"
+    },
+    {
+      "id": "pqctoday",
+      "name": "PQCToday KMIP",
+      "pin": "010da23173bd39a57113fe8f5e9466981a52e27c",
+      "access": "AGPL-3.0-only",
+      "availability": "LOCAL_DOWNLOAD_RUNNABLE",
+      "documented_versions": [
+        "3.0 CSD02"
+      ],
+      "lane": "pqctoday",
+      "persistence_scope": "Native durable KMIP SQLite metadata and --engine-store enabled; registered material survives; server-generated AES key fails after restart with KeyValueNotPresent in KEY-04"
+    }
+  ],
+  "runtime_scope": [
+    "JDK 17",
+    "JDK 21",
+    "JDK 25"
+  ],
+  "excluded_runtime": {
+    "JDK11": "NOT_APPLICABLE: the SDK targets Java 17 bytecode"
+  },
+  "overlays": [
+    "KMIP 3.0 CSD02 remains required in addition to the six versions in the catalog",
+    "VER-11 advertises hypothetical 4.0 as the unimplemented future version because the SDK implements 3.0",
+    "Krypton uses unmodified production listener, authorization, manager and SQLite vault with fixed fixture metadata stores; it does not qualify the full root/PostgreSQL/admin deployment",
+    "H2 2.4.240 is the concrete encrypted database consumer fixture; no other database product is claimed",
+    "PyKMIP source is pinned at the tested upstream commit, not taken from the package"
+  ]
+}

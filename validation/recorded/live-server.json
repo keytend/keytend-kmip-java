@@ -1,0 +1,43 @@
+{
+  "entries": [
+    {
+      "scope": "cassandra-trunk-tde dtest",
+      "kmip": "1.4",
+      "date": "2026-11-09",
+      "server": "keytend-kmip-server 0.10.0-rc.1",
+      "image": "85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a",
+      "pinned": true,
+      "jdk": "17",
+      "command": "integration/cassandra-trunk-tde/run-trial.sh, KMIP 1.4, under --lease-states active-deactivated and active",
+      "result": "PASS",
+      "detail": "Apache Cassandra trunk 275a3a5 with the 4 patches; a KMS replica and its standby. --lease-states active-deactivated: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0); --lease-states active: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0)",
+      "source": "recorded"
+    },
+    {
+      "scope": "cassandra-trunk-tde dtest",
+      "kmip": "2.1",
+      "date": "2026-11-09",
+      "server": "keytend-kmip-server 0.10.0-rc.1",
+      "image": "85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a",
+      "pinned": true,
+      "jdk": "17",
+      "command": "integration/cassandra-trunk-tde/run-trial.sh, KMIP 2.1, under --lease-states active-deactivated and active",
+      "result": "PASS",
+      "detail": "Apache Cassandra trunk 275a3a5 with the 4 patches; a KMS replica and its standby. --lease-states active-deactivated: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0); --lease-states active: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0)",
+      "source": "recorded"
+    },
+    {
+      "scope": "cassandra-trunk-tde dtest",
+      "kmip": "3.0",
+      "date": "2026-11-09",
+      "server": "keytend-kmip-server 0.10.0-rc.1",
+      "image": "85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a",
+      "pinned": true,
+      "jdk": "17",
+      "command": "integration/cassandra-trunk-tde/run-trial.sh, KMIP 3.0, under --lease-states active-deactivated and active",
+      "result": "PASS",
+      "detail": "Apache Cassandra trunk 275a3a5 with the 4 patches; a KMS replica and its standby. --lease-states active-deactivated: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0); --lease-states active: 17 suites and the dtest (Tests run: 1, Failures: 0, Errors: 0, Skipped: 0)",
+      "source": "recorded"
+    }
+  ]
+}

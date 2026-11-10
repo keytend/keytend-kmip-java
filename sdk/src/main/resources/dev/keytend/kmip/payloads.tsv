@@ -1,0 +1,1696 @@
+11	Create	request	Object Type	Yes
+11	Create	request	Template-Attribute	Yes
+11	Create	response	Object Type	Yes
+11	Create	response	Unique Identifier	Yes
+11	Create	response	Template-Attribute	No
+11	CreateKeyPair	request	Common Template-Attribute	No
+11	CreateKeyPair	request	Private Key Template-Attribute	No
+11	CreateKeyPair	request	Public Key Template-Attribute	No
+11	CreateKeyPair	response	Private Key Unique Identifier	Yes
+11	CreateKeyPair	response	Public Key Unique Identifier	Yes
+11	CreateKeyPair	response	Private Key Template-Attribute	No
+11	CreateKeyPair	response	Public Key Template-Attribute	No
+11	Register	request	Object Type	Yes
+11	Register	request	Template-Attribute	Yes
+11	Register	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template Secret Data or Opaque Object	No
+11	Register	response	Unique Identifier	Yes
+11	Register	response	Template-Attribute	No
+11	ReKey	request	Unique Identifier	No
+11	ReKey	request	Offset	No
+11	ReKey	request	Template-Attribute	No
+11	ReKey	response	Unique Identifier	Yes
+11	ReKey	response	Template-Attribute	No
+11	ReKeyKeyPair	request	Private Key Unique Identifier	No
+11	ReKeyKeyPair	request	Offset	No
+11	ReKeyKeyPair	request	Common Template-Attribute	No
+11	ReKeyKeyPair	request	Private Key Template-Attribute	No
+11	ReKeyKeyPair	request	Public Key Template-Attribute	No
+11	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+11	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+11	ReKeyKeyPair	response	Private Key Template-Attribute	No
+11	ReKeyKeyPair	response	Public Key Template-Attribute	No
+11	DeriveKey	request	Object Type	Yes
+11	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+11	DeriveKey	request	Derivation Method	Yes
+11	DeriveKey	request	Derivation Parameters	Yes
+11	DeriveKey	request	Template-Attribute	Yes
+11	DeriveKey	response	Unique Identifier	Yes
+11	DeriveKey	response	Template-Attribute	No
+11	Certify	request	Unique Identifier	No
+11	Certify	request	Certificate Request Type	No
+11	Certify	request	Certificate Request	No
+11	Certify	request	Template-Attribute	No
+11	Certify	response	Unique Identifier	Yes
+11	Certify	response	Template-Attribute	No
+11	ReCertify	request	Unique Identifier	No
+11	ReCertify	request	Certificate Request Type	No
+11	ReCertify	request	Certificate Request	No
+11	ReCertify	request	Offset	No
+11	ReCertify	request	Template-Attribute	No
+11	ReCertify	response	Unique Identifier	Yes
+11	ReCertify	response	Template-Attribute	No
+11	Locate	request	Maximum Items	No
+11	Locate	request	Storage Status Mask	No
+11	Locate	request	Object Group Member	No
+11	Locate	request	Attribute	No, MAY be repeated
+11	Locate	response	Unique Identifier	No, MAY be repeated
+11	Check	request	Unique Identifier	No
+11	Check	request	Usage Limits Count	No
+11	Check	request	Cryptographic Usage Mask	No
+11	Check	request	Lease Time	No
+11	Check	response	Unique Identifier	Yes, unless a failure,
+11	Check	response	Usage Limits Count	No
+11	Check	response	Cryptographic Usage Mask	No
+11	Check	response	Lease Time	No
+11	Get	request	Unique Identifier	No
+11	Get	request	Key Format Type	No
+11	Get	request	Key Compression Type	No
+11	Get	request	Key Wrapping Specification	No
+11	Get	response	Object Type	Yes
+11	Get	response	Unique Identifier	Yes
+11	Get	response	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+11	GetAttributes	request	Unique Identifier	No
+11	GetAttributes	request	Attribute Name	No, MAY be repeated
+11	GetAttributes	response	Unique Identifier	Yes
+11	GetAttributes	response	Attribute	No, MAY be repeated
+11	GetAttributeList	request	Unique Identifier	No
+11	GetAttributeList	response	Unique Identifier	Yes
+11	GetAttributeList	response	Attribute Name	Yes, MAY be repeated
+11	AddAttribute	request	Unique Identifier	No
+11	AddAttribute	request	Attribute	Yes
+11	AddAttribute	response	Unique Identifier	Yes
+11	AddAttribute	response	Attribute	Yes
+11	ModifyAttribute	request	Unique Identifier	No
+11	ModifyAttribute	request	Attribute	Yes
+11	ModifyAttribute	response	Unique Identifier	Yes
+11	ModifyAttribute	response	Attribute	Yes
+11	DeleteAttribute	request	Unique Identifier	No
+11	DeleteAttribute	request	Attribute Name	Yes
+11	DeleteAttribute	request	Attribute Index	No
+11	DeleteAttribute	response	Unique Identifier	Yes
+11	DeleteAttribute	response	Attribute	Yes
+11	ObtainLease	request	Unique Identifier	No
+11	ObtainLease	response	Unique Identifier	Yes
+11	ObtainLease	response	Lease Time	Yes
+11	ObtainLease	response	Last Change Date	Yes
+11	GetUsageAllocation	request	Unique Identifier	No
+11	GetUsageAllocation	request	Usage Limits Count	Yes
+11	GetUsageAllocation	response	Unique Identifier	Yes
+11	Activate	request	Unique Identifier	No
+11	Activate	response	Unique Identifier	Yes
+11	Revoke	request	Unique Identifier	No
+11	Revoke	request	Revocation Reason	Yes
+11	Revoke	request	Compromise Occurrence Date	No
+11	Revoke	response	Unique Identifier	Yes
+11	Destroy	request	Unique Identifier	No
+11	Destroy	response	Unique Identifier	Yes
+11	Archive	request	Unique Identifier	No
+11	Archive	response	Unique Identifier	Yes
+11	Recover	request	Unique Identifier	No
+11	Recover	response	Unique Identifier	Yes
+11	Validate	request	Certificate	No, MAY be repeated
+11	Validate	request	Unique Identifier	No, MAY be repeated
+11	Validate	request	Validity Date	No
+11	Validate	response	Validity Indicator	Yes
+11	Query	request	Query Function	Yes, MAY be Repeated
+11	Query	response	Operation	No, MAY be repeated
+11	Query	response	Object Type	No, MAY be repeated
+11	Query	response	Vendor Identification	No
+11	Query	response	Server Information	No
+11	Query	response	Application Namespace	No, MAY be repeated
+11	Query	response	Extension Information	No, MAY be repeated
+11	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+11	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+11	Cancel	request	Asynchronous Correlation Value	Yes
+11	Cancel	response	Asynchronous Correlation Value	Yes
+11	Cancel	response	Cancellation Result	Yes
+11	Poll	request	Asynchronous Correlation Value	Yes
+11	Notify	request	Unique Identifier	Yes
+11	Notify	request	Attribute	Yes, MAY be repeated
+11	Put	request	Unique Identifier	Yes
+11	Put	request	Put Function	Yes
+11	Put	request	Replaced Unique Identifier	No
+11	Put	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+11	Put	request	Attribute	No, MAY be repeated
+12	Create	request	Object Type	Yes
+12	Create	request	Template-Attribute	Yes
+12	Create	response	Object Type	Yes
+12	Create	response	Unique Identifier	Yes
+12	Create	response	Template-Attribute	No
+12	CreateKeyPair	request	Common Template-Attribute	No
+12	CreateKeyPair	request	Private Key Template-Attribute	No
+12	CreateKeyPair	request	Public Key Template-Attribute	No
+12	CreateKeyPair	response	Private Key Unique Identifier	Yes
+12	CreateKeyPair	response	Public Key Unique Identifier	Yes
+12	CreateKeyPair	response	Private Key Template-Attribute	No
+12	CreateKeyPair	response	Public Key Template-Attribute	No
+12	Register	request	Object Type	Yes
+12	Register	request	Template-Attribute	Yes
+12	Register	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template Secret Data or Opaque Object	Yes
+12	Register	response	Unique Identifier	Yes
+12	Register	response	Template-Attribute	No
+12	ReKey	request	Unique Identifier	No
+12	ReKey	request	Offset	No
+12	ReKey	request	Template-Attribute	No
+12	ReKey	response	Unique Identifier	Yes
+12	ReKey	response	Template-Attribute	No
+12	ReKeyKeyPair	request	Private Key Unique Identifier	No
+12	ReKeyKeyPair	request	Offset	No
+12	ReKeyKeyPair	request	Common Template-Attribute	No
+12	ReKeyKeyPair	request	Private Key Template-Attribute	No
+12	ReKeyKeyPair	request	Public Key Template-Attribute	No
+12	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+12	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+12	ReKeyKeyPair	response	Private Key Template-Attribute	No
+12	ReKeyKeyPair	response	Public Key Template-Attribute	No
+12	DeriveKey	request	Object Type	Yes
+12	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+12	DeriveKey	request	Derivation Method	Yes
+12	DeriveKey	request	Derivation Parameters	Yes
+12	DeriveKey	request	Template-Attribute	Yes
+12	DeriveKey	response	Unique Identifier	Yes
+12	DeriveKey	response	Template-Attribute	No
+12	Certify	request	Unique Identifier	No
+12	Certify	request	Certificate Request Type	No
+12	Certify	request	Certificate Request	No
+12	Certify	request	Template-Attribute	No
+12	Certify	response	Unique Identifier	Yes
+12	Certify	response	Template-Attribute	No
+12	ReCertify	request	Unique Identifier	No
+12	ReCertify	request	Certificate Request Type	No
+12	ReCertify	request	Certificate Request	No
+12	ReCertify	request	Offset	No
+12	ReCertify	request	Template-Attribute	No
+12	ReCertify	response	Unique Identifier	Yes
+12	ReCertify	response	Template-Attribute	No
+12	Locate	request	Maximum Items	No
+12	Locate	request	Storage Status Mask	No
+12	Locate	request	Object Group Member	No
+12	Locate	request	Attribute	No, MAY be repeated
+12	Locate	response	Unique Identifier	No, MAY be repeated
+12	Check	request	Unique Identifier	No
+12	Check	request	Usage Limits Count	No
+12	Check	request	Cryptographic Usage Mask	No
+12	Check	request	Lease Time	No
+12	Check	response	Unique Identifier	Yes, unless a failure,
+12	Check	response	Usage Limits Count	No
+12	Check	response	Cryptographic Usage Mask	No
+12	Check	response	Lease Time	No
+12	Get	request	Unique Identifier	No
+12	Get	request	Key Format Type	No
+12	Get	request	Key Compression Type	No
+12	Get	request	Key Wrapping Specification	No
+12	Get	response	Object Type	Yes
+12	Get	response	Unique Identifier	Yes
+12	Get	response	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+12	GetAttributes	request	Unique Identifier	No
+12	GetAttributes	request	Attribute Name	No, MAY be repeated
+12	GetAttributes	response	Unique Identifier	Yes
+12	GetAttributes	response	Attribute	No, MAY be repeated
+12	GetAttributeList	request	Unique Identifier	No
+12	GetAttributeList	response	Unique Identifier	Yes
+12	GetAttributeList	response	Attribute Name	Yes, MAY be repeated
+12	AddAttribute	request	Unique Identifier	No
+12	AddAttribute	request	Attribute	Yes
+12	AddAttribute	response	Unique Identifier	Yes
+12	AddAttribute	response	Attribute	Yes
+12	ModifyAttribute	request	Unique Identifier	No
+12	ModifyAttribute	request	Attribute	Yes
+12	ModifyAttribute	response	Unique Identifier	Yes
+12	ModifyAttribute	response	Attribute	Yes
+12	DeleteAttribute	request	Unique Identifier	No
+12	DeleteAttribute	request	Attribute Name	Yes
+12	DeleteAttribute	request	Attribute Index	No
+12	DeleteAttribute	response	Unique Identifier	Yes
+12	DeleteAttribute	response	Attribute	Yes
+12	ObtainLease	request	Unique Identifier	No
+12	ObtainLease	response	Unique Identifier	Yes
+12	ObtainLease	response	Lease Time	Yes
+12	ObtainLease	response	Last Change Date	Yes
+12	GetUsageAllocation	request	Unique Identifier	No
+12	GetUsageAllocation	request	Usage Limits Count	Yes
+12	GetUsageAllocation	response	Unique Identifier	Yes
+12	Activate	request	Unique Identifier	No
+12	Activate	response	Unique Identifier	Yes
+12	Revoke	request	Unique Identifier	No
+12	Revoke	request	Revocation Reason	Yes
+12	Revoke	request	Compromise Occurrence Date	No
+12	Revoke	response	Unique Identifier	Yes
+12	Destroy	request	Unique Identifier	No
+12	Destroy	response	Unique Identifier	Yes
+12	Archive	request	Unique Identifier	No
+12	Archive	response	Unique Identifier	Yes
+12	Recover	request	Unique Identifier	No
+12	Recover	response	Unique Identifier	Yes
+12	Validate	request	Certificate	No, MAY be repeated
+12	Validate	request	Unique Identifier	No, MAY be repeated
+12	Validate	request	Validity Date	No
+12	Validate	response	Validity Indicator	Yes
+12	Query	request	Query Function	Yes, MAY be Repeated
+12	Query	response	Operation	No, MAY be repeated
+12	Query	response	Object Type	No, MAY be repeated
+12	Query	response	Vendor Identification	No
+12	Query	response	Server Information	No
+12	Query	response	Application Namespace	No, MAY be repeated
+12	Query	response	Extension Information	No, MAY be repeated
+12	Query	response	Attestation Type	No, MAY be repeated
+12	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+12	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+12	Cancel	request	Asynchronous Correlation Value	Yes
+12	Cancel	response	Asynchronous Correlation Value	Yes
+12	Cancel	response	Cancellation Result	Yes
+12	Poll	request	Asynchronous Correlation Value	Yes
+12	Encrypt	request	Unique Identifier	No
+12	Encrypt	request	Cryptographic Parameters	No
+12	Encrypt	request	Data	Yes
+12	Encrypt	request	IV/Counter/Nonce	No
+12	Encrypt	response	Unique Identifier	Yes
+12	Encrypt	response	Data	Yes
+12	Encrypt	response	IV/Counter/Nonce	No
+12	Decrypt	request	Unique Identifier	No
+12	Decrypt	request	Cryptographic Parameters	No
+12	Decrypt	request	Data	Yes
+12	Decrypt	request	IV/Counter/Nonce	No
+12	Decrypt	response	Unique Identifier	Yes
+12	Decrypt	response	Data	Yes
+12	Sign	request	Unique Identifier	No
+12	Sign	request	Cryptographic Parameters	No
+12	Sign	request	Data	Yes
+12	Sign	response	Unique Identifier	Yes
+12	Sign	response	Signature Data	Yes
+12	SignatureVerify	request	Unique Identifier	No
+12	SignatureVerify	request	Cryptographic Parameters	No
+12	SignatureVerify	request	Data	No
+12	SignatureVerify	request	Signature Data	Yes
+12	SignatureVerify	response	Unique Identifier	Yes
+12	SignatureVerify	response	Validity Indicator	Yes
+12	SignatureVerify	response	Data	No
+12	MAC	request	Unique Identifier	No
+12	MAC	request	Cryptographic Parameters	No
+12	MAC	request	Data	Yes
+12	MAC	response	Unique Identifier	Yes
+12	MAC	response	MAC Data	Yes
+12	MACVerify	request	Unique Identifier	No
+12	MACVerify	request	Cryptographic Parameters	No
+12	MACVerify	request	Data	No
+12	MACVerify	request	MAC Data	Yes
+12	MACVerify	response	Unique Identifier	Yes
+12	MACVerify	response	Validity Indicator	Yes
+12	RNGRetrieve	request	Data Length	Yes
+12	RNGRetrieve	response	Data	Yes
+12	RNGSeed	request	Data	Yes
+12	RNGSeed	response	Data Length	Yes
+12	Hash	request	Cryptographic Parameters	Yes
+12	Hash	request	Data	Yes
+12	Hash	response	Data	Yes
+12	CreateSplitKey	request	Object Type	Yes
+12	CreateSplitKey	request	Unique Identifier	No
+12	CreateSplitKey	request	Split Key Parts	Yes
+12	CreateSplitKey	request	Split Key Threshold	Yes
+12	CreateSplitKey	request	Split Key Method	Yes
+12	CreateSplitKey	request	Prime Field Size	No
+12	CreateSplitKey	request	Template-Attribute	Yes
+12	CreateSplitKey	response	Object Type	Yes
+12	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+12	CreateSplitKey	response	Template-Attribute	No
+12	JoinSplitKey	request	Object Type	Yes
+12	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+12	JoinSplitKey	request	Secret Data Type	No
+12	JoinSplitKey	request	Template-Attribute	No
+12	JoinSplitKey	response	Object Type	Yes
+12	JoinSplitKey	response	Unique Identifier	Yes
+12	JoinSplitKey	response	Template-Attribute	No
+12	Notify	request	Unique Identifier	Yes
+12	Notify	request	Attribute	Yes, MAY be repeated
+12	Put	request	Unique Identifier	Yes
+12	Put	request	Put Function	Yes
+12	Put	request	Replaced Unique Identifier	No
+12	Put	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+12	Put	request	Attribute	No, MAY be repeated
+13	Create	request	Object Type	Yes
+13	Create	request	Template-Attribute	Yes
+13	Create	response	Object Type	Yes
+13	Create	response	Unique Identifier	Yes
+13	Create	response	Template-Attribute	No
+13	CreateKeyPair	request	Common Template-Attribute	No
+13	CreateKeyPair	request	Private Key Template-Attribute	No
+13	CreateKeyPair	request	Public Key Template-Attribute	No
+13	CreateKeyPair	response	Private Key Unique Identifier	Yes
+13	CreateKeyPair	response	Public Key Unique Identifier	Yes
+13	CreateKeyPair	response	Private Key Template-Attribute	No
+13	CreateKeyPair	response	Public Key Template-Attribute	No
+13	Register	request	Object Type	Yes
+13	Register	request	Template-Attribute	Yes
+13	Register	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template Secret Data or Opaque Object	Yes
+13	Register	response	Unique Identifier	Yes
+13	Register	response	Template-Attribute	No
+13	ReKey	request	Unique Identifier	No
+13	ReKey	request	Offset	No
+13	ReKey	request	Template-Attribute	No
+13	ReKey	response	Unique Identifier	Yes
+13	ReKey	response	Template-Attribute	No
+13	ReKeyKeyPair	request	Private Key Unique Identifier	No
+13	ReKeyKeyPair	request	Offset	No
+13	ReKeyKeyPair	request	Common Template-Attribute	No
+13	ReKeyKeyPair	request	Private Key Template-Attribute	No
+13	ReKeyKeyPair	request	Public Key Template-Attribute	No
+13	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+13	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+13	ReKeyKeyPair	response	Private Key Template-Attribute	No
+13	ReKeyKeyPair	response	Public Key Template-Attribute	No
+13	DeriveKey	request	Object Type	Yes
+13	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+13	DeriveKey	request	Derivation Method	Yes
+13	DeriveKey	request	Derivation Parameters	Yes
+13	DeriveKey	request	Template-Attribute	Yes
+13	DeriveKey	response	Unique Identifier	Yes
+13	DeriveKey	response	Template-Attribute	No
+13	Certify	request	Unique Identifier	No
+13	Certify	request	Certificate Request Type	No
+13	Certify	request	Certificate Request	No
+13	Certify	request	Template-Attribute	No
+13	Certify	response	Unique Identifier	Yes
+13	Certify	response	Template-Attribute	No
+13	ReCertify	request	Unique Identifier	No
+13	ReCertify	request	Certificate Request Type	No
+13	ReCertify	request	Certificate Request	No
+13	ReCertify	request	Offset	No
+13	ReCertify	request	Template-Attribute	No
+13	ReCertify	response	Unique Identifier	Yes
+13	ReCertify	response	Template-Attribute	No
+13	Locate	request	Maximum Items	No
+13	Locate	request	Offset Items	No
+13	Locate	request	Storage Status Mask	No
+13	Locate	request	Object Group Member	No
+13	Locate	request	Attribute	No, MAY be repeated
+13	Locate	response	Located Items	No
+13	Locate	response	Unique Identifier	No, MAY be repeated
+13	Check	request	Unique Identifier	No
+13	Check	request	Usage Limits Count	No
+13	Check	request	Cryptographic Usage Mask	No
+13	Check	request	Lease Time	No
+13	Check	response	Unique Identifier	Yes, unless a failure,
+13	Check	response	Usage Limits Count	No
+13	Check	response	Cryptographic Usage Mask	No
+13	Check	response	Lease Time	No
+13	Get	request	Unique Identifier	No
+13	Get	request	Key Format Type	No
+13	Get	request	Key Compression Type	No
+13	Get	request	Key Wrapping Specification	No
+13	Get	response	Object Type	Yes
+13	Get	response	Unique Identifier	Yes
+13	Get	response	Certificate, Symmetric Key, PGP Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+13	GetAttributes	request	Unique Identifier	No
+13	GetAttributes	request	Attribute Name	No, MAY be repeated
+13	GetAttributes	response	Unique Identifier	Yes
+13	GetAttributes	response	Attribute	No, MAY be repeated
+13	GetAttributeList	request	Unique Identifier	No
+13	GetAttributeList	response	Unique Identifier	Yes
+13	GetAttributeList	response	Attribute Name	Yes, MAY be repeated
+13	AddAttribute	request	Unique Identifier	No
+13	AddAttribute	request	Attribute	Yes
+13	AddAttribute	response	Unique Identifier	Yes
+13	AddAttribute	response	Attribute	Yes
+13	ModifyAttribute	request	Unique Identifier	No
+13	ModifyAttribute	request	Attribute	Yes
+13	ModifyAttribute	response	Unique Identifier	Yes
+13	ModifyAttribute	response	Attribute	Yes
+13	DeleteAttribute	request	Unique Identifier	No
+13	DeleteAttribute	request	Attribute Name	Yes
+13	DeleteAttribute	request	Attribute Index	No
+13	DeleteAttribute	response	Unique Identifier	Yes
+13	DeleteAttribute	response	Attribute	Yes
+13	ObtainLease	request	Unique Identifier	No
+13	ObtainLease	response	Unique Identifier	Yes
+13	ObtainLease	response	Lease Time	Yes
+13	ObtainLease	response	Last Change Date	Yes
+13	GetUsageAllocation	request	Unique Identifier	No
+13	GetUsageAllocation	request	Usage Limits Count	Yes
+13	GetUsageAllocation	response	Unique Identifier	Yes
+13	Activate	request	Unique Identifier	No
+13	Activate	response	Unique Identifier	Yes
+13	Revoke	request	Unique Identifier	No
+13	Revoke	request	Revocation Reason	Yes
+13	Revoke	request	Compromise Occurrence Date	No
+13	Revoke	response	Unique Identifier	Yes
+13	Destroy	request	Unique Identifier	No
+13	Destroy	response	Unique Identifier	Yes
+13	Archive	request	Unique Identifier	No
+13	Archive	response	Unique Identifier	Yes
+13	Recover	request	Unique Identifier	No
+13	Recover	response	Unique Identifier	Yes
+13	Validate	request	Certificate	No, MAY be repeated
+13	Validate	request	Unique Identifier	No, MAY be repeated
+13	Validate	request	Validity Date	No
+13	Validate	response	Validity Indicator	Yes
+13	Query	request	Protocol Version	No, MAY be Repeated
+13	Query	response	Protocol Version	No, MAY be repeated
+13	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+13	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+13	Cancel	request	Asynchronous Correlation Value	Yes
+13	Cancel	response	Asynchronous Correlation Value	Yes
+13	Cancel	response	Cancellation Result	Yes
+13	Poll	request	Asynchronous Correlation Value	Yes
+13	Encrypt	request	Unique Identifier	No
+13	Encrypt	request	Cryptographic Parameters	No
+13	Encrypt	request	Data	Yes for single-part. No for multi-part.
+13	Encrypt	request	IV/Counter/Nonce	No
+13	Encrypt	request	Correlation Value	No
+13	Encrypt	request	Init Indicator	No
+13	Encrypt	request	Final Indicator	No
+13	Encrypt	response	Unique Identifier	Yes
+13	Encrypt	response	Data	Yes for single-part. No for multi-part.
+13	Encrypt	response	IV/Counter/Nonce	No
+13	Encrypt	response	Correlation Value	No
+13	Decrypt	request	Unique Identifier	No
+13	Decrypt	request	Cryptographic Parameters	No
+13	Decrypt	request	Data	Yes for single-part. No for multi-part.
+13	Decrypt	request	IV/Counter/Nonce	No
+13	Decrypt	request	Correlation Value	No
+13	Decrypt	request	Init Indicator	No
+13	Decrypt	request	Final Indicator	No
+13	Decrypt	response	Unique Identifier	Yes
+13	Decrypt	response	Data	Yes for single-part. No for multi-part.
+13	Decrypt	response	Correlation Value	No
+13	Sign	request	Unique Identifier	No
+13	Sign	request	Cryptographic Parameters	No
+13	Sign	request	Data	Yes for single-part. No for multi-part.
+13	Sign	request	Correlation Value	No
+13	Sign	request	Init Indicator	No
+13	Sign	request	Final Indicator	No
+13	Sign	response	Unique Identifier	Yes
+13	Sign	response	Signature Data	Yes for single-part. No for multi-part.
+13	Sign	response	Correlation Value	No
+13	SignatureVerify	request	Unique Identifier	No
+13	SignatureVerify	request	Cryptographic Parameters	No
+13	SignatureVerify	request	Data	No
+13	SignatureVerify	request	Signature Data	Yes for single-part. No for multi-part.
+13	SignatureVerify	request	Correlation Value	No
+13	SignatureVerify	request	Init Indicator	No
+13	SignatureVerify	request	Final Indicator	No
+13	SignatureVerify	response	Unique Identifier	Yes
+13	SignatureVerify	response	Validity Indicator	Yes
+13	SignatureVerify	response	Data	No
+13	SignatureVerify	response	Correlation Value	No
+13	MAC	request	Unique Identifier	No
+13	MAC	request	Cryptographic Parameters	No
+13	MAC	request	Data	Yes for single-part. No for multi-part.
+13	MAC	request	Correlation Value	No
+13	MAC	request	Init Indicator	No
+13	MAC	request	Final Indicator	No
+13	MAC	response	Unique Identifier	Yes
+13	MAC	response	MAC Data	Yes for single-part. No for multi-part.
+13	MAC	response	Correlation Value	No
+13	MACVerify	request	Unique Identifier	No
+13	MACVerify	request	Cryptographic Parameters	No
+13	MACVerify	request	Data	No
+13	MACVerify	request	MAC Data	Yes for single-part. No for multi-part.
+13	MACVerify	request	Correlation Value	No
+13	MACVerify	request	Init Indicator	No
+13	MACVerify	request	Final Indicator	No
+13	MACVerify	response	Unique Identifier	Yes
+13	MACVerify	response	Validity Indicator	Yes
+13	MACVerify	response	Correlation Value	No
+13	RNGRetrieve	request	Data Length	Yes
+13	RNGRetrieve	response	Data	Yes
+13	RNGSeed	request	Data	Yes
+13	RNGSeed	response	Data Length	Yes
+13	Hash	request	Cryptographic Parameters	Yes
+13	Hash	request	Data	Yes for single-part. No for multi-part.
+13	Hash	request	Correlation Value	No
+13	Hash	request	Init Indicator	No
+13	Hash	request	Final Indicator	No
+13	Hash	response	Data	Yes for single-part. No for multi-part.
+13	Hash	response	Correlation Value	No
+13	CreateSplitKey	request	Object Type	Yes
+13	CreateSplitKey	request	Unique Identifier	No
+13	CreateSplitKey	request	Split Key Parts	Yes
+13	CreateSplitKey	request	Split Key Threshold	Yes
+13	CreateSplitKey	request	Split Key Method	Yes
+13	CreateSplitKey	request	Prime Field Size	No
+13	CreateSplitKey	request	Template-Attribute	Yes
+13	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+13	CreateSplitKey	response	Template-Attribute	No
+13	JoinSplitKey	request	Object Type	Yes
+13	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+13	JoinSplitKey	request	Secret Data Type	No
+13	JoinSplitKey	request	Template-Attribute	No
+13	JoinSplitKey	response	Unique Identifier	Yes
+13	JoinSplitKey	response	Template-Attribute	No
+13	Notify	request	Unique Identifier	Yes
+13	Notify	request	Attribute	Yes, MAY be repeated
+13	Put	request	Unique Identifier	Yes
+13	Put	request	Put Function	Yes
+13	Put	request	Replaced Unique Identifier	No
+13	Put	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+13	Put	request	Attribute	No, MAY be repeated
+14	Create	request	Object Type	Yes
+14	Create	request	Template-Attribute	Yes
+14	Create	response	Object Type	Yes
+14	Create	response	Unique Identifier	Yes
+14	Create	response	Template-Attribute	No
+14	CreateKeyPair	request	Common Template-Attribute	No
+14	CreateKeyPair	request	Private Key Template-Attribute	No
+14	CreateKeyPair	request	Public Key Template-Attribute	No
+14	CreateKeyPair	response	Private Key Unique Identifier	Yes
+14	CreateKeyPair	response	Public Key Unique Identifier	Yes
+14	CreateKeyPair	response	Private Key Template-Attribute	No
+14	CreateKeyPair	response	Public Key Template-Attribute	No
+14	Register	request	Object Type	Yes
+14	Register	request	Template-Attribute	Yes
+14	Register	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template Secret Data or Opaque Object	Yes
+14	Register	response	Unique Identifier	Yes
+14	Register	response	Template-Attribute	No
+14	ReKey	request	Unique Identifier	No
+14	ReKey	request	Offset	No
+14	ReKey	request	Template-Attribute	No
+14	ReKey	response	Unique Identifier	Yes
+14	ReKey	response	Template-Attribute	No
+14	ReKeyKeyPair	request	Private Key Unique Identifier	No
+14	ReKeyKeyPair	request	Offset	No
+14	ReKeyKeyPair	request	Common Template-Attribute	No
+14	ReKeyKeyPair	request	Private Key Template-Attribute	No
+14	ReKeyKeyPair	request	Public Key Template-Attribute	No
+14	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+14	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+14	ReKeyKeyPair	response	Private Key Template-Attribute	No
+14	ReKeyKeyPair	response	Public Key Template-Attribute	No
+14	DeriveKey	request	Object Type	Yes
+14	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+14	DeriveKey	request	Derivation Method	Yes
+14	DeriveKey	request	Derivation Parameters	Yes
+14	DeriveKey	request	Template-Attribute	Yes
+14	DeriveKey	response	Unique Identifier	Yes
+14	DeriveKey	response	Template-Attribute	No
+14	Certify	request	Unique Identifier	No
+14	Certify	request	Certificate Request Type	No
+14	Certify	request	Certificate Request	No
+14	Certify	request	Template-Attribute	No
+14	Certify	response	Unique Identifier	Yes
+14	Certify	response	Template-Attribute	No
+14	ReCertify	request	Unique Identifier	No
+14	ReCertify	request	Certificate Request Type	No
+14	ReCertify	request	Certificate Request	No
+14	ReCertify	request	Offset	No
+14	ReCertify	request	Template-Attribute	No
+14	ReCertify	response	Unique Identifier	Yes
+14	ReCertify	response	Template-Attribute	No
+14	Locate	request	Maximum Items	No
+14	Locate	request	Offset Items	No
+14	Locate	request	Storage Status Mask	No
+14	Locate	request	Object Group Member	No
+14	Locate	request	Attribute	No, MAY be repeated
+14	Locate	response	Located Items	No
+14	Locate	response	Unique Identifier	No, MAY be repeated
+14	Check	request	Unique Identifier	No
+14	Check	request	Usage Limits Count	No
+14	Check	request	Cryptographic Usage Mask	No
+14	Check	request	Lease Time	No
+14	Check	response	Unique Identifier	Yes, unless a failure,
+14	Check	response	Usage Limits Count	No
+14	Check	response	Cryptographic Usage Mask	No
+14	Check	response	Lease Time	No
+14	Get	request	Unique Identifier	No
+14	Get	request	Key Format Type	No
+14	Get	request	Key Wrap Type	No
+14	Get	request	Key Compression Type	No
+14	Get	request	Key Wrapping Specification	No
+14	Get	response	Object Type	Yes
+14	Get	response	Unique Identifier	Yes
+14	Get	response	Certificate, Symmetric Key, PGP Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+14	GetAttributes	request	Unique Identifier	No
+14	GetAttributes	request	Attribute Name	No, MAY be repeated
+14	GetAttributes	response	Unique Identifier	Yes
+14	GetAttributes	response	Attribute	No, MAY be repeated
+14	GetAttributeList	request	Unique Identifier	No
+14	GetAttributeList	response	Unique Identifier	Yes
+14	GetAttributeList	response	Attribute Name	Yes, MAY be repeated
+14	AddAttribute	request	Unique Identifier	No
+14	AddAttribute	request	Attribute	Yes
+14	AddAttribute	response	Unique Identifier	Yes
+14	AddAttribute	response	Attribute	Yes
+14	ModifyAttribute	request	Unique Identifier	No
+14	ModifyAttribute	request	Attribute	Yes
+14	ModifyAttribute	response	Unique Identifier	Yes
+14	ModifyAttribute	response	Attribute	Yes
+14	DeleteAttribute	request	Unique Identifier	No
+14	DeleteAttribute	request	Attribute Name	Yes
+14	DeleteAttribute	request	Attribute Index	No
+14	DeleteAttribute	response	Unique Identifier	Yes
+14	DeleteAttribute	response	Attribute	Yes
+14	ObtainLease	request	Unique Identifier	No
+14	ObtainLease	response	Unique Identifier	Yes
+14	ObtainLease	response	Lease Time	Yes
+14	ObtainLease	response	Last Change Date	Yes
+14	GetUsageAllocation	request	Unique Identifier	No
+14	GetUsageAllocation	request	Usage Limits Count	Yes
+14	GetUsageAllocation	response	Unique Identifier	Yes
+14	Activate	request	Unique Identifier	No
+14	Activate	response	Unique Identifier	Yes
+14	Revoke	request	Unique Identifier	No
+14	Revoke	request	Revocation Reason	Yes
+14	Revoke	request	Compromise Occurrence Date	No
+14	Revoke	response	Unique Identifier	Yes
+14	Destroy	request	Unique Identifier	No
+14	Destroy	response	Unique Identifier	Yes
+14	Archive	request	Unique Identifier	No
+14	Archive	response	Unique Identifier	Yes
+14	Recover	request	Unique Identifier	No
+14	Recover	response	Unique Identifier	Yes
+14	Validate	request	Certificate	No, MAY be repeated
+14	Validate	request	Unique Identifier	No, MAY be repeated
+14	Validate	request	Validity Date	No
+14	Validate	response	Validity Indicator	Yes
+14	Query	request	Protocol Version	No, MAY be Repeated
+14	Query	response	Protocol Version	No, MAY be repeated
+14	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+14	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+14	Cancel	request	Asynchronous Correlation Value	Yes
+14	Cancel	response	Asynchronous Correlation Value	Yes
+14	Cancel	response	Cancellation Result	Yes
+14	Poll	request	Asynchronous Correlation Value	Yes
+14	Encrypt	request	Unique Identifier	No
+14	Encrypt	request	Cryptographic Parameters	No
+14	Encrypt	request	Data	Yes for single-part. No for multi-part.
+14	Encrypt	request	IV/Counter/Nonce	No
+14	Encrypt	request	Correlation Value	No
+14	Encrypt	request	Init Indicator	No
+14	Encrypt	request	Final Indicator	No
+14	Encrypt	request	Authenticated Encryption Additional Data	No
+14	Encrypt	response	Unique Identifier	Yes
+14	Encrypt	response	Data	Yes for single-part. No for multi-part.
+14	Encrypt	response	IV/Counter/Nonce	No
+14	Encrypt	response	Correlation Value	No
+14	Encrypt	response	Authenticated Encryption Tag	No
+14	Decrypt	request	Unique Identifier	No
+14	Decrypt	request	Cryptographic Parameters	No
+14	Decrypt	request	Data	Yes for single-part. No for multi-part.
+14	Decrypt	request	IV/Counter/Nonce	No
+14	Decrypt	request	Correlation Value	No
+14	Decrypt	request	Init Indicator	No
+14	Decrypt	request	Final Indicator	No
+14	Decrypt	request	Authenticated Encryption Additional Data	No
+14	Decrypt	request	Authenticated Encryption Tag	No
+14	Decrypt	response	Unique Identifier	Yes
+14	Decrypt	response	Data	Yes for single-part. No for multi-part.
+14	Decrypt	response	Correlation Value	No
+14	Sign	request	Unique Identifier	No
+14	Sign	request	Cryptographic Parameters	No
+14	Sign	request	Data	Yes for single-part, unless Digested Data is supplied.. No for multi-part.
+14	Sign	request	Digested Data	No
+14	Sign	request	Correlation Value	No
+14	Sign	request	Init Indicator	No
+14	Sign	request	Final Indicator	No
+14	Sign	response	Unique Identifier	Yes
+14	Sign	response	Signature Data	Yes for single-part. No for multi-part.
+14	Sign	response	Correlation Value	No
+14	SignatureVerify	request	Unique Identifier	No
+14	SignatureVerify	request	Cryptographic Parameters	No
+14	SignatureVerify	request	Data	No
+14	SignatureVerify	request	Digested Data	No
+14	SignatureVerify	request	Signature Data	Yes for single-part. No for multi-part.
+14	SignatureVerify	request	Correlation Value	No
+14	SignatureVerify	request	Init Indicator	No
+14	SignatureVerify	request	Final Indicator	No
+14	SignatureVerify	response	Unique Identifier	Yes
+14	SignatureVerify	response	Validity Indicator	Yes
+14	SignatureVerify	response	Data	No
+14	SignatureVerify	response	Correlation Value	No
+14	MAC	request	Unique Identifier	No
+14	MAC	request	Cryptographic Parameters	No
+14	MAC	request	Data	Yes for single-part. No for multi-part.
+14	MAC	request	Correlation Value	No
+14	MAC	request	Init Indicator	No
+14	MAC	request	Final Indicator	No
+14	MAC	response	Unique Identifier	Yes
+14	MAC	response	MAC Data	Yes for single-part. No for multi-part.
+14	MAC	response	Correlation Value	No
+14	MACVerify	request	Unique Identifier	No
+14	MACVerify	request	Cryptographic Parameters	No
+14	MACVerify	request	Data	No
+14	MACVerify	request	MAC Data	Yes for single-part. No for multi-part.
+14	MACVerify	request	Correlation Value	No
+14	MACVerify	request	Init Indicator	No
+14	MACVerify	request	Final Indicator	No
+14	MACVerify	response	Unique Identifier	Yes
+14	MACVerify	response	Validity Indicator	Yes
+14	MACVerify	response	Correlation Value	No
+14	RNGRetrieve	request	Data Length	Yes
+14	RNGRetrieve	response	Data	Yes
+14	RNGSeed	request	Data	Yes
+14	RNGSeed	response	Data Length	Yes
+14	Hash	request	Cryptographic Parameters	Yes
+14	Hash	request	Data	Yes for single-part. No for multi-part.
+14	Hash	request	Correlation Value	No
+14	Hash	request	Init Indicator	No
+14	Hash	request	Final Indicator	No
+14	Hash	response	Data	Yes for single-part. No for multi-part.
+14	Hash	response	Correlation Value	No
+14	CreateSplitKey	request	Object Type	Yes
+14	CreateSplitKey	request	Unique Identifier	No
+14	CreateSplitKey	request	Split Key Parts	Yes
+14	CreateSplitKey	request	Split Key Threshold	Yes
+14	CreateSplitKey	request	Split Key Method	Yes
+14	CreateSplitKey	request	Prime Field Size	No
+14	CreateSplitKey	request	Template-Attribute	Yes
+14	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+14	CreateSplitKey	response	Template-Attribute	No
+14	JoinSplitKey	request	Object Type	Yes
+14	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+14	JoinSplitKey	request	Secret Data Type	No
+14	JoinSplitKey	request	Template-Attribute	No
+14	JoinSplitKey	response	Unique Identifier	Yes
+14	JoinSplitKey	response	Template-Attribute	No
+14	Export	request	Unique Identifier	No
+14	Export	request	Key Format Type	No
+14	Export	request	Key Wrap Type	No
+14	Export	request	Key Compression Type	No
+14	Export	request	Key Wrapping Specification	No
+14	Export	response	Object Type	Yes
+14	Export	response	Unique Identifier	Yes
+14	Export	response	Attribute	Yes, is repeated
+14	Export	response	Certificate, Symmetric Key, PGP Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+14	Import	request	Unique Identifier	Yes
+14	Import	request	Replace Existing	No
+14	Import	request	Key Wrap Type	No
+14	Import	request	Attribute	Yes, is repeated
+14	Import	request	Certificate, Symmetric Key, PGP Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+14	Import	response	Unique Identifier	Yes
+14	Notify	request	Unique Identifier	Yes
+14	Notify	request	Attribute	Yes, MAY be repeated
+14	Put	request	Unique Identifier	Yes
+14	Put	request	Put Function	Yes
+14	Put	request	Replaced Unique Identifier	No
+14	Put	request	Certificate, Symmetric Key, Private Key, Public Key, Split Key, Template, Secret Data, or Opaque Object	Yes
+14	Put	request	Attribute	No, MAY be repeated
+20	Activate	request	Unique Identifier	No
+20	Activate	response	Unique Identifier	Yes
+20	AddAttribute	request	Unique Identifier	No
+20	AddAttribute	request	New Attribute	Yes
+20	AddAttribute	response	Unique Identifier	Yes
+20	AdjustAttribute	request	Unique Identifier	No
+20	AdjustAttribute	request	Attribute Reference	Yes
+20	AdjustAttribute	request	Adjustment Type	Yes
+20	AdjustAttribute	request	Adjustment Value	No
+20	AdjustAttribute	response	Unique Identifier	Yes
+20	Archive	request	Unique Identifier	No
+20	Archive	response	Unique Identifier	Yes
+20	Cancel	request	Asynchronous Correlation Value	Yes
+20	Cancel	response	Asynchronous Correlation Value	Yes
+20	Cancel	response	Cancellation Result	Yes
+20	Certify	request	Unique Identifier	No
+20	Certify	request	Certificate Request Type	No
+20	Certify	request	Certificate Request Value	No
+20	Certify	request	Attributes	No
+20	Certify	request	Protection Storage Masks	No
+20	Certify	response	Unique Identifier	Yes
+20	Check	request	Unique Identifier	No
+20	Check	request	Usage Limits Count	No
+20	Check	request	Cryptographic Usage Mask	No
+20	Check	request	Lease Time	No
+20	Check	response	Unique Identifier	Yes, unless a failure,
+20	Check	response	Usage Limits Count	No
+20	Check	response	Cryptographic Usage Mask	No
+20	Check	response	Lease Time	No
+20	Create	request	Object Type	Yes
+20	Create	request	Attributes	Yes
+20	Create	request	Protection Storage Masks	No
+20	Create	response	Object Type	Yes
+20	Create	response	Unique Identifier	Yes
+20	CreateKeyPair	request	Common Attributes	No
+20	CreateKeyPair	request	Private Key Attributes	No
+20	CreateKeyPair	request	Public Key Attributes	No
+20	CreateKeyPair	request	Common Protection Storage Masks	No
+20	CreateKeyPair	request	Private Protection Storage Masks	No
+20	CreateKeyPair	request	Public Protection Storage Masks	No
+20	CreateKeyPair	response	Private Key Unique Identifier	Yes
+20	CreateKeyPair	response	Public Key Unique Identifier	Yes
+20	CreateSplitKey	request	Object Type	Yes
+20	CreateSplitKey	request	Unique Identifier	No
+20	CreateSplitKey	request	Split Key Parts	Yes
+20	CreateSplitKey	request	Split Key Threshold	Yes
+20	CreateSplitKey	request	Split Key Method	Yes
+20	CreateSplitKey	request	Prime Field Size	No
+20	CreateSplitKey	request	Attributes	Yes
+20	CreateSplitKey	request	Protection Storage Masks	No
+20	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+20	Decrypt	request	Unique Identifier	No
+20	Decrypt	request	Cryptographic Parameters	No
+20	Decrypt	request	Data	Yes for single-part. No for multi-part.
+20	Decrypt	request	IV/Counter/Nonce	No
+20	Decrypt	request	Correlation Value	No
+20	Decrypt	request	Init Indicator	No
+20	Decrypt	request	Final Indicator	No
+20	Decrypt	request	Authenticated Encryption Additional Data	No
+20	Decrypt	request	Authenticated Encryption Tag	No
+20	Decrypt	response	Unique Identifier	Yes
+20	Decrypt	response	Data	No.
+20	Decrypt	response	Correlation Value	No
+20	DelegatedLogin	request	Lease Time	No
+20	DelegatedLogin	request	Request Count	No
+20	DelegatedLogin	request	Usage Limits	No
+20	DelegatedLogin	request	Rights	Yes
+20	DelegatedLogin	response	Ticket	Yes
+20	DeleteAttribute	request	Unique Identifier	No
+20	DeleteAttribute	request	Current Attribute	No
+20	DeleteAttribute	request	Attribute Reference	No
+20	DeleteAttribute	response	Unique Identifier	Yes
+20	DeriveKey	request	Object Type	Yes
+20	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+20	DeriveKey	request	Derivation Method	Yes
+20	DeriveKey	request	Derivation Parameters	Yes
+20	DeriveKey	request	Attributes	Yes
+20	DeriveKey	response	Unique Identifier	Yes
+20	Destroy	request	Unique Identifier	No
+20	Destroy	response	Unique Identifier	Yes
+20	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+20	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+20	Encrypt	request	Unique Identifier	No
+20	Encrypt	request	Cryptographic Parameters	No
+20	Encrypt	request	Data	Yes for single-part. No for multi-part.
+20	Encrypt	request	IV/Counter/Nonce	No
+20	Encrypt	request	Correlation Value	No
+20	Encrypt	request	Init Indicator	No
+20	Encrypt	request	Final Indicator	No
+20	Encrypt	request	Authenticated Encryption Additional Data	No
+20	Encrypt	response	Unique Identifier	Yes
+20	Encrypt	response	Data	No.
+20	Encrypt	response	IV/Counter/Nonce	No
+20	Encrypt	response	Correlation Value	No
+20	Encrypt	response	Authenticated Encryption Tag	No
+20	Export	request	Unique Identifier	No
+20	Export	request	Key Format Type	No
+20	Export	request	Key Wrap Type	No
+20	Export	request	Key Compression Type	No
+20	Export	request	Key Wrapping Specification	No
+20	Export	response	Object Type	Yes
+20	Export	response	Unique Identifier	Yes
+20	Export	response	Attributes	Yes
+20	Export	response	Any Object (Section 2)	Yes
+20	Get	request	Unique Identifier	No
+20	Get	request	Key Format Type	No
+20	Get	request	Key Wrap Type	No
+20	Get	request	Key Compression Type	No
+20	Get	request	Key Wrapping Specification	No
+20	Get	response	Object Type	Yes
+20	Get	response	Unique Identifier	Yes
+20	Get	response	Any Object (Section 2)	Yes
+20	GetAttributes	request	Unique Identifier	No
+20	GetAttributes	request	Attribute Reference	No, MAY be repeated
+20	GetAttributes	response	Unique Identifier	Yes
+20	GetAttributes	response	Attributes	Yes
+20	GetAttributeList	request	Unique Identifier	No
+20	GetAttributeList	response	Unique Identifier	Yes
+20	GetAttributeList	response	Attribute Reference	Yes, MAY be repeated
+20	GetUsageAllocation	request	Unique Identifier	No
+20	GetUsageAllocation	request	Usage Limits Count	Yes
+20	GetUsageAllocation	response	Unique Identifier	Yes
+20	Hash	request	Cryptographic Parameters	Yes
+20	Hash	request	Data	Yes for single-part. No for multi-part.
+20	Hash	request	Correlation Value	No
+20	Hash	request	Init Indicator	No
+20	Hash	request	Final Indicator	No
+20	Hash	response	Data	Yes for single-part. No for multi-part.
+20	Hash	response	Correlation Value	No
+20	Import	request	Unique Identifier	Yes
+20	Import	request	Object Type	Yes
+20	Import	request	Replace Existing	No
+20	Import	request	Key Wrap Type	If and only if the key object is wrapped.
+20	Import	request	Attributes	Yes
+20	Import	request	Any Object (Section 2)	Yes
+20	Import	response	Unique Identifier	Yes
+20	Interop	request	Interop Function	Yes
+20	Interop	request	Interop Identifier	Yes
+20	Interop	response		
+20	JoinSplitKey	request	Object Type	Yes
+20	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+20	JoinSplitKey	request	Secret Data Type	No
+20	JoinSplitKey	request	Attributes	No
+20	JoinSplitKey	request	Protection Storage Masks	No
+20	JoinSplitKey	response	Unique Identifier	Yes
+20	Locate	request	Maximum Items	No
+20	Locate	request	Offset Items	No
+20	Locate	request	Storage Status Mask	No
+20	Locate	request	Object Group Member	No
+20	Locate	request	Attributes	Yes
+20	Locate	response	Located Items	No
+20	Locate	response	Unique Identifier	No, MAY be repeated
+20	Log	request	Log Message	Yes
+20	Login	request	Lease Time	No
+20	Login	request	Request Count	No
+20	Login	request	Usage Limits	No
+20	Login	response	Ticket	Yes
+20	Logout	request	Ticket	Yes
+20	MAC	request	Unique Identifier	No
+20	MAC	request	Cryptographic Parameters	No
+20	MAC	request	Data	Yes for single-part. No for multi-part.
+20	MAC	request	Correlation Value	No
+20	MAC	request	Init Indicator	No
+20	MAC	request	Final Indicator	No
+20	MAC	response	Unique Identifier	Yes
+20	MAC	response	MAC Data	Yes for single-part. No for multi-part
+20	MAC	response	Correlation Value	No
+20	MACVerify	request	Unique Identifier	No
+20	MACVerify	request	Cryptographic Parameters	No
+20	MACVerify	request	Data	No
+20	MACVerify	request	MAC Data	Yes for single-part. No for multi-part.
+20	MACVerify	request	Correlation Value	No
+20	MACVerify	request	Init Indicator	No
+20	MACVerify	request	Final Indicator	No
+20	MACVerify	response	Unique Identifier	Yes
+20	MACVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+20	MACVerify	response	Correlation Value	No
+20	ModifyAttribute	request	Unique Identifier	No
+20	ModifyAttribute	request	Current Attribute	No
+20	ModifyAttribute	request	New Attribute	Yes
+20	ModifyAttribute	response	Unique Identifier	Yes
+20	ObtainLease	request	Unique Identifier	No
+20	ObtainLease	response	Unique Identifier	Yes
+20	ObtainLease	response	Lease Time	Yes
+20	ObtainLease	response	Last Change Date	Yes
+20	PKCS_11	request	PKCS#11 Interface	No
+20	PKCS_11	request	PKCS#11 Function	Yes
+20	PKCS_11	request	Correlation Value	No
+20	PKCS_11	request	PKCS#11 Input Parameters	No
+20	PKCS_11	response	PKCS#11 Interface	No
+20	PKCS_11	response	PKCS#11 Function	Yes
+20	PKCS_11	response	Correlation Value	No
+20	PKCS_11	response	PKCS#11 Output Parameters	No
+20	PKCS_11	response	PKCS#11 Return Code	Yes
+20	Poll	request	Asynchronous Correlation Value	Yes
+20	Query	request	Query Function	Yes, MAY be Repeated
+20	Query	response	Operation	No, MAY be repeated
+20	Query	response	Object Type	No, MAY be repeated
+20	Query	response	Vendor Identification	No
+20	Query	response	Server Information	No
+20	Query	response	Extension Information	No, MAY be repeated
+20	Query	response	Attestation Type	No, MAY be repeated
+20	Query	response	RNG Parameters	No, MAY be repeated
+20	Query	response	Profile Information	No, MAY be repeated
+20	Query	response	Validation Information	No, MAY be repeated
+20	Query	response	Capability Information	No, MAY be repeated
+20	Query	response	Client Registration Method	No, MAY be repeated
+20	Recover	request	Unique Identifier	No
+20	Recover	response	Unique Identifier	Yes
+20	Register	request	Object Type	Yes
+20	Register	request	Attributes	Yes
+20	Register	request	Any Object (Section 2)	Yes
+20	Register	request	Protection Storage Masks	No
+20	Register	response	Unique Identifier	Yes
+20	Revoke	request	Unique Identifier	No
+20	Revoke	request	Revocation Reason	Yes
+20	Revoke	request	Compromise Occurrence Date	No
+20	Revoke	response	Unique Identifier	Yes
+20	ReCertify	request	Unique Identifier	No
+20	ReCertify	request	Certificate Request Unique Identifier	No
+20	ReCertify	request	Certificate Request Type	No
+20	ReCertify	request	Certificate Request Value	No
+20	ReCertify	request	Offset	No
+20	ReCertify	request	Attributes	No
+20	ReCertify	request	Protection Storage Masks	No
+20	ReCertify	response	Unique Identifier	Yes
+20	ReKey	request	Unique Identifier	No
+20	ReKey	request	Offset	No
+20	ReKey	request	Attributes	No
+20	ReKey	request	Protection Storage Masks	No
+20	ReKey	response	Unique Identifier	Yes
+20	ReKeyKeyPair	request	Private Key Unique Identifier	No
+20	ReKeyKeyPair	request	Offset	No
+20	ReKeyKeyPair	request	Common Attributes	No
+20	ReKeyKeyPair	request	Private Key Attributes	No
+20	ReKeyKeyPair	request	Public Key Attributes	No
+20	ReKeyKeyPair	request	Common Protection Storage Masks	No
+20	ReKeyKeyPair	request	Private Protection Storage Masks	No
+20	ReKeyKeyPair	request	Public Protection Storage Masks	No
+20	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+20	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+20	ReProvision	request	Certificate Request	No
+20	ReProvision	request	Certificate	No
+20	ReProvision	response	Unique Identifier	No
+20	RNGRetrieve	request	Data Length	Yes
+20	RNGRetrieve	response	Data	Yes
+20	RNGSeed	request	Data	Yes
+20	RNGSeed	response	Data Length	Yes
+20	SetAttribute	request	Unique Identifier	No
+20	SetAttribute	request	New Attribute	Yes
+20	SetAttribute	response	Unique Identifier	Yes
+20	SetEndpointRole	request	Endpoint Role	Yes
+20	SetEndpointRole	response	Endpoint Role	Yes
+20	Sign	request	Unique Identifier	No
+20	Sign	request	Cryptographic Parameters	No
+20	Sign	request	Data	Yes for single-part, unless Digested Data is supplied.. No for multi-part.
+20	Sign	request	Digested Data	No
+20	Sign	request	Correlation Value	No
+20	Sign	request	Init Indicator	No
+20	Sign	request	Final Indicator	No
+20	Sign	response	Unique Identifier	Yes
+20	Sign	response	Signature Data	Yes for single-part. No for multi-part.
+20	Sign	response	Correlation Value	No
+20	SignatureVerify	request	Unique Identifier	No
+20	SignatureVerify	request	Cryptographic Parameters	No
+20	SignatureVerify	request	Data	No
+20	SignatureVerify	request	Digested Data	No
+20	SignatureVerify	request	Signature Data	Yes for single-part. No for multi-part.
+20	SignatureVerify	request	Correlation Value	No
+20	SignatureVerify	request	Init Indicator	No
+20	SignatureVerify	request	Final Indicator	No
+20	SignatureVerify	response	Unique Identifier	Yes
+20	SignatureVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+20	SignatureVerify	response	Data	No
+20	SignatureVerify	response	Correlation Value	No
+20	Validate	request	Certificate	No, MAY be repeated
+20	Validate	request	Unique Identifier	No, MAY be repeated
+20	Validate	request	Validity Date	No
+20	Validate	response	Validity Indicator	Yes
+20	Notify	request	Unique Identifier	Yes
+20	Notify	request	Attributes	No
+20	Notify	request	Attribute Reference	No, may be repeated
+20	Put	request	Unique Identifier	Yes
+20	Put	request	Put Function	Yes
+20	Put	request	Replaced Unique Identifier	No
+20	Put	request	All Objects	Yes
+20	Put	request	Attributes	No
+21	Activate	request	Unique Identifier	No
+21	Activate	response	Unique Identifier	Yes
+21	AddAttribute	request	Unique Identifier	No
+21	AddAttribute	request	New Attribute	Yes
+21	AddAttribute	response	Unique Identifier	Yes
+21	AdjustAttribute	request	Unique Identifier	No
+21	AdjustAttribute	request	Attribute Reference	Yes
+21	AdjustAttribute	request	Adjustment Type	Yes
+21	AdjustAttribute	request	Adjustment Value	No
+21	AdjustAttribute	response	Unique Identifier	Yes
+21	Archive	request	Unique Identifier	No
+21	Archive	response	Unique Identifier	Yes
+21	Cancel	request	Asynchronous Correlation Value	Yes
+21	Cancel	response	Asynchronous Correlation Value	Yes
+21	Cancel	response	Cancellation Result	Yes
+21	Certify	request	Unique Identifier	No
+21	Certify	request	Certificate Request Type	No
+21	Certify	request	Certificate Request Value	No
+21	Certify	request	Attributes	No
+21	Certify	request	Protection Storage Masks	No
+21	Certify	response	Unique Identifier	Yes
+21	Check	request	Unique Identifier	No
+21	Check	request	Usage Limits Count	No
+21	Check	request	Cryptographic Usage Mask	No
+21	Check	request	Lease Time	No
+21	Check	response	Unique Identifier	Yes, unless a failure,
+21	Check	response	Usage Limits Count	No
+21	Check	response	Cryptographic Usage Mask	No
+21	Check	response	Lease Time	No
+21	Create	request	Object Type	Yes
+21	Create	request	Attributes	Yes
+21	Create	request	Protection Storage Masks	No
+21	Create	response	Object Type	Yes
+21	Create	response	Unique Identifier	Yes
+21	CreateKeyPair	request	Common Attributes	No
+21	CreateKeyPair	request	Private Key Attributes	No
+21	CreateKeyPair	request	Public Key Attributes	No
+21	CreateKeyPair	request	Common Protection Storage Masks	No
+21	CreateKeyPair	request	Private Protection Storage Masks	No
+21	CreateKeyPair	request	Public Protection Storage Masks	No
+21	CreateKeyPair	response	Private Key Unique Identifier	Yes
+21	CreateKeyPair	response	Public Key Unique Identifier	Yes
+21	CreateSplitKey	request	Object Type	Yes
+21	CreateSplitKey	request	Unique Identifier	No
+21	CreateSplitKey	request	Split Key Parts	Yes
+21	CreateSplitKey	request	Split Key Threshold	Yes
+21	CreateSplitKey	request	Split Key Method	Yes
+21	CreateSplitKey	request	Prime Field Size	No
+21	CreateSplitKey	request	Attributes	Yes
+21	CreateSplitKey	request	Protection Storage Masks	No
+21	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+21	Decrypt	request	Unique Identifier	No
+21	Decrypt	request	Cryptographic Parameters	No
+21	Decrypt	request	Data	Yes for single-part. No for multi-part.
+21	Decrypt	request	IV/Counter/Nonce	No
+21	Decrypt	request	Correlation Value	No
+21	Decrypt	request	Init Indicator	No
+21	Decrypt	request	Final Indicator	No
+21	Decrypt	request	Authenticated Encryption Additional Data	No
+21	Decrypt	request	Authenticated Encryption Tag	No
+21	Decrypt	response	Unique Identifier	Yes
+21	Decrypt	response	Data	No.
+21	Decrypt	response	Correlation Value	No
+21	DelegatedLogin	request	Lease Time	No
+21	DelegatedLogin	request	Request Count	No
+21	DelegatedLogin	request	Usage Limits	No
+21	DelegatedLogin	request	Rights	Yes
+21	DelegatedLogin	response	Ticket	Yes
+21	DeleteAttribute	request	Unique Identifier	No
+21	DeleteAttribute	request	Current Attribute	No
+21	DeleteAttribute	request	Attribute Reference	No
+21	DeleteAttribute	response	Unique Identifier	Yes
+21	DeriveKey	request	Object Type	Yes
+21	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+21	DeriveKey	request	Derivation Method	Yes
+21	DeriveKey	request	Derivation Parameters	Yes
+21	DeriveKey	request	Attributes	Yes
+21	DeriveKey	response	Unique Identifier	Yes
+21	Destroy	request	Unique Identifier	No
+21	Destroy	response	Unique Identifier	Yes
+21	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+21	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+21	Encrypt	request	Unique Identifier	No
+21	Encrypt	request	Cryptographic Parameters	No
+21	Encrypt	request	Data	Yes for single-part. No for multi-part.
+21	Encrypt	request	IV/Counter/Nonce	No
+21	Encrypt	request	Correlation Value	No
+21	Encrypt	request	Init Indicator	No
+21	Encrypt	request	Final Indicator	No
+21	Encrypt	request	Authenticated Encryption Additional Data	No
+21	Encrypt	response	Unique Identifier	Yes
+21	Encrypt	response	Data	No.
+21	Encrypt	response	IV/Counter/Nonce	No
+21	Encrypt	response	Correlation Value	No
+21	Encrypt	response	Authenticated Encryption Tag	No
+21	Export	request	Unique Identifier	No
+21	Export	request	Key Format Type	No
+21	Export	request	Key Wrap Type	No
+21	Export	request	Key Compression Type	No
+21	Export	request	Key Wrapping Specification	No
+21	Export	response	Object Type	Yes
+21	Export	response	Unique Identifier	Yes
+21	Export	response	Attributes	Yes
+21	Export	response	Any Object (Section 2)	Yes
+21	Get	request	Unique Identifier	No
+21	Get	request	Key Format Type	No
+21	Get	request	Key Wrap Type	No
+21	Get	request	Key Compression Type	No
+21	Get	request	Key Wrapping Specification	No
+21	Get	response	Object Type	Yes
+21	Get	response	Unique Identifier	Yes
+21	Get	response	Any Object (Section 2)	Yes
+21	GetAttributes	request	Unique Identifier	No
+21	GetAttributes	request	Attribute Reference	No, MAY be repeated
+21	GetAttributes	response	Unique Identifier	Yes
+21	GetAttributes	response	Attributes	Yes
+21	GetAttributeList	request	Unique Identifier	No
+21	GetAttributeList	response	Unique Identifier	Yes
+21	GetAttributeList	response	Attribute Reference	Yes, MAY be repeated
+21	GetConstraints	request		
+21	GetConstraints	response	Constraints	Yes
+21	GetUsageAllocation	request	Unique Identifier	No
+21	GetUsageAllocation	request	Usage Limits Count	Yes
+21	GetUsageAllocation	response	Unique Identifier	Yes
+21	Hash	request	Cryptographic Parameters	Yes
+21	Hash	request	Data	Yes for single-part. No for multi-part.
+21	Hash	request	Correlation Value	No
+21	Hash	request	Init Indicator	No
+21	Hash	request	Final Indicator	No
+21	Hash	response	Data	Yes for single-part. No for multi-part.
+21	Hash	response	Correlation Value	No
+21	Import	request	Unique Identifier	Yes
+21	Import	request	Object Type	Yes
+21	Import	request	Replace Existing	No
+21	Import	request	Key Wrap Type	If and only if the key object is wrapped.
+21	Import	request	Attributes	Yes
+21	Import	request	Any Object (Section 2)	Yes
+21	Import	response	Unique Identifier	Yes
+21	Interop	request	Interop Function	Yes
+21	Interop	request	Interop Identifier	Yes
+21	Interop	response		
+21	JoinSplitKey	request	Object Type	Yes
+21	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+21	JoinSplitKey	request	Secret Data Type	No
+21	JoinSplitKey	request	Attributes	No
+21	JoinSplitKey	request	Protection Storage Masks	No
+21	JoinSplitKey	response	Unique Identifier	Yes
+21	Locate	request	Maximum Items	No
+21	Locate	request	Offset Items	No
+21	Locate	request	Storage Status Mask	No
+21	Locate	request	Object Group Member	No
+21	Locate	request	Attributes	Yes
+21	Locate	response	Located Items	No
+21	Locate	response	Unique Identifier	No, MAY be repeated
+21	Log	request	Log Message	Yes
+21	Login	request	Lease Time	No
+21	Login	request	Request Count	No
+21	Login	request	Usage Limits	No
+21	Login	response	Ticket	Yes
+21	Logout	request	Ticket	Yes
+21	MAC	request	Unique Identifier	No
+21	MAC	request	Cryptographic Parameters	No
+21	MAC	request	Data	Yes for single-part. No for multi-part.
+21	MAC	request	Correlation Value	No
+21	MAC	request	Init Indicator	No
+21	MAC	request	Final Indicator	No
+21	MAC	response	Unique Identifier	Yes
+21	MAC	response	MAC Data	Yes for single-part. No for multi-part
+21	MAC	response	Correlation Value	No
+21	MACVerify	request	Unique Identifier	No
+21	MACVerify	request	Cryptographic Parameters	No
+21	MACVerify	request	Data	No
+21	MACVerify	request	MAC Data	Yes for single-part. No for multi-part.
+21	MACVerify	request	Correlation Value	No
+21	MACVerify	request	Init Indicator	No
+21	MACVerify	request	Final Indicator	No
+21	MACVerify	response	Unique Identifier	Yes
+21	MACVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+21	MACVerify	response	Correlation Value	No
+21	ModifyAttribute	request	Unique Identifier	No
+21	ModifyAttribute	request	Current Attribute	No
+21	ModifyAttribute	request	New Attribute	Yes
+21	ModifyAttribute	response	Unique Identifier	Yes
+21	ObtainLease	request	Unique Identifier	No
+21	ObtainLease	response	Unique Identifier	Yes
+21	ObtainLease	response	Lease Time	Yes
+21	ObtainLease	response	Last Change Date	Yes
+21	Ping	request		
+21	Ping	response		
+21	PKCS_11	request	PKCS#11 Interface	No
+21	PKCS_11	request	PKCS#11 Function	Yes
+21	PKCS_11	request	Correlation Value	No
+21	PKCS_11	request	PKCS#11 Input Parameters	No
+21	PKCS_11	response	PKCS#11 Interface	No
+21	PKCS_11	response	PKCS#11 Function	Yes
+21	PKCS_11	response	Correlation Value	No
+21	PKCS_11	response	PKCS#11 Output Parameters	No
+21	PKCS_11	response	PKCS#11 Return Code	Yes
+21	Poll	request	Asynchronous Correlation Value	Yes
+21	Process	request	Asynchronous Correlation Value	Yes
+21	Process	response		
+21	Query	request	Query Function	Yes, MAY be Repeated
+21	Query	response	Operation	No, MAY be repeated
+21	Query	response	Object Type	No, MAY be repeated
+21	Query	response	Vendor Identification	No
+21	Query	response	Server Information	No
+21	Query	response	Extension Information	No, MAY be repeated
+21	Query	response	Attestation Type	No, MAY be repeated
+21	Query	response	RNG Parameters	No, MAY be repeated
+21	Query	response	Profile Information	No, MAY be repeated
+21	Query	response	Validation Information	No, MAY be repeated
+21	Query	response	Capability Information	No, MAY be repeated
+21	Query	response	Client Registration Method	No, MAY be repeated
+21	QueryAsynchronousRequests	request	Asynchronous Correlation Values	No
+21	QueryAsynchronousRequests	request	Operations	No
+21	QueryAsynchronousRequests	response	Asynchronous Request	No, MAY be repeated
+21	Recover	request	Unique Identifier	No
+21	Recover	response	Unique Identifier	Yes
+21	Register	request	Object Type	Yes
+21	Register	request	Attributes	Yes
+21	Register	request	Any Object (Section 2)	Yes
+21	Register	request	Protection Storage Masks	No
+21	Register	response	Unique Identifier	Yes
+21	Revoke	request	Unique Identifier	No
+21	Revoke	request	Revocation Reason	Yes
+21	Revoke	request	Compromise Occurrence Date	No
+21	Revoke	response	Unique Identifier	Yes
+21	ReCertify	request	Unique Identifier	No
+21	ReCertify	request	Certificate Request Unique Identifier	No
+21	ReCertify	request	Certificate Request Type	No
+21	ReCertify	request	Certificate Request Value	No
+21	ReCertify	request	Offset	No
+21	ReCertify	request	Attributes	No
+21	ReCertify	request	Protection Storage Masks	No
+21	ReCertify	response	Unique Identifier	Yes
+21	ReKey	request	Unique Identifier	No
+21	ReKey	request	Offset	No
+21	ReKey	request	Attributes	No
+21	ReKey	request	Protection Storage Masks	No
+21	ReKey	response	Unique Identifier	Yes
+21	ReKeyKeyPair	request	Private Key Unique Identifier	No
+21	ReKeyKeyPair	request	Offset	No
+21	ReKeyKeyPair	request	Common Attributes	No
+21	ReKeyKeyPair	request	Private Key Attributes	No
+21	ReKeyKeyPair	request	Public Key Attributes	No
+21	ReKeyKeyPair	request	Common Protection Storage Masks	No
+21	ReKeyKeyPair	request	Private Protection Storage Masks	No
+21	ReKeyKeyPair	request	Public Protection Storage Masks	No
+21	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+21	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+21	ReProvision	request	Certificate Request	No
+21	ReProvision	request	Certificate	No
+21	ReProvision	response	Unique Identifier	No
+21	RNGRetrieve	request	Data Length	Yes
+21	RNGRetrieve	response	Data	Yes
+21	RNGSeed	request	Data	Yes
+21	RNGSeed	response	Data Length	Yes
+21	SetAttribute	request	Unique Identifier	No
+21	SetAttribute	request	New Attribute	Yes
+21	SetAttribute	response	Unique Identifier	Yes
+21	SetConstraints	request	Constraints	Yes
+21	SetConstraints	response		
+21	SetDefaults	request	Defaults Information	No
+21	SetDefaults	response		
+21	SetEndpointRole	request	Endpoint Role	Yes
+21	SetEndpointRole	response	Endpoint Role	Yes
+21	Sign	request	Unique Identifier	No
+21	Sign	request	Cryptographic Parameters	No
+21	Sign	request	Data	Yes for single-part, unless Digested Data is supplied.. No for multi-part.
+21	Sign	request	Digested Data	No
+21	Sign	request	Correlation Value	No
+21	Sign	request	Init Indicator	No
+21	Sign	request	Final Indicator	No
+21	Sign	response	Unique Identifier	Yes
+21	Sign	response	Signature Data	Yes for single-part. No for multi-part.
+21	Sign	response	Correlation Value	No
+21	SignatureVerify	request	Unique Identifier	No
+21	SignatureVerify	request	Cryptographic Parameters	No
+21	SignatureVerify	request	Data	No
+21	SignatureVerify	request	Digested Data	No
+21	SignatureVerify	request	Signature Data	Yes for single-part. No for multi-part.
+21	SignatureVerify	request	Correlation Value	No
+21	SignatureVerify	request	Init Indicator	No
+21	SignatureVerify	request	Final Indicator	No
+21	SignatureVerify	response	Unique Identifier	Yes
+21	SignatureVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+21	SignatureVerify	response	Data	No
+21	SignatureVerify	response	Correlation Value	No
+21	Validate	request	Certificate	No, MAY be repeated
+21	Validate	request	Unique Identifier	No, MAY be repeated
+21	Validate	request	Validity Date	No
+21	Validate	response	Validity Indicator	Yes
+21	Notify	request	Unique Identifier	Yes
+21	Notify	request	Attributes	No
+21	Notify	request	Attribute Reference	No, may be repeated
+21	Put	request	Unique Identifier	Yes
+21	Put	request	Put Function	Yes
+21	Put	request	Replaced Unique Identifier	No
+21	Put	request	All Objects	Yes
+21	Put	request	Attributes	No
+30	Activate	request	Unique Identifier	Yes
+30	Activate	response	Unique Identifier	Yes
+30	AddAttribute	request	Unique Identifier	Yes
+30	AddAttribute	request	New Attribute	Yes
+30	AddAttribute	response	Unique Identifier	Yes
+30	AdjustAttribute	request	Unique Identifier	Yes
+30	AdjustAttribute	request	Attribute Reference	Yes
+30	AdjustAttribute	request	Adjustment Type	Yes
+30	AdjustAttribute	request	Adjustment Value	No
+30	AdjustAttribute	response	Unique Identifier	Yes
+30	Archive	request	Unique Identifier	Yes
+30	Archive	response	Unique Identifier	Yes
+30	Cancel	request	Asynchronous Correlation Value	Yes
+30	Cancel	response	Asynchronous Correlation Value	Yes
+30	Cancel	response	Cancellation Result	Yes
+30	Certify	request	Unique Identifier	No
+30	Certify	request	Certificate Request Type	No
+30	Certify	request	Certificate Request Value	No
+30	Certify	request	Attributes	No
+30	Certify	request	Protection Storage Masks	No
+30	Certify	response	Unique Identifier	Yes
+30	Check	request	Unique Identifier	Yes
+30	Check	request	Usage Limits Count	No
+30	Check	request	Cryptographic Usage Mask	No
+30	Check	request	Lease Time	No
+30	Check	response	Unique Identifier	Yes, unless a failure,
+30	Check	response	Usage Limits Count	No
+30	Check	response	Cryptographic Usage Mask	No
+30	Check	response	Lease Time	No
+30	Create	request	Object Type	Yes
+30	Create	request	Attributes	Yes
+30	Create	request	Protection Storage Masks	No
+30	Create	response	Object Type	Yes
+30	Create	response	Unique Identifier	Yes
+30	CreateCredential	request	Credential Type	Yes
+30	CreateCredential	request	Attributes	Yes
+30	CreateCredential	request	Password Credential or Device Credential or Hashed Password Credential or OTP Credential or Certificate	
+30	CreateCredential	response	Unique Identifier	Yes
+30	CreateGroup	request	Attributes	Yes
+30	CreateGroup	response	Unique Identifier	Yes
+30	CreateKeyPair	request	Common Attributes	No
+30	CreateKeyPair	request	Private Key Attributes	No
+30	CreateKeyPair	request	Public Key Attributes	No
+30	CreateKeyPair	request	Common Protection Storage Masks	No
+30	CreateKeyPair	request	Private Protection Storage Masks	No
+30	CreateKeyPair	request	Public Protection Storage Masks	No
+30	CreateKeyPair	request	Seed	No
+30	CreateKeyPair	response	Private Key Unique Identifier	Yes
+30	CreateKeyPair	response	Public Key Unique Identifier	Yes
+30	CreateSplitKey	request	Object Type	Yes
+30	CreateSplitKey	request	Unique Identifier	No
+30	CreateSplitKey	request	Split Key Parts	Yes
+30	CreateSplitKey	request	Split Key Threshold	Yes
+30	CreateSplitKey	request	Split Key Method	Yes
+30	CreateSplitKey	request	Prime Field Size	No
+30	CreateSplitKey	request	Attributes	Yes
+30	CreateSplitKey	request	Protection Storage Masks	No
+30	CreateSplitKey	response	Unique Identifier	Yes, MAY be repeated
+30	CreateUser	request	Attributes	Yes
+30	CreateUser	response	Unique Identifier	Yes
+30	Deactivate	request	Unique Identifier	Yes
+30	Deactivate	request	Deactivation Reason	No
+30	Deactivate	request	Deactivation Date	No
+30	Deactivate	response	Unique Identifier	Yes
+30	Decapsulate	request	Unique Identifier	Yes
+30	Decapsulate	request	Cryptographic Parameters	No
+30	Decapsulate	request	Data	Yes
+30	Decapsulate	request	Attributes	No
+30	Decapsulate	response	Unique Identifier	Yes
+30	Decrypt	request	Unique Identifier	Yes
+30	Decrypt	request	Cryptographic Parameters	No
+30	Decrypt	request	Data	Yes for single-part. No for multi-part.
+30	Decrypt	request	IV/Counter/Nonce	No
+30	Decrypt	request	Correlation Value	No
+30	Decrypt	request	Init Indicator	No
+30	Decrypt	request	Final Indicator	No
+30	Decrypt	request	Authenticated Encryption Additional Data	No
+30	Decrypt	request	Authenticated Encryption Tag	No
+30	Decrypt	response	Unique Identifier	Yes
+30	Decrypt	response	Data	No.
+30	Decrypt	response	Correlation Value	No
+30	DelegatedLogin	request	Lease Time	No
+30	DelegatedLogin	request	Request Count	No
+30	DelegatedLogin	request	Usage Limits	No
+30	DelegatedLogin	request	Rights	Yes
+30	DelegatedLogin	response	Ticket	Yes
+30	DeleteAttribute	request	Unique Identifier	Yes
+30	DeleteAttribute	request	Current Attribute	No
+30	DeleteAttribute	request	Attribute Reference	No
+30	DeleteAttribute	response	Unique Identifier	Yes
+30	DeriveKey	request	Object Type	Yes
+30	DeriveKey	request	Unique Identifier	Yes. MAY be repeated
+30	DeriveKey	request	Derivation Method	Yes
+30	DeriveKey	request	Derivation Parameters	Yes
+30	DeriveKey	request	Attributes	Yes
+30	DeriveKey	response	Unique Identifier	Yes
+30	Destroy	request	Unique Identifier	Yes
+30	Destroy	response	Unique Identifier	Yes
+30	DiscoverVersions	request	Protocol Version	No, MAY be Repeated
+30	DiscoverVersions	response	Protocol Version	No, MAY be repeated
+30	Encapsulate	request	Unique Identifier	Yes
+30	Encapsulate	request	Cryptographic Parameters	No
+30	Encapsulate	request	Attributes	No
+30	Encapsulate	response	Unique Identifier	Yes
+30	Encapsulate	response	Data	Yes
+30	Encrypt	request	Unique Identifier	Yes
+30	Encrypt	request	Cryptographic Parameters	No
+30	Encrypt	request	Data	Yes for single-part. No for multi-part.
+30	Encrypt	request	IV/Counter/Nonce	No
+30	Encrypt	request	Correlation Value	No
+30	Encrypt	request	Init Indicator	No
+30	Encrypt	request	Final Indicator	No
+30	Encrypt	request	Authenticated Encryption Additional Data	No
+30	Encrypt	response	Unique Identifier	Yes
+30	Encrypt	response	Data	No.
+30	Encrypt	response	IV/Counter/Nonce	No
+30	Encrypt	response	Correlation Value	No
+30	Encrypt	response	Authenticated Encryption Tag	No
+30	Export	request	Unique Identifier	Yes
+30	Export	request	Key Format Type	No
+30	Export	request	Key Wrap Type	No
+30	Export	request	Key Compression Type	No
+30	Export	request	Key Wrapping Specification	No
+30	Export	response	Object Type	Yes
+30	Export	response	Unique Identifier	Yes
+30	Export	response	Attributes	Yes
+30	Export	response	Any Object (Section 2)	Yes
+30	Get	request	Unique Identifier	Yes
+30	Get	request	Key Format Type	No
+30	Get	request	Key Wrap Type	No
+30	Get	request	Key Compression Type	No
+30	Get	request	Key Wrapping Specification	No
+30	Get	response	Object Type	Yes
+30	Get	response	Unique Identifier	Yes
+30	Get	response	Any Object (Section 2)	Yes
+30	GetAttributes	request	Unique Identifier	Yes
+30	GetAttributes	request	Attribute Reference	No, MAY be repeated
+30	GetAttributes	response	Unique Identifier	Yes
+30	GetAttributes	response	Attributes	Yes
+30	GetAttributeList	request	Unique Identifier	Yes
+30	GetAttributeList	response	Unique Identifier	Yes
+30	GetAttributeList	response	Attribute Reference	Yes, MAY be repeated
+30	GetConstraints	request		
+30	GetConstraints	response	Constraints	Yes
+30	GetUsageAllocation	request	Unique Identifier	Yes
+30	GetUsageAllocation	request	Usage Limits Count	Yes
+30	GetUsageAllocation	response	Unique Identifier	Yes
+30	Hash	request	Cryptographic Parameters	Yes
+30	Hash	request	Data	Yes for single-part. No for multi-part.
+30	Hash	request	Correlation Value	No
+30	Hash	request	Init Indicator	No
+30	Hash	request	Final Indicator	No
+30	Hash	response	Data	Yes for single-part. No for multi-part.
+30	Hash	response	Correlation Value	No
+30	Import	request	Unique Identifier	Yes
+30	Import	request	Object Type	Yes
+30	Import	request	Replace Existing	No
+30	Import	request	Key Wrap Type	If and only if the key object is wrapped.
+30	Import	request	Attributes	Yes
+30	Import	request	Any Object (Section 2)	Yes
+30	Import	response	Unique Identifier	Yes
+30	Interop	request	Interop Function	Yes
+30	Interop	request	Interop Identifier	Yes
+30	Interop	response		
+30	JoinSplitKey	request	Object Type	Yes
+30	JoinSplitKey	request	Unique Identifier	Yes, MAY be repeated
+30	JoinSplitKey	request	Secret Data Type	No
+30	JoinSplitKey	request	Attributes	No
+30	JoinSplitKey	request	Protection Storage Masks	No
+30	JoinSplitKey	response	Unique Identifier	Yes
+30	Locate	request	Maximum Items	No
+30	Locate	request	Offset Items	No
+30	Locate	request	Storage Status Mask	No
+30	Locate	request	Object Class Mask	No
+30	Locate	request	Attributes	Yes
+30	Locate	response	Located Items	No
+30	Locate	response	Unique Identifier	No, MAY be repeated
+30	Log	request	Log Message	Yes
+30	Login	request	Lease Time	No
+30	Login	request	Request Count	No
+30	Login	request	Usage Limits	No
+30	Login	response	Ticket	Yes
+30	Logout	request	Ticket	Yes
+30	MAC	request	Unique Identifier	Yes
+30	MAC	request	Cryptographic Parameters	No
+30	MAC	request	Data	Yes for single-part. No for multi-part.
+30	MAC	request	Correlation Value	No
+30	MAC	request	Init Indicator	No
+30	MAC	request	Final Indicator	No
+30	MAC	response	Unique Identifier	Yes
+30	MAC	response	MAC Data	Yes for single-part. No for multi-part
+30	MAC	response	Correlation Value	No
+30	MACVerify	request	Unique Identifier	Yes
+30	MACVerify	request	Cryptographic Parameters	No
+30	MACVerify	request	Data	No
+30	MACVerify	request	MAC Data	Yes for single-part. No for multi-part.
+30	MACVerify	request	Correlation Value	No
+30	MACVerify	request	Init Indicator	No
+30	MACVerify	request	Final Indicator	No
+30	MACVerify	response	Unique Identifier	Yes
+30	MACVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+30	MACVerify	response	Correlation Value	No
+30	ModifyAttribute	request	Unique Identifier	Yes
+30	ModifyAttribute	request	Current Attribute	No
+30	ModifyAttribute	request	New Attribute	Yes
+30	ModifyAttribute	response	Unique Identifier	Yes
+30	Obliterate	request	Unique Identifier	Yes
+30	ObtainLease	request	Unique Identifier	Yes
+30	ObtainLease	response	Unique Identifier	Yes
+30	ObtainLease	response	Lease Time	Yes
+30	ObtainLease	response	Last Change Date	Yes
+30	Ping	request		
+30	Ping	response		
+30	PKCS_11	request	PKCS#11 Interface	No
+30	PKCS_11	request	PKCS#11 Function	Yes
+30	PKCS_11	request	Correlation Value	No
+30	PKCS_11	request	PKCS#11 Input Parameters	No
+30	PKCS_11	response	PKCS#11 Interface	No
+30	PKCS_11	response	PKCS#11 Function	Yes
+30	PKCS_11	response	Correlation Value	No
+30	PKCS_11	response	PKCS#11 Output Parameters	No
+30	PKCS_11	response	PKCS#11 Return Code	Yes
+30	Poll	request	Asynchronous Correlation Value	Yes
+30	Process	request	Asynchronous Correlation Value	Yes
+30	Process	response		
+30	Query	request	Query Function	Yes, MAY be Repeated
+30	Query	response	Operation	No, MAY be repeated
+30	Query	response	Object Type	No, MAY be repeated
+30	Query	response	Vendor Identification	No
+30	Query	response	Server Information	No
+30	Query	response	Extension Information	No, MAY be repeated
+30	Query	response	Attestation Type	No, MAY be repeated
+30	Query	response	RNG Parameters	No, MAY be repeated
+30	Query	response	Profile Information	No, MAY be repeated
+30	Query	response	Validation Information	No, MAY be repeated
+30	Query	response	Capability Information	No, MAY be repeated
+30	Query	response	Client Registration Method	No, MAY be repeated
+30	QueryAsynchronousRequests	request	Asynchronous Correlation Values	No
+30	QueryAsynchronousRequests	request	Operations	No
+30	QueryAsynchronousRequests	response	Asynchronous Request	No, MAY be repeated
+30	Recover	request	Unique Identifier	Yes
+30	Recover	response	Unique Identifier	Yes
+30	Register	request	Object Type	Yes
+30	Register	request	Attributes	Yes
+30	Register	request	Any Object (Section 2)	Yes
+30	Register	request	Protection Storage Masks	No
+30	Register	response	Unique Identifier	Yes
+30	Revoke	request	Unique Identifier	Yes
+30	Revoke	request	Revocation Reason	No
+30	Revoke	request	Compromise Occurrence Date	No
+30	Revoke	response	Unique Identifier	Yes
+30	ReCertify	request	Unique Identifier	Yes
+30	ReCertify	request	Certificate Request Unique Identifier	No
+30	ReCertify	request	Certificate Request Type	No
+30	ReCertify	request	Certificate Request Value	No
+30	ReCertify	request	Offset	No
+30	ReCertify	request	Attributes	No
+30	ReCertify	request	Protection Storage Masks	No
+30	ReCertify	response	Unique Identifier	Yes
+30	ReKey	request	Unique Identifier	Yes
+30	ReKey	request	Offset	No
+30	ReKey	request	Attributes	No
+30	ReKey	request	Protection Storage Masks	No
+30	ReKey	response	Unique Identifier	Yes
+30	ReKeyKeyPair	request	Unique Identifier	Yes
+30	ReKeyKeyPair	request	Offset	No
+30	ReKeyKeyPair	request	Common Attributes	No
+30	ReKeyKeyPair	request	Private Key Attributes	No
+30	ReKeyKeyPair	request	Public Key Attributes	No
+30	ReKeyKeyPair	request	Common Protection Storage Masks	No
+30	ReKeyKeyPair	request	Private Protection Storage Masks	No
+30	ReKeyKeyPair	request	Public Protection Storage Masks	No
+30	ReKeyKeyPair	response	Private Key Unique Identifier	Yes
+30	ReKeyKeyPair	response	Public Key Unique Identifier	Yes
+30	ReProvision	request	Certificate Request	No
+30	ReProvision	request	Certificate	No
+30	ReProvision	response	Unique Identifier	No
+30	RNGRetrieve	request	Data Length	Yes
+30	RNGRetrieve	response	Data	Yes
+30	RNGSeed	request	Data	Yes
+30	RNGSeed	response	Data Length	Yes
+30	SetAttribute	request	Unique Identifier	Yes
+30	SetAttribute	request	New Attribute	Yes
+30	SetAttribute	response	Unique Identifier	Yes
+30	SetConstraints	request	Constraints	Yes
+30	SetConstraints	response		
+30	SetDefaults	request	Defaults Information	No
+30	SetDefaults	response		
+30	SetEndpointRole	request	Endpoint Role	Yes
+30	SetEndpointRole	response	Endpoint Role	Yes
+30	Sign	request	Unique Identifier	Yes
+30	Sign	request	Cryptographic Parameters	No
+30	Sign	request	Data	Yes for single-part, unless Digested Data is supplied.. No for multi-part.
+30	Sign	request	Digested Data	No
+30	Sign	request	Correlation Value	No
+30	Sign	request	Init Indicator	No
+30	Sign	request	Final Indicator	No
+30	Sign	response	Unique Identifier	Yes
+30	Sign	response	Signature Data	Yes for single-part. No for multi-part.
+30	Sign	response	Correlation Value	No
+30	SignatureVerify	request	Unique Identifier	Yes
+30	SignatureVerify	request	Cryptographic Parameters	No
+30	SignatureVerify	request	Data	No
+30	SignatureVerify	request	Digested Data	No
+30	SignatureVerify	request	Signature Data	Yes for single-part. No for multi-part.
+30	SignatureVerify	request	Correlation Value	No
+30	SignatureVerify	request	Init Indicator	No
+30	SignatureVerify	request	Final Indicator	No
+30	SignatureVerify	response	Unique Identifier	Yes
+30	SignatureVerify	response	Validity Indicator	Yes for single-part. No for multi-part.
+30	SignatureVerify	response	Data	No
+30	SignatureVerify	response	Correlation Value	No
+30	Validate	request	Certificate	No, MAY be repeated
+30	Validate	request	Unique Identifier	No, MAY be repeated
+30	Validate	request	Validity Date	No
+30	Validate	response	Validity Indicator	Yes
+30	Notify	request	Unique Identifier	Yes
+30	Notify	request	Attributes	No
+30	Notify	request	Attribute Reference	No, may be repeated
+30	Put	request	Unique Identifier	Yes
+30	Put	request	Put Function	Yes
+30	Put	request	Replaced Unique Identifier	No
+30	Put	request	All Objects	Yes
+30	Put	request	Attributes	No

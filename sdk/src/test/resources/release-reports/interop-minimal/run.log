@@ -1,0 +1,26 @@
+pin       keytend-kmip-server 0.10.0-rc.1 (85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a)
+image     85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a
+image_id  85df8bafcf54206615d73b993124428898c504a76a1bdec9eeed2f0af370d04a (pinned)
+version   keytend-kmip-server 0.10.0-rc.1
+kmip_env  
+jar       <run directory>/tree-a/sdk/target/keytend-kmip-0.10.0-rc.1.jar e74f38e9d86952a61b17ef2b94dd0fc763c33c89e37a6c5daed3edd7839b38a0
+jar       <run directory>/tree-a/integration-tests/target/keytend-kmip-integration-0.10.0-rc.1.jar c0aca4e3f86c9b2ce19099438447a7787d445a6971a403f37960f7e2a02ea514
+jar       <run directory>/tree-a/testing/target/keytend-kmip-testing-0.10.0-rc.1.jar de3da98dcd2c4ab13764c01239d449053e6a8d440f2ddb95c21e2f99924ccb4e
+java      openjdk version "17.0.21" 2026-10-20 LTS
+setup     minimal
+programs  suite
+versions  1.1 1.2 1.3 1.4 2.0 2.1 3.0
+KMIP 1.1 suite exit=1
+KMIP 1.2 suite exit=1
+KMIP 1.3 suite exit=1
+KMIP 1.4 suite exit=1
+KMIP 2.0 suite exit=1
+KMIP 2.1 suite exit=1
+KMIP 3.0 suite exit=1
+PASS interop minimal suite 1.1: exit 1; 50 of 51 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 1.2: exit 1; 64 of 65 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 1.3: exit 1; 64 of 65 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 1.4: exit 1; 67 of 68 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 2.0: exit 1; 62 of 63 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 2.1: exit 1; 68 of 69 checks passed; only the expected refusals: Validate fails without a trust anchor
+PASS interop minimal suite 3.0: exit 1; 73 of 78 checks passed; only the expected refusals: Validate fails without a trust anchor; Login, Create Credential, Create User and Create Group are refused without the header credential

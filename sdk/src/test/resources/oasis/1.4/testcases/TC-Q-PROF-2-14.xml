@@ -1,0 +1,172 @@
+<KMIP>
+<!--
+
+     Key Management Interoperability Protocol Test Cases Version 1.4
+     Committee Note 01
+     03 August 2017
+     Copyright (c) OASIS Open 2017. All Rights Reserved.
+     Source: http://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/
+     Latest version of the specification: http://docs.oasis-open.org/kmip/testcases/v1.4/kmip-testcases-v1.4.html
+     TC IPR Statement: https://www.oasis-open.org/committees/kmip/ipr.php
+-->
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Query"/>
+    <RequestPayload>
+      <QueryFunction type="Enumeration" value="QueryProfiles"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Query"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="BaselineServerBasicKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="BaselineServerTLSV1_2KMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="CompleteServerBasicKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="CompleteServerTLSV1_2KMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="TapeLibraryServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="TapeLibraryServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="TapeLibraryServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyLifecycleServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyLifecycleServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyLifecycleServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="AsymmetricKeyLifecycleServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="AsymmetricKeyLifecycleServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="AsymmetricKeyLifecycleServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="BasicCryptographicServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="AdvancedCryptographicServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="RNGCryptographicServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyFoundryServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyFoundryServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SymmetricKeyFoundryServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="OpaqueManagedObjectStoreServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="OpaqueManagedObjectStoreServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="OpaqueManagedObjectStoreServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_128ServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_128ServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_128ServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_192ServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_192ServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="SuiteBMinLOS_192ServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="StorageArrayWithSelfEncryptingDriveServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="StorageArrayWithSelfEncryptingDriveServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="StorageArrayWithSelfEncryptingDriveServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="HTTPSServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="HTTPSServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="HTTPSServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="JSONServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="JSONServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="JSONServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="XMLServerKMIPV1_0"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="XMLServerKMIPV1_1"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="XMLServerKMIPV1_2"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="XMLServerKMIPV1_3"/>
+      </ProfileInformation>
+      <ProfileInformation>
+	<ProfileName type="Enumeration" value="XMLServerKMIPV1_4"/>
+      </ProfileInformation>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+</KMIP>

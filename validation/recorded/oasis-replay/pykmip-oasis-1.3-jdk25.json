@@ -1,0 +1,282 @@
+{
+  "server" : "pykmip",
+  "version" : "1.3",
+  "java" : "25.0.1",
+  "checks" : [ {
+    "name" : "mandatory/AKLC-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/AKLC-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/AKLC-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/AKLC-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/CS-AC-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-3-ECC-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-4-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-5-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-6-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-AC-M-7-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-AC-M-8-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-10-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-11-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-12-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-13-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-14-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-4-12-3DES-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-4-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-5-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-6-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-7-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-BC-M-8-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-BC-M-9-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/CS-RNG-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-RNG-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-RNG-O-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-RNG-O-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/CS-RNG-O-4-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/MSGENC-HTTPS-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/MSGENC-JSON-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/MSGENC-XML-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/OMOS-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/OMOS-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/SASED-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ObjectType"
+  }, {
+    "name" : "mandatory/SASED-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SASED-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field UniqueIdentifier"
+  }, {
+    "name" : "mandatory/SKFF-M-1-13.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-10-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for KeyMaterial"
+  }, {
+    "name" : "mandatory/SKFF-M-11-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for KeyMaterial"
+  }, {
+    "name" : "mandatory/SKFF-M-12-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-2-13.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-3-13.xml",
+    "outcome" : "PASS",
+    "detail" : "2 exchanges"
+  }, {
+    "name" : "mandatory/SKFF-M-4-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-5-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-6-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-7-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-8-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ResponsePayload"
+  }, {
+    "name" : "mandatory/SKFF-M-9-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Value mismatch for KeyMaterial"
+  }, {
+    "name" : "mandatory/SKLC-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/SKLC-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/SKLC-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/SKLC-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "mandatory/SUITEB_128-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/SUITEB_192-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/TL-M-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field ObjectType"
+  }, {
+    "name" : "mandatory/TL-M-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "mandatory/TL-M-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field UniqueIdentifier"
+  }, {
+    "name" : "optional/AKLC-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  }, {
+    "name" : "optional/CS-RNG-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "optional/CS-RNG-O-2-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "optional/CS-RNG-O-3-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "optional/CS-RNG-O-4-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "optional/OMOS-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field Operation"
+  }, {
+    "name" : "optional/SKLC-O-1-13.xml",
+    "outcome" : "FAIL",
+    "detail" : "Missing response field HashingAlgorithm"
+  } ]
+}

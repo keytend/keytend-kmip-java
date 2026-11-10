@@ -1,0 +1,231 @@
+<KMIP>
+<!--
+
+     Key Management Interoperability Protocol Test Cases Version 1.4
+     Committee Note 01
+     03 August 2017
+     Copyright (c) OASIS Open 2017. All Rights Reserved.
+     Source: http://docs.oasis-open.org/kmip/testcases/v1.4/cn01/test-cases/kmip-v1.4/
+     Latest version of the specification: http://docs.oasis-open.org/kmip/testcases/v1.4/kmip-testcases-v1.4.html
+     TC IPR Statement: https://www.oasis-open.org/committees/kmip/ipr.php
+-->
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <RequestPayload>
+      <ObjectType type="Enumeration" value="Certificate"/>
+      <TemplateAttribute>
+        <Attribute>
+          <AttributeName type="TextString" value="Certificate Type"/>
+          <AttributeValue type="Enumeration" value="X_509"/>
+        </Attribute>
+      </TemplateAttribute>
+      <Certificate>
+        <CertificateType type="Enumeration" value="X_509"/>
+        <CertificateValue type="ByteString" value="3082022930820192a00302010202083132333435363738300d06092a864886f70d01010b05003031310b300906035504061302415531123010060355040a13094b6d69702054657374310e300c06035504031305496e746572301e170d3135313231373036313030375a170d3136303130333036353033365a302e310b300906035504061302415531123010060355040a13094b6d69702054657374310b300906035504031302454530819f300d06092a864886f70d010101050003818d00308189028181009bccc77338705de30fae343fd02f8f94ec4657a8c24a0e56103bc45db6d740868b9ac3fbcc0ebac6e1e8a954a85050d6aae7600934b8ebe8b03db6ba0884b1aee69e4fc3a1bd11fcbfef68de0baa888d1f5cbca2d81a3168b2a901e9f84d3854ee10aa7235dfef0684f58d98879c936372435f2cb102782d3884f9abb818817d0203010001a34d304b301d0603551d0e0416041488ca3ff1ce8f6b8af4647ea1a1829abd91b227c4301f0603551d230418301680147c3a5ad107907f9af1106e85c6dffc431ba7829030090603551d1304023000300d06092a864886f70d01010b050003818100d39bdd1623dd990a65007d82cc06aedda9fe7bedffb03189d4f51f4ae70cfb275568b62bc59ef2d80b82300de83d871c28541c6d8d9f601c12180b790b9c6c3ca14520fee8be4878f72e7e47b5a8918774ee5776c93e1ba84063f0ca48b5d7d05362489e7b7e7071263c011fb14562aa63b7bdd1715a5e186028a3caa874b283"/>
+      </Certificate>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="Register"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+<RequestMessage>
+  <RequestHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <BatchCount type="Integer" value="1"/>
+  </RequestHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <RequestPayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+    </RequestPayload>
+  </BatchItem>
+</RequestMessage>
+
+<!--
+Issuer: C=AU, O=Kmip Test, CN=Inter
+Subject: C=AU, O=Kmip Test, CN=EE
+-->
+
+<ResponseMessage>
+  <ResponseHeader>
+    <ProtocolVersion>
+      <ProtocolVersionMajor type="Integer" value="1"/>
+      <ProtocolVersionMinor type="Integer" value="4"/>
+    </ProtocolVersion>
+    <TimeStamp type="DateTime" value="$NOW"/>
+    <BatchCount type="Integer" value="1"/>
+  </ResponseHeader>
+  <BatchItem>
+    <Operation type="Enumeration" value="GetAttributes"/>
+    <ResultStatus type="Enumeration" value="Success"/>
+    <ResponsePayload>
+      <UniqueIdentifier type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+      <Attribute>
+        <AttributeName type="TextString" value="Unique Identifier"/>
+        <AttributeValue type="TextString" value="$UNIQUE_IDENTIFIER_0"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Object Type"/>
+        <AttributeValue type="Enumeration" value="Certificate"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Type"/>
+        <AttributeValue type="Enumeration" value="X_509"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Always Sensitive"/>
+        <AttributeValue type="Boolean" value="false"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Identifier"/>
+        <AttributeValue>
+          <Issuer type="TextString" value="CN=Inter,O=Kmip Test,C=AU"/>
+          <SerialNumber type="TextString" value="3132333435363738"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Issuer"/>
+        <AttributeValue>
+          <CertificateIssuerDistinguishedName type="TextString" value="CN=Inter,O=Kmip Test,C=AU"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Issuer C"/>
+        <AttributeValue type="TextString" value="AU"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Issuer CN"/>
+        <AttributeValue type="TextString" value="Inter"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Issuer O"/>
+        <AttributeValue type="TextString" value="Kmip Test"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Length"/>
+        <AttributeValue type="Integer" value="557"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Subject"/>
+        <AttributeValue>
+          <CertificateSubjectDistinguishedName type="TextString" value="CN=EE,O=Kmip Test,C=AU"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Subject C"/>
+        <AttributeValue type="TextString" value="AU"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Subject CN"/>
+        <AttributeValue type="TextString" value="EE"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Certificate Subject O"/>
+        <AttributeValue type="TextString" value="Kmip Test"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Algorithm"/>
+        <AttributeValue type="Enumeration" value="RSA"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Cryptographic Length"/>
+        <AttributeValue type="Integer" value="1024"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Digest"/>
+        <AttributeValue>
+          <HashingAlgorithm type="Enumeration" value="SHA_256"/>
+          <DigestValue type="ByteString" value="c2afb2c05ca8690d7d9cf753c3cceb758030c29538b730bb23b77dc5ff0bbb36"/>
+          <KeyFormatType type="Enumeration" value="Raw"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Digital Signature Algorithm"/>
+        <AttributeValue type="Enumeration" value="SHA_256WithRSAEncryption"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Extractable"/>
+        <AttributeValue type="Boolean" value="true"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Fresh"/>
+        <AttributeValue type="Boolean" value="true"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Initial Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Last Change Date"/>
+        <AttributeValue type="DateTime" value="$NOW"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Lease Time"/>
+        <AttributeValue type="Interval" value="3600"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Never Extractable"/>
+        <AttributeValue type="Boolean" value="false"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="Sensitive"/>
+        <AttributeValue type="Boolean" value="false"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="State"/>
+        <AttributeValue type="Enumeration" value="PreActive"/>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Identifier"/>
+        <AttributeValue>
+          <IssuerDistinguishedName type="ByteString" value="3031310b300906035504061302415531123010060355040a13094b6d69702054657374310e300c06035504031305496e746572"/>
+          <CertificateSerialNumber type="ByteString" value="02083132333435363738"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Issuer"/>
+        <AttributeValue>
+          <IssuerDistinguishedName type="ByteString" value="3031310b300906035504061302415531123010060355040a13094b6d69702054657374310e300c06035504031305496e746572"/>
+        </AttributeValue>
+      </Attribute>
+      <Attribute>
+        <AttributeName type="TextString" value="X.509 Certificate Subject"/>
+        <AttributeValue>
+          <SubjectDistinguishedName type="ByteString" value="302e310b300906035504061302415531123010060355040a13094b6d69702054657374310b3009060355040313024545"/>
+        </AttributeValue>
+      </Attribute>
+    </ResponsePayload>
+  </BatchItem>
+</ResponseMessage>
+
+</KMIP>
+

@@ -1,0 +1,321 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Author: Jeremiah Jordan
+Date: Sun, 1 Nov 2026 18:39:37 -0600
+Subject: [PATCH 3/4] Hints: encrypted under
+ transparent_data_encryption_options, fail closed, key outages are not
+ corruption
+
+cassandra.yaml documents hints as covered by transparent data encryption, but HintsService never
+asked for it; it now does when encryption is enabled and hints are not compressed. A new hints
+file whose key cannot be had throws EncryptionKeyUnavailableException instead of being written
+unencrypted. A file being read builds its decryptor when it is read, not when the catalog lists
+it; when its key cannot be had then, dispatch keeps the file for the next attempt instead of
+treating it as corrupt and deleting it. Before each flush, the open hints file asks for its key
+again; one whose key may no longer encrypt is closed (it stays readable while its key may
+decrypt) and the hints go to a new file under the current key.
+---
+ .../cassandra/hints/HintsDescriptor.java      | 62 ++++++++++++++++---
+ .../hints/HintsDispatchExecutor.java          |  8 +++
+ .../apache/cassandra/hints/HintsReader.java   |  5 ++
+ .../apache/cassandra/hints/HintsService.java  |  8 +++
+ .../cassandra/hints/HintsWriteExecutor.java   | 23 ++++++-
+ .../EncryptionKeyUnavailableException.java    | 31 ++++++++++
+ 6 files changed, 127 insertions(+), 10 deletions(-)
+ create mode 100644 src/java/org/apache/cassandra/security/EncryptionKeyUnavailableException.java
+
+diff --git a/src/java/org/apache/cassandra/hints/HintsDescriptor.java b/src/java/org/apache/cassandra/hints/HintsDescriptor.java
+index 5b8db34..b191872 100644
+--- a/src/java/org/apache/cassandra/hints/HintsDescriptor.java
++++ b/src/java/org/apache/cassandra/hints/HintsDescriptor.java
+@@ -51,6 +51,7 @@ import org.apache.cassandra.io.util.FileInputStreamPlus;
+ import org.apache.cassandra.net.MessagingService;
+ import org.apache.cassandra.schema.CompressionParams;
+ import org.apache.cassandra.security.EncryptionContext;
++import org.apache.cassandra.security.EncryptionKeyUnavailableException;
+ import org.apache.cassandra.serializers.MarshalException;
+ import org.apache.cassandra.utils.Hex;
+ import org.apache.cassandra.utils.JsonUtils;
+@@ -88,7 +89,10 @@ final class HintsDescriptor
+     final ImmutableMap<String, Object> parameters;
+     final ParameterizedClass compressionConfig;
+ 
++    /** For a file being written: its cipher. */
+     private final Cipher cipher;
++    /** The file's encryption: a file being read builds its decryptor from it when it is read, not before. */
++    private final EncryptionContext encryptionContext;
+     private final ICompressor compressor;
+ 
+     HintsDescriptor(UUID hostId, int version, long timestamp, ImmutableMap<String, Object> parameters)
+@@ -104,6 +108,7 @@ final class HintsDescriptor
+         if (encryption == null)
+         {
+             cipher = null;
++            encryptionContext = null;
+             compressor = null;
+         }
+         else
+@@ -111,6 +116,7 @@ final class HintsDescriptor
+             if (compressionConfig != null)
+                 throw new IllegalStateException("a hints file cannot be configured for both compression and encryption");
+             cipher = encryption.cipher;
++            encryptionContext = encryption.context;
+             compressor = encryption.compressor;
+             parameters = encryption.params;
+         }
+@@ -163,14 +169,16 @@ final class HintsDescriptor
+ 
+             try
+             {
+-                Cipher cipher;
+                 if (encryptionConfig.containsKey(EncryptionContext.ENCRYPTION_IV))
+                 {
+-                    cipher = encryptionContext.getDecryptor();
++                    // the key is needed only when the file is read (getCipher), not when the catalog lists it
++                    return new EncryptionData(null, encryptionContext, encryptionContext.getCompressor(), params);
+                 }
+                 else
+                 {
+-                    cipher = encryptionContext.getEncryptor();
++                    EncryptionContext.NewFile file = encryptionContext.forNewFile();
++                    encryptionContext = file.context;
++                    Cipher cipher = file.cipher;
+                     ImmutableMap<String, Object> encParams = ImmutableMap.<String, Object>builder()
+                                                                  .putAll(encryptionContext.toHeaderParameters())
+                                                                  .put(EncryptionContext.ENCRYPTION_IV, Hex.bytesToHex(cipher.getIV()))
+@@ -179,13 +187,13 @@ final class HintsDescriptor
+                     Map<String, Object> map = new HashMap<>(params);
+                     map.put(ENCRYPTION, encParams);
+                     params = ImmutableMap.<String, Object>builder().putAll(map).build();
++                    return new EncryptionData(cipher, encryptionContext, encryptionContext.getCompressor(), params);
+                 }
+-                return new EncryptionData(cipher, encryptionContext.getCompressor(), params);
+             }
+             catch (IOException ioe)
+             {
+-                logger.warn("failed to create encyption context for hints file. ignoring encryption for hints.", ioe);
+-                return null;
++                // never fall back to writing hints unencrypted
++                throw new EncryptionKeyUnavailableException("cannot encrypt a new hints file: " + ioe.getMessage(), ioe);
+             }
+         }
+         else
+@@ -197,12 +205,14 @@ final class HintsDescriptor
+     private static final class EncryptionData
+     {
+         final Cipher cipher;
++        final EncryptionContext context;
+         final ICompressor compressor;
+         final ImmutableMap<String, Object> params;
+ 
+-        private EncryptionData(Cipher cipher, ICompressor compressor, ImmutableMap<String, Object> params)
++        private EncryptionData(Cipher cipher, EncryptionContext context, ICompressor compressor, ImmutableMap<String, Object> params)
+         {
+             this.cipher = cipher;
++            this.context = context;
+             this.compressor = compressor;
+             this.params = params;
+         }
+@@ -331,7 +341,7 @@ final class HintsDescriptor
+ 
+     public boolean isEncrypted()
+     {
+-        return cipher != null;
++        return encryptionContext != null;
+     }
+ 
+     public ICompressor createCompressor()
+@@ -343,9 +353,43 @@ final class HintsDescriptor
+         return null;
+     }
+ 
++    /**
++     * The cipher of a file being written, or a new decryptor for a file being read, made now with its key.
++     *
++     * @throws EncryptionKeyUnavailableException when the key cannot be had now; the file is intact
++     */
+     public Cipher getCipher()
+     {
+-        return isEncrypted() ? cipher : null;
++        if (cipher != null || encryptionContext == null)
++            return cipher;
++        try
++        {
++            return encryptionContext.getDecryptor();
++        }
++        catch (IOException e)
++        {
++            throw new EncryptionKeyUnavailableException("cannot decrypt hints file " + hintsFileName + ": " + e.getMessage(), e);
++        }
++    }
++
++    /**
++     * Before a file being written is appended to: initializes its cipher again with its key, when the key provider's
++     * authorization of the key is limited in time.
++     *
++     * @throws EncryptionKeyUnavailableException when the key may no longer encrypt, or cannot be had now
++     */
++    void reauthorizeCipher()
++    {
++        if (cipher == null)
++            return;
++        try
++        {
++            encryptionContext.reauthorize(cipher);
++        }
++        catch (IOException e)
++        {
++            throw new EncryptionKeyUnavailableException("cannot append to hints file " + hintsFileName + ": " + e.getMessage(), e);
++        }
+     }
+ 
+     @Override
+diff --git a/src/java/org/apache/cassandra/hints/HintsDispatchExecutor.java b/src/java/org/apache/cassandra/hints/HintsDispatchExecutor.java
+index e508b47..9217885 100644
+--- a/src/java/org/apache/cassandra/hints/HintsDispatchExecutor.java
++++ b/src/java/org/apache/cassandra/hints/HintsDispatchExecutor.java
+@@ -39,6 +39,7 @@ import org.apache.cassandra.config.DatabaseDescriptor;
+ import org.apache.cassandra.io.FSReadError;
+ import org.apache.cassandra.io.util.File;
+ import org.apache.cassandra.locator.InetAddressAndPort;
++import org.apache.cassandra.security.EncryptionKeyUnavailableException;
+ import org.apache.cassandra.service.StorageService;
+ import org.apache.cassandra.tcm.ClusterMetadata;
+ import org.apache.cassandra.utils.concurrent.Future;
+@@ -258,6 +259,13 @@ final class HintsDispatchExecutor
+                     if (!dispatch(descriptor))
+                         break;
+                 }
++                catch (EncryptionKeyUnavailableException e)
++                {
++                    // the file is intact, only its key is unavailable now: keep it for the next dispatch
++                    logger.warn("Cannot dispatch hints file {} now: {}", descriptor.fileName(), e.getMessage());
++                    store.offerFirst(descriptor);
++                    break;
++                }
+                 catch (FSReadError e)
+                 {
+                     logger.error(String.format("Failed to dispatch hints file %s: file is corrupted", descriptor.fileName()), e);
+diff --git a/src/java/org/apache/cassandra/hints/HintsReader.java b/src/java/org/apache/cassandra/hints/HintsReader.java
+index 3bd5dbe..0a711c8 100644
+--- a/src/java/org/apache/cassandra/hints/HintsReader.java
++++ b/src/java/org/apache/cassandra/hints/HintsReader.java
+@@ -96,6 +96,11 @@ class HintsReader implements AutoCloseable, Iterable<HintsReader.Page>
+             reader.close();
+             throw new FSReadError(e, file);
+         }
++        catch (RuntimeException e)
++        {
++            reader.close();
++            throw e;
++        }
+     }
+ 
+     static HintsReader open(File file)
+diff --git a/src/java/org/apache/cassandra/hints/HintsService.java b/src/java/org/apache/cassandra/hints/HintsService.java
+index 4db17c5..0f7d330 100644
+--- a/src/java/org/apache/cassandra/hints/HintsService.java
++++ b/src/java/org/apache/cassandra/hints/HintsService.java
+@@ -50,6 +50,7 @@ import org.apache.cassandra.locator.InetAddressAndPort;
+ import org.apache.cassandra.locator.ReplicaLayout;
+ import org.apache.cassandra.metrics.HintedHandoffMetrics;
+ import org.apache.cassandra.metrics.StorageMetrics;
++import org.apache.cassandra.security.EncryptionContext;
+ import org.apache.cassandra.service.StorageProxy;
+ import org.apache.cassandra.service.StorageService;
+ import org.apache.cassandra.utils.MBeanWrapper;
+@@ -169,6 +170,13 @@ public final class HintsService implements HintsServiceMBean
+             }
+             builder.put(HintsDescriptor.COMPRESSION, compressorParams.build());
+         }
++        else
++        {
++            // cassandra.yaml documents hints as covered by transparent_data_encryption_options, but they were never encrypted
++            EncryptionContext encryptionContext = DatabaseDescriptor.getEncryptionContext();
++            if (encryptionContext != null && encryptionContext.isEnabled())
++                builder.put(HintsDescriptor.ENCRYPTION, ImmutableMap.copyOf(encryptionContext.toHeaderParameters()));
++        }
+ 
+         return builder.build();
+     }
+diff --git a/src/java/org/apache/cassandra/hints/HintsWriteExecutor.java b/src/java/org/apache/cassandra/hints/HintsWriteExecutor.java
+index 0141b99..93fc54c 100644
+--- a/src/java/org/apache/cassandra/hints/HintsWriteExecutor.java
++++ b/src/java/org/apache/cassandra/hints/HintsWriteExecutor.java
+@@ -31,6 +31,7 @@ import org.apache.cassandra.config.DatabaseDescriptor;
+ import org.apache.cassandra.io.FSError;
+ import org.apache.cassandra.io.FSWriteError;
+ import org.apache.cassandra.io.util.FileUtils;
++import org.apache.cassandra.security.EncryptionKeyUnavailableException;
+ import org.apache.cassandra.utils.FBUtilities;
+ import org.apache.cassandra.utils.concurrent.Future;
+ import org.apache.cassandra.utils.concurrent.UncheckedInterruptedException;
+@@ -235,11 +236,31 @@ final class HintsWriteExecutor
+         {
+             // If we exceed the size limit for a hints file then close the current writer,
+             // if we still have more to write, we'll open a new file in the next iteration.
+-            if (!flushInternal(iterator, store.getOrOpenWriter()))
++            if (!flushInternal(iterator, authorizedWriter(store)))
+                 store.closeWriter();
+         }
+     }
+ 
++    /**
++     * The store's writer, once its file's key has been checked again. A file whose key may no longer encrypt is closed
++     * (it stays readable while its key may still decrypt), and the hints go to a new file under the current key.
++     */
++    private static HintsWriter authorizedWriter(HintsStore store)
++    {
++        HintsWriter writer = store.getOrOpenWriter();
++        try
++        {
++            writer.descriptor().reauthorizeCipher();
++            return writer;
++        }
++        catch (EncryptionKeyUnavailableException e)
++        {
++            logger.warn("Closing hints file {}, which can no longer be appended to: {}", writer.descriptor().fileName(), e.getMessage());
++            store.closeWriter();
++            return store.getOrOpenWriter();
++        }
++    }
++
+     /**
+      * @return {@code true} if we can keep writing to the file,
+      *      or {@code false} if we've exceeded max file size limit during writing
+diff --git a/src/java/org/apache/cassandra/security/EncryptionKeyUnavailableException.java b/src/java/org/apache/cassandra/security/EncryptionKeyUnavailableException.java
+new file mode 100644
+index 0000000..c5842cf
+--- /dev/null
++++ b/src/java/org/apache/cassandra/security/EncryptionKeyUnavailableException.java
+@@ -0,0 +1,31 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.cassandra.security;
++
++/**
++ * The key of an encrypted file cannot be had now (the key provider failed, a KMS is unreachable, the key's
++ * authorization ended). The file is intact: this is never a reason to treat it as corrupt, or to write unencrypted.
++ */
++public class EncryptionKeyUnavailableException extends RuntimeException
++{
++    public EncryptionKeyUnavailableException(String message, Throwable cause)
++    {
++        super(message, cause);
++    }
++}
