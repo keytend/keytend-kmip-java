@@ -555,45 +555,17 @@ PY
   record "$result" user-commands "$summary; logs/user-commands.log"
 }
 
-# central_bundle TREE: after TREE's Central dry run and packaging, every JAR of the Central bundle
-# must be the one in its module's target/, every one SHA256SUMS lists must have that hash, and
-# every JAR of the published modules SHA256SUMS lists must be in the bundle: Central and the GitHub
-# release have the same bytes (SECURITY.md), whatever the umask the build ran under.
+# central_bundle TREE: after TREE's Central dry run and packaging, tools/central-bundle.py: the
+# Central bundle's JARs are the ones in target/ and those its SHA256SUMS lists, so Central and the
+# GitHub release have the same bytes (SECURITY.md), whatever the umask the build ran under.
 central_bundle() {
   local tree=$1 log=$logs/central-bundle.log
   if ! grep -q 'Skipping the upload of the bundle' "$logs/distribution-b.log"; then
     record FAIL central-bundle "the dry run did not say it skipped the upload; logs/distribution-b.log"
     return
   fi
-  python3 -I - "$tree" >"$log" 2>&1 <<'PY' && result=PASS || result=FAIL
-import glob, hashlib, os, sys, zipfile
-tree = sys.argv[1]
-sha = lambda content: hashlib.sha256(content).hexdigest()
-listed = {}
-for line in open(os.path.join(tree, 'target/releases/SHA256SUMS'), encoding='utf-8'):
-    digest, _, path = line.rstrip('\n').partition('  ')
-    listed[os.path.basename(path)] = digest
-failed, compared = [], 0
-with zipfile.ZipFile(os.path.join(tree, 'target/central-publishing/central-bundle.zip')) as bundle:
-    jars = {os.path.basename(n): sha(bundle.read(n)) for n in bundle.namelist() if n.endswith('.jar')}
-for name, digest in sorted(jars.items()):
-    built = glob.glob(os.path.join(tree, '*/target', name))
-    if len(built) != 1 or sha(open(built[0], 'rb').read()) != digest:
-        failed.append(f'{name}: not the one in target/')
-    if name in listed:
-        compared += 1
-        print(('same     ' if listed[name] == digest else 'DIFFERENT'), digest, listed[name], name)
-        if listed[name] != digest:
-            failed.append(f'{name}: not the SHA-256 SHA256SUMS lists')
-missing = sorted(n for n in listed if n.endswith('.jar') and n.startswith('keytend-kmip')
-                 and not n.startswith(('keytend-kmip-cli-', 'keytend-kmip-integration-')) and n not in jars)
-failed += [f'{n}: listed in SHA256SUMS, not in the bundle' for n in missing]
-for f in failed:
-    print('FAILED', f)
-print(f'{compared} of the bundle\'s {len(jars)} JARs are in SHA256SUMS, ' + (
-    'every one with its hash' if not failed else f'{len(failed)} failures'))
-sys.exit(1 if failed or not compared else 0)
-PY
+  python3 -I "$tree/tools/central-bundle.py" "$tree" "$tree/target/releases/SHA256SUMS" >"$log" 2>&1 \
+    && result=PASS || result=FAIL
   record "$result" central-bundle "$(tail -1 "$log") (umask 0077); logs/central-bundle.log"
 }
 

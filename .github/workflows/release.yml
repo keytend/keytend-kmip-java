@@ -1,0 +1,213 @@
+# Copyright 2026 Jeremiah Jordan
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Build a release from a v<version> tag on main (docs/releasing.md, "The release workflow").
+#
+# A tag push runs the full release checks on the tagged commit, against the pinned
+# keytend-kmip-server build, on JDK 17, 21 and 25 (tools/release-check.sh). Then it builds the
+# distribution again, checks that every JAR, SBOM and the source ZIP are the bytes the release
+# checks built and tested, packages them with the checks' reports, signs them with this
+# repository's CI signing subkey and creates a draft GitHub release. Publishing the draft starts
+# publish-central.yml, which deploys a release X.Y.Z to Maven Central (never an X.Y.Z-rc.N).
+# A manual run runs the release checks on the commit it is given, and signs or releases nothing.
+#
+# Repository settings (tools/ci-signing-subkey.sh sets both): secret KEYTEND_SIGNING_KEY, the
+# armored CI subkey secret without a passphrase (the primary is a stub), and variable
+# KEYTEND_SIGNING_SUBKEY, its fingerprint.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: version
+        name: Tag, version and branch
+        run: |
+          version=$(python3 -I -c 'import sys, xml.etree.ElementTree as E; print(E.parse(sys.argv[1]).getroot().findtext("{http://maven.apache.org/POM/4.0.0}version"))' pom.xml)
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            [ "$GITHUB_REF_NAME" = "v$version" ] || { echo "::error::the tag $GITHUB_REF_NAME does not name the POMs' version $version"; exit 1; }
+            [[ $version =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-rc\.[1-9][0-9]*)?$ ]] || { echo "::error::$version is not a release version (X.Y.Z or X.Y.Z-rc.N)"; exit 1; }
+            git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::$GITHUB_REF_NAME is not on main"; exit 1; }
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  release-check:
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          df -h / "$RUNNER_TEMP"
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: |
+            25
+            21
+            17
+      - name: The pinned keytend-kmip-server build
+        run: |
+          pin=tools/kmip-server/pinned-image.properties
+          prop() { sed -n "s/^$1=//p" "$pin"; }
+          dir=$RUNNER_TEMP/server
+          mkdir -p "$dir"
+          curl -fsSL --retry 3 -o "$dir/$(prop release_asset)" \
+            "https://github.com/$(prop repository)/releases/download/$(prop tag)/$(prop release_asset)"
+          (cd "$dir" && echo "$(prop release_asset_sha256)  $(prop release_asset)" | sha256sum -c -)
+          tar -xf "$dir/$(prop release_asset)" -C "$dir" "$(prop archive)"
+          (cd "$dir" && echo "$(prop archive_sha256)  $(prop archive)" | sha256sum -c -)
+          echo "SERVER_ARCHIVE=$dir/$(prop archive)" >> "$GITHUB_ENV"
+      - name: Release checks
+        env:
+          JDK17_HOME: ${{ env.JAVA_HOME_17_X64 }}
+          JDK21_HOME: ${{ env.JAVA_HOME_21_X64 }}
+          JDK25_HOME: ${{ env.JAVA_HOME_25_X64 }}
+        run: tools/release-check.sh --jdks "17 21 25" --integration --server "$SERVER_ARCHIVE" --out "$RUNNER_TEMP/run"
+      - name: Keep the reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-check
+          path: |
+            ${{ runner.temp }}/run/validation/
+            ${{ runner.temp }}/run/summary.txt
+            ${{ runner.temp }}/run/run.txt
+            ${{ runner.temp }}/run/dist-a/sha256.txt
+          retention-days: 30
+          if-no-files-found: error
+      - name: Keep the logs
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-check-logs
+          path: ${{ runner.temp }}/run/logs/
+          retention-days: 30
+
+  release:
+    needs: [check, release-check]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: write   # the draft release
+    env:
+      VERSION: ${{ needs.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-check
+          path: ${{ runner.temp }}/run
+      # The release checks' JDK 17, to the patch release: the Javadoc JARs name it.
+      - id: jdk
+        name: The release checks' JDK 17
+        run: |
+          jdk=$(sed -n 's/^jdk17 openjdk version "\([0-9.]*\)".*/\1/p' "$RUNNER_TEMP/run/validation/release-check.txt")
+          [ -n "$jdk" ] || { echo "::error::validation/release-check.txt names no JDK 17"; exit 1; }
+          echo "version=$jdk" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: ${{ steps.jdk.outputs.version }}
+      - name: Build the distribution as the release checks did
+        run: |
+          run=$RUNNER_TEMP/run
+          grep -q "^commit $GITHUB_SHA " "$run/run.txt" || { echo "::error::the release checks ran on another commit"; exit 1; }
+          tail -1 "$run/summary.txt" | grep -q '^RELEASE CHECK PASSED' || { echo "::error::the release checks did not pass"; exit 1; }
+          epoch=$(git show -s --format=%ct HEAD)
+          grep -qx "epoch $epoch" "$run/run.txt" || { echo "::error::the release checks built with another timestamp"; exit 1; }
+          ./mvnw -B -ntp clean -Pdistribution verify -DskipTests -Dproject.build.outputTimestamp="$epoch"
+      - name: Signing keyring
+        env:
+          SIGNING_KEY: ${{ secrets.KEYTEND_SIGNING_KEY }}
+        run: |
+          umask 077
+          mkdir -p "$RUNNER_TEMP/gnupg"
+          # The subkey has no passphrase; the secret store protects it. package-release.py reads a file.
+          : > "$RUNNER_TEMP/signing-passphrase"
+          printf '%s\n' "$SIGNING_KEY" | gpg --homedir "$RUNNER_TEMP/gnupg" --batch --quiet --import
+      - name: Package and sign
+        env:
+          KEYTEND_SIGNING_HOME: ${{ runner.temp }}/gnupg
+          KEYTEND_SIGNING_PASSPHRASE_FILE: ${{ runner.temp }}/signing-passphrase
+          KEYTEND_SIGNING_SUBKEY: ${{ vars.KEYTEND_SIGNING_SUBKEY }}
+        run: |
+          [ -n "$KEYTEND_SIGNING_SUBKEY" ] || { echo "::error::no variable KEYTEND_SIGNING_SUBKEY (tools/ci-signing-subkey.sh)"; exit 1; }
+          python3 tools/package-release.py --sign-key "$KEYTEND_SIGNING_SUBKEY!" --reports "$RUNNER_TEMP/run/validation"
+      - name: Remove the signing keyring
+        if: always()
+        run: |
+          gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
+          rm -rf "$RUNNER_TEMP/gnupg" "$RUNNER_TEMP/signing-passphrase"
+      - name: The bytes the release checks tested
+        run: |
+          # Every JAR, SBOM, runtime library and the source ZIP must be the release checks' own.
+          # Only the binary ZIP, its .sha256 and SHA256SUMS differ: they carry this packaging.
+          built=$RUNNER_TEMP/built
+          mkdir -p "$built"
+          for f in */target/keytend-kmip*-"$VERSION"*.jar sdk/target/lib/*.jar \
+              */target/keytend-kmip*-"$VERSION"-cyclonedx.json target/releases/keytend-kmip-"$VERSION"-src.zip; do
+            cp "$f" "$built/"
+          done
+          (cd "$built" && sha256sum -- *) > "$RUNNER_TEMP/built.txt"
+          python3 -I - "$RUNNER_TEMP/run/dist-a/sha256.txt" "$RUNNER_TEMP/built.txt" <<'PY'
+          import sys
+          def read(path):
+              return {name: digest for digest, name in (line.rstrip('\n').split('  ', 1) for line in open(path))}
+          tested, built = read(sys.argv[1]), read(sys.argv[2])
+          wanted = {n for n in tested if n.endswith(('.jar', '.json')) or n.endswith('-src.zip')}
+          failed = sorted(n for n in wanted | set(built) if tested.get(n) != built.get(n))
+          for n in failed:
+              print(f'DIFFERENT {n}: tested {tested.get(n)}, built {built.get(n)}')
+          print(f'{len(built)} files, {len(failed)} different from the release checks\' build')
+          sys.exit(1 if failed or not built else 0)
+          PY
+      - name: Draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The signatures verify with the key as the keyserver publishes it, as users fetch it.
+          export GNUPGHOME=$RUNNER_TEMP/verify
+          mkdir -p "$GNUPGHOME" && chmod 700 "$GNUPGHOME"
+          # shellcheck disable=SC2016  # the backticks are SECURITY.md's, not a command
+          fingerprint=$(sed -n 's/^\*\*Release key fingerprint:\*\* `\([0-9A-F]\{40\}\)`$/\1/p' SECURITY.md)
+          gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$fingerprint"
+          tools/publish-release.sh "$VERSION" --publish --draft

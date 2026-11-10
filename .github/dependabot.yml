@@ -62,3 +62,15 @@ updates:
           - org.cyclonedx:*
           - com.github.siom79.japicmp:*
           - org.jacoco:*
+  # The release workflows' actions, each pinned by commit (.github/workflows).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    # A release two weeks old at least.
+    cooldown:
+      default-days: 14
+    groups:
+      actions:
+        patterns:
+          - '*'

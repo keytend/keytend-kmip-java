@@ -664,6 +664,26 @@ class PublishReleaseScriptTest {
   }
 
   /**
+   * {@code --publish --draft} (the release workflow) makes the same release a draft; {@code
+   * --draft} alone is refused, since without {@code --publish} nothing is created.
+   */
+  @Test
+  void draftMakesTheReleaseADraft() throws Exception {
+    Run r = run99("--publish", "--draft");
+    assertEquals(0, r.exit(), r.out());
+    List<String> args = Files.readAllLines(ghCalled);
+    assertEquals(
+        List.of("release", "create", "v9.9.9", "-R", "keytend/keytend-kmip-java", "--verify-tag"),
+        args.subList(0, 6));
+    assertEquals(1, args.stream().filter("--draft"::equals).count(), args.toString());
+    for (String asset : ASSETS) assertTrue(args.contains(dir.resolve(asset).toString()), asset);
+    Files.delete(ghCalled);
+    r = run99("--draft");
+    assertEquals(2, r.exit(), r.out());
+    assertTrue(r.out().contains("--draft needs --publish"), r.out());
+  }
+
+  /**
    * Only a version X.Y.Z-rc.N is published as a pre-release; a release X.Y.Z is not, whatever its
    * major version (0.10.0 is a normal release). release.json must say the same. A version of
    * another form is refused.

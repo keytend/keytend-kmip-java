@@ -851,11 +851,14 @@ limitations under the License.
         </plugins>
       </build>
     </profile>
-    <!-- Maven Central (no release is deployed there for now): ./mvnw -B clean -Pdistribution,central deploy
-         -Dgpg.keyname=AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E! (the release key's signing subkey, exactly),
-         with GNUPGHOME set to the signing keyring and MAVEN_GPG_PASSPHRASE to its passphrase, read
-         from the passphrase file into the environment, never into an argument (docs/releasing.md,
-         step 3). Signs every artifact and uploads the bundle without publishing it (autoPublish=false). -->
+    <!-- Maven Central, for a release X.Y.Z only (docs/releasing.md, step 3; publish-central.yml):
+         ./mvnw -B clean -Pdistribution,central deploy -DskipUpload=true
+         -Dgpg.keyname=AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E! (a signing subkey of the release key,
+         exactly), with GNUPGHOME set to the signing keyring and MAVEN_GPG_PASSPHRASE to its
+         passphrase, read from the passphrase file into the environment, never into an argument.
+         Signs every artifact and writes the bundle, which tools/central-bundle.py checks and
+         tools/central-upload.py uploads. Without -DskipUpload the plugin uploads it for the user
+         to publish (autoPublish=false). -->
     <profile>
       <id>central</id>
       <build>

@@ -18,7 +18,7 @@
 # without --publish.
 #
 #   tools/publish-release.sh VERSION [--dir target/releases] [--notes FILE | --release-md FILE]
-#       [--fingerprint FPR | --unsigned] [--publish]
+#       [--fingerprint FPR | --unsigned] [--publish [--draft]]
 #
 # VERSION is the POMs' version: X.Y.Z, or a pre-release X.Y.Z-rc.N of the release X.Y.Z.
 # It refuses (exit 1) unless the directory holds every asset tools/package-release.py writes. The
@@ -58,7 +58,9 @@
 # are. With --publish, the tag vVERSION must have been pushed there and name release.json's
 # commit (gh api), and so must a local tag vVERSION of this clone, if it has one; gh's
 # --verify-tag checks the tag again. An -rc.N version is marked a pre-release (--prerelease); a
-# release X.Y.Z is not, whatever its major version.
+# release X.Y.Z is not, whatever its major version. --draft makes the release a draft, which only
+# the repository's maintainers see until one of them publishes it (the release workflow,
+# .github/workflows/release.yml).
 set -euo pipefail
 
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -69,6 +71,7 @@ release_md=$root/RELEASE.md
 fingerprint=
 signed=true
 publish=false
+draft=false
 while [ $# -gt 0 ]; do
   case $1 in
     --dir) dir=$2; shift 2 ;;
@@ -77,6 +80,7 @@ while [ $# -gt 0 ]; do
     --fingerprint) fingerprint=$2; shift 2 ;;
     --unsigned) signed=false; shift ;;
     --publish) publish=true; shift ;;
+    --draft) draft=true; shift ;;
     -h|--help) sed -n '/^# Checks a packaged/,/^# version\.$/s/^# \{0,1\}//p' "$0"; exit 0 ;;
     -*) echo "unknown argument $1" >&2; exit 2 ;;
     *) [ -z "$version" ] || { echo "one version only" >&2; exit 2; }; version=$1; shift ;;
@@ -86,7 +90,8 @@ if $publish && ! $signed; then
   echo "REFUSED: --publish with --unsigned: a release is signed, and its signature stands for a full release check that passed (tools/package-release.py --sign --reports)" >&2
   exit 1
 fi
-[ -n "$version" ] || { echo "usage: $0 VERSION [--dir DIR] [--notes FILE | --release-md FILE] [--fingerprint FPR | --unsigned] [--publish]" >&2; exit 2; }
+if $draft && ! $publish; then echo "--draft needs --publish" >&2; exit 2; fi
+[ -n "$version" ] || { echo "usage: $0 VERSION [--dir DIR] [--notes FILE | --release-md FILE] [--fingerprint FPR | --unsigned] [--publish [--draft]]" >&2; exit 2; }
 # X.Y.Z, or a pre-release X.Y.Z-rc.N; release is X.Y.Z, whose RELEASE.md section is the notes.
 [[ $version =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-rc\.[1-9][0-9]*)?$ ]] \
   || { echo "not a release version (X.Y.Z or X.Y.Z-rc.N): $version" >&2; exit 2; }
@@ -338,6 +343,7 @@ fi
 command=(gh release create "v$version" -R keytend/keytend-kmip-java --verify-tag --title "keytend-kmip $version" --notes-file "$notes")
 # An -rc.N version is a pre-release; a release X.Y.Z is not, whatever its major version.
 if [ -n "$candidate" ]; then command+=(--prerelease); fi
+if $draft; then command+=(--draft); fi
 for a in "${assets[@]}"; do command+=("$dir/$a"); done
 echo "Every asset is present and consistent ($($signed && echo "signed by $fingerprint" || echo UNSIGNED)). The release command:"
 printf '%q ' "${command[@]}"; echo

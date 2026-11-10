@@ -18,8 +18,8 @@ limitations under the License.
 
 This is the maintainer's runbook. A release is a GitHub release holding two
 reproducible ZIPs, the binary distribution and its source, and beside them the
-in-memory test server's JAR. No release is deployed to Maven Central for now.
-Step 3 says how one would be, and the release checks run that deploy dry.
+in-memory test server's JAR. A release X.Y.Z is also deployed to Maven Central
+(step 3). A pre-release X.Y.Z-rc.N never is.
 
 A release is built, tested, reported, then packaged. The release checks build
 the distribution, run every test against it, and write the results to a reports
@@ -27,8 +27,10 @@ directory. The packaging puts those reports in the binary ZIP's `validation/`
 ([Where the results are](validation.md#where-the-results-are)). The docs hold no
 results.
 
-Nothing here runs in CI. The maintainer runs every step locally, with JDK 17.
-The signing policy is in [SECURITY.md](../SECURITY.md#verifying-release-artifacts).
+The maintainer prepares the version (step 1) and pushes its tag. The release
+workflow then runs steps 1 to 3 on GitHub Actions
+([The release workflow](#the-release-workflow)). Every step can also run
+locally, with JDK 17, as this page describes it. The signing policy is in [SECURITY.md](../SECURITY.md#verifying-release-artifacts).
 This page says how to follow it.
 
 "The release checks" on this page means `tools/release-check.sh`, which runs
@@ -92,9 +94,91 @@ off Central too.
 - [x] The GitHub organization `keytend` exists.
 - [x] The Central namespace `dev.keytend` is verified, by DNS on
   `keytend.dev` (step 3, "Namespace").
+- [ ] The repository's CI signing subkey is made, given to the workflows and
+  published on both keyservers, and the Central Portal token is a repository
+  secret ([The release workflow](#the-release-workflow), "Settings").
 
 keytend-kmip lives in `keytend/keytend-kmip-java`. The POM's `url`, `scm` and
 `issueManagement`, the README, SECURITY.md and the tools all name it.
+
+## The release workflow
+
+Two GitHub Actions workflows build and publish a release. They run in
+`keytend/keytend-kmip-java` only.
+
+`.github/workflows/release.yml` starts when a tag `vX.Y.Z` or
+`vX.Y.Z-rc.N` is pushed. It runs three jobs:
+
+1. **check.** The tag must name the POMs' version, a release version, and a
+   commit on `main`.
+2. **release-check.** It runs the full release checks on the tagged commit:
+   `tools/release-check.sh --jdks "17 21 25" --integration --server` with the
+   pinned keytend-kmip-server build
+   ([The pinned keytend-kmip-server build](#the-pinned-keytend-kmip-server-build)).
+   It downloads that build from the server's GitHub release and checks the
+   release asset's and the archive's SHA-256 against
+   `tools/kmip-server/pinned-image.properties`. The JDKs are Temurin 17, 21 and
+   25. The job keeps the reports, `summary.txt`, `run.txt` and the first
+   distribution build's `sha256.txt` as the artifact `release-check`, and the
+   logs as `release-check-logs` when a check fails. This job holds no secret.
+3. **release.** It needs the release checks to have passed on this commit. It
+   sets up the JDK 17 they ran on, to the patch release, because the Javadoc JARs
+   name it. Then it builds the distribution as they did (step 2), packages it
+   with their reports and signs it with the CI signing subkey. It refuses to go
+   on unless every JAR, SBOM, runtime library and the source ZIP are
+   byte-identical to the release checks' first build: what is signed is what was
+   tested. The signing keyring is removed before the next step. Then it
+   fetches the release key from keyserver.ubuntu.com, as users do, and runs
+   `tools/publish-release.sh X.Y.Z --publish --draft`, which verifies every
+   signature and creates a **draft** release. An `-rc.N` is marked a
+   pre-release.
+
+A manual run of `release` (Actions, release, Run workflow) runs the first two
+jobs on the branch's commit. It signs and releases nothing.
+
+The maintainer reviews the draft: its notes, its assets and the
+`release-check` artifact. Then the maintainer publishes it, or deletes it and
+its tag. Publishing a release X.Y.Z starts `.github/workflows/publish-central.yml`
+(step 3). Publishing a pre-release starts nothing.
+
+`publish-central.yml` verifies the release's `SHA256SUMS` signature against
+SECURITY.md's fingerprint. It sets up the JDK 17 that the release's
+`validation/release-check.txt` names, builds the Central bundle from the tag
+with the release's timestamp, and signs it with the CI signing subkey. It
+checks that the bundle's JARs are the release's (`tools/central-bundle.py`),
+uploads the bundle to the Central Portal, and publishes it once the Portal has
+validated it (`tools/central-upload.py --publish`). A manual run takes a
+published release's version and `drop` or `publish`. `drop` uploads the
+bundle, waits for the Portal's validation and drops it, so nothing reaches
+Central; it works for a pre-release too. `publish` takes a release X.Y.Z
+only, and `tools/central-upload.py` refuses a bundle of any other version
+before it uploads anything.
+
+### Settings
+
+Once, by the release key's holder, with the primary key at hand:
+
+```sh
+tools/ci-signing-subkey.sh
+```
+
+It adds an Ed25519 signing subkey to the release key, valid for two years. It
+stores the subkey's secret, without a passphrase, as the repository secret
+`KEYTEND_SIGNING_KEY`, and its fingerprint as the variable
+`KEYTEND_SIGNING_SUBKEY`. Then publish the key on both keyservers, with the
+commands it prints, before the first tag. The draft step and Central both
+verify against the published key. The subkey belongs to this repository alone.
+If the secret leaks, revoke that subkey ([the release key](#the-release-key)).
+
+The Central Portal user token goes in two repository secrets. `gh secret set`
+reads each value from the terminal, not from an argument:
+
+```sh
+gh secret set CENTRAL_TOKEN_USERNAME -R keytend/keytend-kmip-java
+gh secret set CENTRAL_TOKEN_PASSWORD -R keytend/keytend-kmip-java
+```
+
+The workflows pin each action they use by commit, with its release in a comment.
 
 ## The first release
 
@@ -119,15 +203,14 @@ one off in order:
    link its form in SECURITY.md's "Reporting a vulnerability", beside the email
    address: `https://github.com/keytend/keytend-kmip-java/security/advisories/new`.
 3. [ ] For each pre-release `0.10.0-rc.N`, and then for 0.10.0: make the
-   `Prepare version` commit (step 1), run the full release checks on it, with
-   `--server`, in a clone of the public repository. Every check must pass. Tag
-   that commit `v0.10.0-rc.N` (or `v0.10.0`).
-4. [ ] Build, package with that run's reports, sign and publish the GitHub
-   release (step 2). Push the tag, then run
-   `tools/publish-release.sh 0.10.0-rc.N --publish`, which publishes it as a
-   pre-release (0.10.0 itself as a normal release). It checks that the tag
-   names the packaged commit, verifies the signatures against SECURITY.md's
-   fingerprint and attaches every asset. Verify the release as a user would.
+   `Prepare version` commit (step 1) on `main`, and push its tag
+   `v0.10.0-rc.N` (or `v0.10.0`). The release workflow runs the full release
+   checks, with `--server`, and every check must pass. It then signs the release
+   and creates its draft ([The release workflow](#the-release-workflow)).
+4. [ ] Review the draft, publish it, and verify the release as a user would.
+   A pre-release stays on GitHub. Publishing 0.10.0 deploys it to Maven Central
+   (step 3). Once it is on Central, change "not on Maven Central" in README.md,
+   docs/getting-started.md and SECURITY.md to the Central dependency.
 5. [ ] Once 0.10.0 itself is published, make it the API baseline (the end of
    step 1). Set `api.baseline.name`, `api.baseline.version` (0.10.0) and its
    SHA-256 in `sdk/pom.xml`. Its stored-format fixtures,
@@ -627,7 +710,10 @@ Beside the ZIPs the script writes:
 The signatures are made by the release key's **signing subkey**
 `AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E` (Ed25519, signing only). Its primary
 key fingerprint is `3A84912AFBE7D2B04EBA2A8A51E65DD49C6F987F`, the one
-SECURITY.md publishes. Step 3's `-Dgpg.keyname` names the same subkey.
+SECURITY.md publishes. Step 3's `-Dgpg.keyname` names the same subkey. The
+release workflow signs with the repository's CI signing subkey instead,
+another subkey of the same release key (`--sign-key`, and `-Dgpg.keyname` in
+step 3), so users verify against the same primary fingerprint.
 
 How the script signs:
 
@@ -824,14 +910,19 @@ SBOMs and save its output as `osv-scanner.txt` in the run directory's
 
 ## 3. Deploy to Maven Central
 
-No release is deployed to Maven Central for now. The release checks run this
-step's deploy as a dry run (`central-bundle`), so it stays ready.
+A release X.Y.Z is deployed to Maven Central once its GitHub release is
+published. A pre-release X.Y.Z-rc.N never is. `publish-central.yml` does it
+([The release workflow](#the-release-workflow)), and the commands below do the
+same by hand. The release checks run this step's build as a dry run
+(`central-bundle`), so it stays ready.
 
-The `central` profile signs every artifact with GnuPG (`maven-gpg-plugin`). It
-uploads one bundle to the [Central Portal](https://central.sonatype.com) with
-Sonatype's `central-publishing-maven-plugin`, with `autoPublish=false`. The
-Portal validates the upload, which then waits until someone publishes it by
-hand.
+The `central` profile signs every artifact with GnuPG (`maven-gpg-plugin`).
+Sonatype's `central-publishing-maven-plugin` writes them into one bundle, and
+`-DskipUpload=true` keeps it from uploading. `tools/central-bundle.py` checks
+that the bundle's JARs are the release's. `tools/central-upload.py` uploads it
+to the [Central Portal](https://central.sonatype.com), waits until the Portal
+has validated it, and publishes it (`--publish`) or drops it (`--drop`).
+`--publish` refuses a bundle of any version but X.Y.Z before it uploads anything.
 
 Without a key name (`-Dgpg.keyname`), the `no-signing-key` profile skips
 signing, so `-Pcentral verify` works on any machine. Central refuses an
@@ -878,16 +969,25 @@ GNUPGHOME=$signing MAVEN_GPG_PASSPHRASE=$(cat "$passphrase") \
   -Dgpg.keyname='AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E!' -DskipUpload=true
 ```
 
-This is a dry run. `-DskipUpload=true` writes the signed bundle and sends
-nothing. The bundle is `central-bundle.zip` under `target/central-publishing/`,
-and the build log names it. Check that it holds the parent POM and the
-`keytend-kmip` artifacts with their `.asc` signatures, and nothing of
-`keytend-kmip-integration`.
+`-DskipUpload=true` writes the signed bundle and sends nothing. The bundle is
+`central-bundle.zip` under `target/central-publishing/`, and the build log names
+it. It holds the parent POM and the `keytend-kmip` artifacts with their `.asc`
+signatures, and nothing of `keytend-kmip-integration` or `keytend-kmip-cli`.
+Check it against the release's `SHA256SUMS`, then upload it:
 
-Then run the same command without `-DskipUpload=true`. The build waits until
-the Portal has validated the deployment. Open **Deployments** in the Portal,
-check it, and **Publish** it (or **Drop** it). Artifacts appear on Central some
-minutes after publishing.
+```sh
+python3 tools/central-bundle.py . <the release's SHA256SUMS>
+python3 tools/central-upload.py target/central-publishing/central-bundle.zip \
+  --name "keytend-kmip X.Y.Z" --publish
+```
+
+`tools/central-upload.py` reads the Portal user token from
+`CENTRAL_TOKEN_USERNAME` and `CENTRAL_TOKEN_PASSWORD`, or else from the server
+`central` of `~/.m2/settings.xml` ("One-time setup"). It uploads the bundle for
+the user to publish, waits until the Portal has validated it, then publishes it
+and waits until it is published. With `--drop` instead, it drops the validated
+deployment, and nothing is published. Artifacts appear on Central some minutes
+after publishing.
 
 > [!WARNING]
 > A version published on Central can never be changed or removed.
@@ -910,6 +1010,13 @@ publish the key again on both keyservers. The primary key expires 2031-10-31.
 Extend its expiry before then and publish the key again. Sign a release only
 with a subkey that is valid when the release is published. A signature by an
 expired subkey no longer verifies as good.
+
+The CI signing subkey ([The release workflow](#the-release-workflow), "Settings")
+also expires two years after it is made. Before it expires, run
+`tools/ci-signing-subkey.sh` again. It adds a new subkey and replaces the
+repository's secret and variable. Publish the key again, then let the old CI
+subkey expire. A GitHub secret cannot be read back, so a CI subkey is never
+used anywhere else.
 
 If a subkey's secret is exposed, revoke that subkey with the primary key, and
 publish the revocation on both keyservers. Add a new signing subkey and publish
