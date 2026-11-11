@@ -17,20 +17,29 @@
 # A tag push runs the full release checks on the tagged commit, against the pinned
 # keytend-kmip-server build, on JDK 17, 21 and 25 (tools/release-check.sh). Then a job without the
 # test containers packages the JARs and SBOMs those checks built and tested (the run's
-# dist-a/build/) with the checks' reports, signs them with this repository's CI signing subkey and
-# creates a draft GitHub release. Publishing the draft starts
-# publish-central.yml, which deploys a release X.Y.Z to Maven Central (never an X.Y.Z-rc.N).
-# A manual run runs the release checks on the commit it is given, and signs or releases nothing.
+# dist-a/build/) with the checks' reports, signs them and the checks' Central bundle of the same
+# JARs with this repository's CI signing subkey, and creates a draft GitHub release. Publishing the
+# draft starts publish-central.yml, which uploads that bundle to Maven Central for a release X.Y.Z
+# (never an X.Y.Z-rc.N).
+# A manual run runs the release checks on the commit it is given, and releases nothing. With
+# central_drop, it then signs the same way and uploads the Central bundle to the Central Portal,
+# which validates it, and drops it: nothing is published, and no GitHub release is made.
 #
-# Repository settings (tools/ci-signing-subkey.sh sets both): secret KEYTEND_SIGNING_KEY, the
-# armored CI subkey secret without a passphrase (the primary is a stub), and variable
-# KEYTEND_SIGNING_SUBKEY, its fingerprint.
+# Repository settings (tools/ci-signing-subkey.sh sets the first two): secret KEYTEND_SIGNING_KEY,
+# the armored CI subkey secret without a passphrase (the primary is a stub), and variable
+# KEYTEND_SIGNING_SUBKEY, its fingerprint; for central_drop, secrets CENTRAL_TOKEN_USERNAME and
+# CENTRAL_TOKEN_PASSWORD (publish-central.yml).
 name: release
 
 on:
   push:
     tags: ['v*']
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      central_drop:
+        description: Then sign, upload the Central bundle for validation, and drop it
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -114,7 +123,8 @@ jobs:
             ${{ runner.temp }}/run/run.txt
           retention-days: 30
           if-no-files-found: error
-      # The JARs and SBOMs the release checks built and tested, in the tree's layout.
+      # The JARs and SBOMs the release checks built and tested, in the tree's layout, and the
+      # unsigned Central bundle of the same JARs (target/central-publishing/).
       - name: Keep the tested build
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -132,9 +142,9 @@ jobs:
 
   release:
     needs: [check, release-check]
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || inputs.central_drop
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 90
     permissions:
       contents: write   # the draft release
     env:
@@ -169,13 +179,15 @@ jobs:
           KEYTEND_SIGNING_SUBKEY: ${{ vars.KEYTEND_SIGNING_SUBKEY }}
         run: |
           [ -n "$KEYTEND_SIGNING_SUBKEY" ] || { echo "::error::no variable KEYTEND_SIGNING_SUBKEY (tools/ci-signing-subkey.sh)"; exit 1; }
-          python3 tools/package-release.py --sign-key "$KEYTEND_SIGNING_SUBKEY!" --reports "$RUNNER_TEMP/run/validation"
+          python3 tools/package-release.py --sign-key "$KEYTEND_SIGNING_SUBKEY!" --reports "$RUNNER_TEMP/run/validation" \
+            --central-bundle target/central-publishing/central-bundle.zip
       - name: Remove the signing keyring
         if: always()
         run: |
           gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
           rm -rf "$RUNNER_TEMP/gnupg" "$RUNNER_TEMP/signing-passphrase"
       - name: Draft release
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -186,3 +198,9 @@ jobs:
           fingerprint=$(sed -n 's/^\*\*Release key fingerprint:\*\* `\([0-9A-F]\{40\}\)`$/\1/p' SECURITY.md)
           gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$fingerprint"
           tools/publish-release.sh "$VERSION" --publish --draft
+      - name: Central Portal validation, then drop
+        if: github.event_name != 'push'
+        env:
+          CENTRAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          CENTRAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+        run: python3 -I tools/central-upload.py "target/releases/keytend-kmip-$VERSION-central-bundle.zip" --name "keytend-kmip $VERSION" --drop

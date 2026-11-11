@@ -119,11 +119,14 @@ Two GitHub Actions workflows build and publish a release. They run in
    release asset's and the archive's SHA-256 against
    `tools/kmip-server/pinned-image.properties`. The JDKs are Temurin 17, 21 and
    25. The job keeps the reports, `summary.txt` and `run.txt` as the artifact
-   `release-check`, the first distribution build's JARs and SBOMs as
-   `tested-build`, and the logs as `release-check-logs` when a check fails. This job holds no secret.
+   `release-check`, the first distribution build's JARs and SBOMs with the
+   second build's unsigned Central bundle as `tested-build`, and the logs as
+   `release-check-logs` when a check fails. This job holds no secret.
 3. **release.** It builds nothing. It puts the `tested-build` files back into
    the checkout, packages them with the release checks' reports and signs them
-   with the CI signing subkey, so what is signed is what was tested.
+   with the CI signing subkey, so what is signed is what was tested. It signs
+   every file of the Central bundle too, whose JARs must be those same files,
+   into the asset `keytend-kmip-X.Y.Z-central-bundle.zip`.
    `tools/package-release.py` refuses to unless the release checks passed on
    this commit. The signing keyring is removed before the next step. Then it
    fetches the release key from keyserver.ubuntu.com, as users do, and runs
@@ -132,20 +135,24 @@ Two GitHub Actions workflows build and publish a release. They run in
    pre-release.
 
 A manual run of `release` (Actions, release, Run workflow) runs the first two
-jobs on the branch's commit. It signs and releases nothing.
+jobs on the branch's commit, and releases nothing. With `central_drop`, the
+third job then signs as on a tag but makes no GitHub release: it uploads the
+signed Central bundle to the Central Portal, waits for its validation and drops
+it (`tools/central-upload.py --drop`), so nothing reaches Central. This tries a
+bundle before a tag is pushed.
 
 The maintainer reviews the draft: its notes, its assets and the
 `release-check` artifact. Then the maintainer publishes it, or deletes it and
 its tag. Publishing a release X.Y.Z starts `.github/workflows/publish-central.yml`
 (step 3). Publishing a pre-release starts nothing.
 
-`publish-central.yml` verifies the release's `SHA256SUMS` signature against
-SECURITY.md's fingerprint. It sets up the JDK 17 that the release's
-`validation/release-check.txt` names, builds the Central bundle from the tag
-with the release's timestamp, and signs it with the CI signing subkey. It
-checks that the bundle's JARs are the release's (`tools/central-bundle.py`),
-uploads the bundle to the Central Portal, and publishes it once the Portal has
-validated it (`tools/central-upload.py --publish`). A manual run takes a
+`publish-central.yml` builds and signs nothing. It verifies the release's
+`SHA256SUMS` signature against SECURITY.md's fingerprint, downloads the
+release's `keytend-kmip-X.Y.Z-central-bundle.zip` and checks it against
+`SHA256SUMS`. Then it uploads that bundle to the Central Portal as it is, and
+publishes it once the Portal has validated it
+(`tools/central-upload.py --publish`). So Central gets the JARs the release
+checks tested, the GitHub release's own. A manual run takes a
 published release's version and `drop` or `publish`. `drop` uploads the
 bundle, waits for the Portal's validation and drops it, so nothing reaches
 Central; it works for a pre-release too. `publish` takes a release X.Y.Z
@@ -604,11 +611,19 @@ release checks (step 1):
 
 ```sh
 release_epoch=$(git show -s --format=%ct HEAD)
-TZ=UTC ./mvnw -B clean -Pdistribution verify \
-  -Dproject.build.outputTimestamp="$release_epoch"
+TZ=UTC ./mvnw -B clean -Pdistribution,central deploy -DskipUpload=true \
+  -Dmaven.install.skip=true -Dproject.build.outputTimestamp="$release_epoch"
 python3 tools/package-release.py --check-signing   # the signing setup, on a scratch file
-python3 tools/package-release.py --sign --reports <the run directory>/validation
+python3 tools/package-release.py --sign --reports <the run directory>/validation \
+  --central-bundle target/central-publishing/central-bundle.zip
 ```
+
+The `central` profile writes the Maven Central bundle of the same build,
+`target/central-publishing/central-bundle.zip`, and `-DskipUpload=true` keeps
+it from uploading anything. Without a key name (`-Dgpg.keyname`) it signs
+nothing: `--central-bundle` signs every file of it but the checksums, refuses
+it unless its JARs are the ones in each module's `target/`, and publishes it as
+`keytend-kmip-X.Y.Z-central-bundle.zip` (step 3).
 
 Build online. The CycloneDX plugin skips the SBOMs when Maven is offline (`-o`), and the
 packaging script then stops and names the SBOM that is missing.
@@ -667,6 +682,9 @@ The script writes two ZIPs to `target/releases/`:
   `README.md`.
 - `keytend-kmip-X.Y.Z-src.zip`, the source: the committed tree of the tag as
   `git archive` gives it, under `keytend-kmip-X.Y.Z-src/`.
+
+With `--central-bundle`, it also writes the signed Central bundle,
+`keytend-kmip-X.Y.Z-central-bundle.zip`.
 
 Before writing them, the script checks:
 
@@ -845,12 +863,18 @@ gh release create vX.Y.Z --verify-tag --title "keytend-kmip X.Y.Z" \
   target/releases/keytend-kmip-testing-X.Y.Z-sources.jar.sha256 \
   target/releases/keytend-kmip-testing-X.Y.Z-cyclonedx.json \
   target/releases/keytend-kmip-testing-X.Y.Z-cyclonedx.json.sha256 \
+  target/releases/keytend-kmip-X.Y.Z-central-bundle.zip \
+  target/releases/keytend-kmip-X.Y.Z-central-bundle.zip.sha256 \
   target/releases/SHA256SUMS \
   target/releases/keytend-kmip-X.Y.Z.zip.asc target/releases/keytend-kmip-X.Y.Z-src.zip.asc \
   target/releases/keytend-kmip-testing-X.Y.Z.jar.asc \
   target/releases/keytend-kmip-testing-X.Y.Z-sources.jar.asc \
-  target/releases/keytend-kmip-testing-X.Y.Z-cyclonedx.json.asc target/releases/SHA256SUMS.asc
+  target/releases/keytend-kmip-testing-X.Y.Z-cyclonedx.json.asc \
+  target/releases/keytend-kmip-X.Y.Z-central-bundle.zip.asc target/releases/SHA256SUMS.asc
 ```
+
+`--publish` refuses a release without its Central bundle. A check without
+`--publish` takes it when it is there.
 
 A pre-release's command also has `--prerelease`.
 
@@ -914,15 +938,13 @@ SBOMs and save its output as `osv-scanner.txt` in the run directory's
 A release X.Y.Z is deployed to Maven Central once its GitHub release is
 published. A pre-release X.Y.Z-rc.N never is. `publish-central.yml` does it
 ([The release workflow](#the-release-workflow)), and the commands below do the
-same by hand. The release checks run this step's build as a dry run
-(`central-bundle`), so it stays ready.
+same by hand. Nothing is built in this step: the bundle is the release's
+signed `keytend-kmip-X.Y.Z-central-bundle.zip` (step 2). The release checks
+build it as a dry run (`central-bundle`), so it stays ready.
 
-The `central` profile signs every artifact with GnuPG (`maven-gpg-plugin`).
-Sonatype's `central-publishing-maven-plugin` writes them into one bundle, and
-`-DskipUpload=true` keeps it from uploading. `tools/central-bundle.py` checks
-that the bundle's JARs are the release's. `tools/central-upload.py` uploads it
-to the [Central Portal](https://central.sonatype.com), waits until the Portal
-has validated it, and publishes it (`--publish`) or drops it (`--drop`).
+`tools/central-upload.py` uploads the bundle to the
+[Central Portal](https://central.sonatype.com), waits until the Portal has
+validated it, and publishes it (`--publish`) or drops it (`--drop`).
 `--publish` refuses a bundle of any version but X.Y.Z before it uploads anything.
 
 Without a key name (`-Dgpg.keyname`), the `no-signing-key` profile skips
@@ -958,27 +980,13 @@ unsigned bundle at validation.
 
 ### Each release
 
-From the same clean checkout of the tag, with the same `release_epoch`:
+Download the published release's bundle and `SHA256SUMS`, check them as
+[Verifying a release](#verifying-a-release) does, then upload the bundle:
 
 ```sh
-signing=${KEYTEND_SIGNING_HOME:-~/.config/keytend-kmip-java/signing/gnupg}
-passphrase=${KEYTEND_SIGNING_PASSPHRASE_FILE:-~/.config/keytend-kmip-java/signing/passphrase}
-# The passphrase goes from the file into this one command's environment, never into an argument.
-GNUPGHOME=$signing MAVEN_GPG_PASSPHRASE=$(cat "$passphrase") \
-  ./mvnw -B clean -Pdistribution,central deploy \
-  -Dproject.build.outputTimestamp="$release_epoch" \
-  -Dgpg.keyname='AAE2AF4DD7F2427F52B800D494E026FE1BF6C09E!' -DskipUpload=true
-```
-
-`-DskipUpload=true` writes the signed bundle and sends nothing. The bundle is
-`central-bundle.zip` under `target/central-publishing/`, and the build log names
-it. It holds the parent POM and the `keytend-kmip` artifacts with their `.asc`
-signatures, and nothing of `keytend-kmip-integration` or `keytend-kmip-cli`.
-Check it against the release's `SHA256SUMS`, then upload it:
-
-```sh
-python3 tools/central-bundle.py . <the release's SHA256SUMS>
-python3 tools/central-upload.py target/central-publishing/central-bundle.zip \
+gpg --verify SHA256SUMS.asc SHA256SUMS   # Good signature, from SECURITY.md's fingerprint
+sha256sum -c --ignore-missing SHA256SUMS
+python3 tools/central-upload.py keytend-kmip-X.Y.Z-central-bundle.zip \
   --name "keytend-kmip X.Y.Z" --publish
 ```
 
@@ -992,13 +1000,6 @@ after publishing.
 
 > [!WARNING]
 > A version published on Central can never be changed or removed.
-
-If the GitHub ZIPs should come from the same build, run
-`python3 tools/package-release.py --reports <the run directory>/validation`
-after the deploy. The `.asc` files the deploy
-adds are not packaged. Its JARs are the bundle's, byte for byte, whatever the
-umask ([Reproducible builds](#reproducible-builds)). The release check's
-`central-bundle` compares them.
 
 ## The release key
 

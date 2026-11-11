@@ -68,8 +68,13 @@ its own package alone.
 The SDK JAR bundles Caffeine, relocated (sdk/pom.xml, "The bundled Caffeine"): the checks tell
 its classes, sources and license from the project's own (BUNDLED).
 
-Beside the ZIPs: each published file (the two ZIPs and those assets) with its .sha256, and
-SHA256SUMS. The binary ZIP holds its own SHA256SUMS (every other file in it), unchanged; the one
+With --central-bundle FILE (signed releases only), the unsigned Central bundle of the same build
+(./mvnw -Pdistribution,central deploy -DskipUpload=true) gets a detached signature of each of its
+files but the checksums, and is published as keytend-kmip-VERSION-central-bundle.zip:
+.github/workflows/publish-central.yml uploads it to Maven Central as it is.
+
+Beside the ZIPs: each published file (the two ZIPs, those assets and the Central bundle) with its
+.sha256, and SHA256SUMS. The binary ZIP holds its own SHA256SUMS (every other file in it), unchanged; the one
 beside it lists those same files under the binary ZIP's top directory, keytend-kmip-VERSION/, then that
 SHA256SUMS itself, then each published file. So `sha256sum -c SHA256SUMS`, where the ZIP is
 downloaded and unpacked, checks all of them.
@@ -199,6 +204,48 @@ def source_zip(version):
     return f'keytend-kmip-{version}-src.zip'
 
 
+def central_bundle_name(version):
+    """The signed Central bundle's file name, a published file of a signed release."""
+    return f'keytend-kmip-{version}-central-bundle.zip'
+
+
+# The checksum files Maven writes beside each file of a Central bundle; Central wants no signature of them.
+CHECKSUMS = ('.md5', '.sha1', '.sha256', '.sha512')
+
+
+def sign_central_bundle(source, destination, version, signer, zip_time):
+    """--central-bundle: the unsigned bundle at source (./mvnw -Pdistribution,central deploy
+    -DskipUpload=true, without a key name), with a detached signature (.asc) of every file but the
+    checksums, as a deterministic ZIP at destination. Every file must be under
+    dev/keytend/ARTIFACT/VERSION/, none may be a signature already, and every JAR must be the one in
+    its module's target/, which the release packages."""
+    with zipfile.ZipFile(source) as bundle:
+        files = {n: bundle.read(n) for n in bundle.namelist() if not n.endswith('/')}
+    wrong = sorted(n for n in files if not re.fullmatch(rf'dev/keytend/[a-z0-9-]+/{re.escape(version)}/[^/]+', n))
+    if not files or wrong:
+        raise SystemExit(f'REFUSED: {source} is not a Central bundle of {version}: {wrong[:5] or "empty"}')
+    if any(n.endswith('.asc') for n in files):
+        raise SystemExit(f'REFUSED: {source} is signed already; give the unsigned bundle')
+    if not any(n.endswith('.pom') for n in files):
+        raise SystemExit(f'REFUSED: {source} holds no POM')
+    # Every JAR the bundle holds must be this build's own (*/target/), byte for byte.
+    for name, content in sorted(files.items()):
+        if name.endswith('.jar'):
+            built = sorted(ROOT.glob(f'*/target/{Path(name).name}'))
+            if len(built) != 1 or built[0].read_bytes() != content:
+                raise SystemExit(f'REFUSED: {Path(name).name} in {source} is not the one in */target/')
+    entries = {n: (content, 0o100644 << 16) for n, content in files.items()}
+    with tempfile.TemporaryDirectory() as scratch:
+        for name, content in files.items():
+            if name.endswith(CHECKSUMS):
+                continue
+            path = Path(scratch) / name.replace('/', '_')
+            path.write_bytes(content)
+            signature, _ = signer.sign(path)
+            entries[name + '.asc'] = (signature.read_bytes(), 0o100644 << 16)
+    write_zip(destination, '', entries, zip_time)
+
+
 def test_only_assets(version):
     """The test-only module's files the release publishes beside the ZIPs: JAR, -sources JAR and
     SBOM."""
@@ -282,11 +329,12 @@ def outer_sums(version, inner, published):
     return ''.join(lines).encode('utf-8')
 
 
-def write_beside(output, version, zip_path, inner, test_only, signer):
+def write_beside(output, version, zip_path, inner, test_only, signer, central=False):
     """Writes the release's files beside its ZIPs in output: the test-only assets (test_only, name
     to content: exactly test_only_assets(version)), each published file's .sha256, SHA256SUMS
     (outer_sums) and, with a signer, the .asc of each of them. The published files are the binary
-    ZIP (zip_path), the source ZIP beside it, and the test-only assets. Stale .asc files are removed
+    ZIP (zip_path), the source ZIP beside it, the test-only assets and, with central, the signed
+    Central bundle already in output (central_bundle_name). Stale .asc files are removed
     first, and every signature if one cannot be made. Returns the published files, the signatures
     and the key that signed (None, unsigned)."""
     expected = test_only_assets(version)
@@ -298,6 +346,10 @@ def write_beside(output, version, zip_path, inner, test_only, signer):
     if not (output / source_zip(version)).is_file():
         raise SystemExit(f'REFUSED: no {source_zip(version)} in {output}')
     published = [zip_path, output / source_zip(version)] + [output / name for name in expected]
+    if central:
+        if not (output / central_bundle_name(version)).is_file():
+            raise SystemExit(f'REFUSED: no {central_bundle_name(version)} in {output}')
+        published.append(output / central_bundle_name(version))
     signed = published + [output / 'SHA256SUMS']
     for path in signed:
         path.with_name(path.name + '.asc').unlink(missing_ok=True)
@@ -522,6 +574,9 @@ def main():
     parser.add_argument('--reports', metavar='DIRECTORY', type=Path,
                         help="the release check's reports of this commit (its run directory's "
                              "validation/), packaged as the binary ZIP's validation/")
+    parser.add_argument('--central-bundle', metavar='FILE', type=Path,
+                        help='the unsigned Central bundle of this build (./mvnw -Pdistribution,central '
+                             'deploy -DskipUpload=true), signed into a published file of the release')
     parser.add_argument('--in-release-check', action='store_true',
                         help="tools/release-check.sh's own packaging, before its last checks: "
                              "unsigned, and the run's results are not required")
@@ -533,6 +588,8 @@ def main():
     if options.in_release_check and (key or not options.reports):
         raise SystemExit('--in-release-check packages a running release check\'s --reports, '
                          'unsigned')
+    if options.central_bundle and not (key and options.reports):
+        raise SystemExit('--central-bundle needs a signing key and --reports: Central refuses an unsigned bundle')
     signer = Signer(key) if key else None
     if options.check_signing:
         with tempfile.TemporaryDirectory() as scratch:
@@ -799,9 +856,14 @@ def main():
     write_zip(destination, prefix, entries, zip_time)
     write_zip(output / source_zip(version), f'keytend-kmip-{version}-src/', source, zip_time)
     checksum = hashlib.sha256(destination.read_bytes()).hexdigest()
+    if options.central_bundle:
+        sign_central_bundle(options.central_bundle, output / central_bundle_name(version), version, signer, zip_time)
+    else:
+        for suffix in ('', '.sha256', '.asc'):
+            (output / (central_bundle_name(version) + suffix)).unlink(missing_ok=True)
     # Beside the ZIP: the test-only assets, each published file's .sha256, SHA256SUMS, signatures.
     published, signatures, signing_key = write_beside(output, version, destination, entries['SHA256SUMS'][0],
-                                                      beside, signer)
+                                                      beside, signer, central=bool(options.central_bundle))
     if not signer:
         print('Not signed (--sign, --sign-key or KEYTEND_GPG_KEY): the release artifacts are UNSIGNED',
               file=sys.stderr)

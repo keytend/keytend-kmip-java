@@ -16,8 +16,8 @@
 
     tools/central-upload.py BUNDLE --name NAME (--publish | --drop) [--timeout SECONDS]
 
-BUNDLE is the central-bundle.zip that `./mvnw -Pdistribution,central deploy -DskipUpload=true`
-wrote, after tools/central-bundle.py checked it. The bundle is uploaded as is, for the user to
+BUNDLE is a release's signed Central bundle, keytend-kmip-VERSION-central-bundle.zip
+(tools/package-release.py --central-bundle). The bundle is uploaded as is, for the user to
 publish (publishingType USER_MANAGED), and the Portal validates it. Once it is VALIDATED:
 
     --publish  publishes it, and waits until it is PUBLISHED. A version published on Maven

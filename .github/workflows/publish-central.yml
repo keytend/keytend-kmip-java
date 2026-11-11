@@ -15,18 +15,18 @@
 # Deploy a published GitHub release to Maven Central (docs/releasing.md, step 3).
 #
 # Publishing a release X.Y.Z starts it; a pre-release X.Y.Z-rc.N never goes to Central. It
-# checks the release's SHA256SUMS signature against the release key, builds the Central bundle
-# from the tag with the release's timestamp, signed with this repository's CI signing subkey,
-# checks that its JARs are the release's (tools/central-bundle.py), uploads it to the Central
-# Portal, and publishes it once the Portal has validated it (tools/central-upload.py).
+# checks the release's SHA256SUMS signature against the release key, downloads the release's
+# signed Central bundle (keytend-kmip-X.Y.Z-central-bundle.zip, which the release workflow made
+# from the build the release checks tested), checks it against SHA256SUMS, uploads it to the
+# Central Portal as it is, and publishes it once the Portal has validated it
+# (tools/central-upload.py). It builds and signs nothing.
 #
 # A manual run takes a published release's version and "drop" or "publish". "drop" uploads the
 # bundle, lets the Portal validate it and drops it, for any version, so nothing reaches Central.
 # "publish" is for a release X.Y.Z only. A version on Central can never be changed or removed.
 #
-# Repository settings: secret KEYTEND_SIGNING_KEY and variable KEYTEND_SIGNING_SUBKEY
-# (tools/ci-signing-subkey.sh); secrets CENTRAL_TOKEN_USERNAME and CENTRAL_TOKEN_PASSWORD, a
-# Central Portal user token of the namespace dev.keytend.
+# Repository settings: secrets CENTRAL_TOKEN_USERNAME and CENTRAL_TOKEN_PASSWORD, a Central
+# Portal user token of the namespace dev.keytend.
 name: publish-central
 
 on:
@@ -60,7 +60,7 @@ jobs:
   central:
     if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 90
     steps:
       - name: Version
         env:
@@ -77,24 +77,20 @@ jobs:
           case $action in publish|drop) ;; *) echo "::error::action $action is neither drop nor publish"; exit 1 ;; esac
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "ACTION=$action" >> "$GITHUB_ENV"
-      # The tools and SECURITY.md from this workflow's commit; the build from the tag, in tag/.
+      # The tools and SECURITY.md from this workflow's commit.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: v${{ env.VERSION }}
-          path: tag
-          fetch-depth: 0
-          persist-credentials: false
-      - name: The release's SHA256SUMS, verified
+      - name: The release's Central bundle, verified
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           [ "$(gh release view "v$VERSION" -R "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = false ] \
             || { echo "::error::v$VERSION is not a published release"; exit 1; }
+          bundle=keytend-kmip-$VERSION-central-bundle.zip
           mkdir -p "$RUNNER_TEMP/release"
-          gh release download "v$VERSION" -R "$GITHUB_REPOSITORY" -D "$RUNNER_TEMP/release" -p SHA256SUMS -p SHA256SUMS.asc
+          gh release download "v$VERSION" -R "$GITHUB_REPOSITORY" -D "$RUNNER_TEMP/release" \
+            -p SHA256SUMS -p SHA256SUMS.asc -p "$bundle"
           export GNUPGHOME=$RUNNER_TEMP/verify
           mkdir -p "$GNUPGHOME" && chmod 700 "$GNUPGHOME"
           # shellcheck disable=SC2016  # the backticks are SECURITY.md's, not a command
@@ -104,51 +100,10 @@ jobs:
           gpg --batch --status-fd 1 --verify "$RUNNER_TEMP/release/SHA256SUMS.asc" "$RUNNER_TEMP/release/SHA256SUMS" \
             | awk -v want="$fingerprint" '$2 == "VALIDSIG" && $NF == want {ok = 1} END {exit !ok}' \
             || { echo "::error::SHA256SUMS is not signed by the release key $fingerprint"; exit 1; }
-      # The release checks' JDK 17, to the patch release: the Javadoc JARs name it.
-      - id: jdk
-        name: The release's JDK 17
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          zip=keytend-kmip-$VERSION.zip
-          gh release download "v$VERSION" -R "$GITHUB_REPOSITORY" -D "$RUNNER_TEMP/release" -p "$zip"
-          (cd "$RUNNER_TEMP/release" && grep -x "[0-9a-f]\{64\}  $zip" SHA256SUMS | sha256sum -c -)
-          jdk=$(unzip -p "$RUNNER_TEMP/release/$zip" "keytend-kmip-$VERSION/validation/release-check.txt" \
-            | sed -n 's/^jdk17 openjdk version "\([0-9.]*\)".*/\1/p')
-          [ -n "$jdk" ] || { echo "::error::the release's validation/release-check.txt names no JDK 17"; exit 1; }
-          echo "version=$jdk" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
-        with:
-          distribution: temurin
-          java-version: ${{ steps.jdk.outputs.version }}
-      - name: Signing keyring
-        env:
-          SIGNING_KEY: ${{ secrets.KEYTEND_SIGNING_KEY }}
-        run: |
-          umask 077
-          mkdir -p "$RUNNER_TEMP/gnupg"
-          printf '%s\n' "$SIGNING_KEY" | gpg --homedir "$RUNNER_TEMP/gnupg" --batch --quiet --import
-      - name: Build and sign the bundle
-        env:
-          GNUPGHOME: ${{ runner.temp }}/gnupg
-          KEYTEND_SIGNING_SUBKEY: ${{ vars.KEYTEND_SIGNING_SUBKEY }}
-        run: |
-          [ -n "$KEYTEND_SIGNING_SUBKEY" ] || { echo "::error::no variable KEYTEND_SIGNING_SUBKEY (tools/ci-signing-subkey.sh)"; exit 1; }
-          cd tag
-          epoch=$(git show -s --format=%ct HEAD)
-          # The subkey has no passphrase: MAVEN_GPG_PASSPHRASE is empty.
-          MAVEN_GPG_PASSPHRASE='' ./mvnw -B -ntp clean -Pdistribution,central deploy -DskipTests \
-            -Dproject.build.outputTimestamp="$epoch" -Dgpg.keyname="$KEYTEND_SIGNING_SUBKEY!" \
-            -DskipUpload=true -Dmaven.install.skip=true
-      - name: Remove the signing keyring
-        if: always()
-        run: |
-          gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
-          rm -rf "$RUNNER_TEMP/gnupg"
-      - name: The bundle holds the release's JARs
-        run: python3 -I tools/central-bundle.py tag "$RUNNER_TEMP/release/SHA256SUMS"
+          (cd "$RUNNER_TEMP/release" && grep -x "[0-9a-f]\{64\}  $bundle" SHA256SUMS | sha256sum -c -)
+          echo "BUNDLE=$RUNNER_TEMP/release/$bundle" >> "$GITHUB_ENV"
       - name: Upload to the Central Portal
         env:
           CENTRAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           CENTRAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
-        run: python3 -I tools/central-upload.py tag/target/central-publishing/central-bundle.zip --name "keytend-kmip $VERSION" "--$ACTION"
+        run: python3 -I tools/central-upload.py "$BUNDLE" --name "keytend-kmip $VERSION" "--$ACTION"

@@ -573,6 +573,14 @@ central_bundle() {
   fi
   python3 -I "$tree/tools/central-bundle.py" "$tree" "$tree/target/releases/SHA256SUMS" >"$log" 2>&1 \
     && result=PASS || result=FAIL
+  # The unsigned bundle, beside the first build's files (dist-a/build/, whose JARs it holds: the
+  # reproducible check compares the builds): the release workflow signs it (package-release.py
+  # --central-bundle).
+  if [ "$result" = PASS ]; then
+    mkdir -p "$out/dist-a/build/target/central-publishing" \
+      && cp "$tree/target/central-publishing/central-bundle.zip" "$out/dist-a/build/target/central-publishing/" \
+      || result=FAIL
+  fi
   record "$result" central-bundle "$(tail -1 "$log") (umask 0077); logs/central-bundle.log"
 }
 
@@ -586,8 +594,8 @@ sdk_jar() {
 
 # Build: the two distribution builds, each under a umask of its own, whatever the caller's: an
 # ordinary one, then a restrictive one (files 0600, directories 0700 on disk, which the archivers
-# copy into the JARs). The second is docs/releasing.md's Central deploy, a dry run: unsigned,
-# nothing installed or uploaded. They are packaged after the reports (below).
+# copy into the JARs). The second is docs/releasing.md's step 2 build with the central profile:
+# its Central bundle unsigned, nothing installed or uploaded. They are packaged after the reports (below).
 if ! $skip_repro; then
   trees+=("$out/tree-a" "$out/tree-b")   # made in subshells, which have their own copy of trees
   (umask 0022; build_distribution a verify) && built_a=true || built_a=false

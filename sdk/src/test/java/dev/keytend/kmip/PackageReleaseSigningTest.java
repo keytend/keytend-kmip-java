@@ -436,4 +436,85 @@ class PackageReleaseSigningTest {
     assertEquals(1, refused.exit(), refused.out());
     assertTrue(refused.out().contains("REFUSED") && refused.out().contains(".asc"), refused.out());
   }
+
+  /**
+   * Signs a Central bundle (sign_central_bundle) and prints each entry, then tries a signed bundle,
+   * one of another version and one holding a JAR that is not in any module's target/.
+   */
+  static final String CENTRAL =
+      String.join(
+          "\n",
+          "import importlib.util, pathlib, sys, zipfile",
+          "spec = importlib.util.spec_from_file_location('package_release', sys.argv[1])",
+          "m = importlib.util.module_from_spec(spec)",
+          "spec.loader.exec_module(m)",
+          "work = pathlib.Path(sys.argv[2])",
+          "signer = m.Signer(sys.argv[3])",
+          "def bundle(name, files):",
+          "    with zipfile.ZipFile(work / name, 'w') as z:",
+          "        for n, content in files.items(): z.writestr(n, content)",
+          "    return work / name",
+          "d = 'dev/keytend/keytend-kmip-x/9.9.9/keytend-kmip-x-9.9.9'",
+          "unsigned = bundle('b.zip', {d + '.pom': b'<project/>', d + '.pom.sha1': b'0' * 40,",
+          "                            d + '-cyclonedx.json': b'{}', d + '-cyclonedx.json.md5': b'0' * 32})",
+          "m.sign_central_bundle(unsigned, work / 'signed.zip', '9.9.9', signer, (2026, 11, 10, 0, 0, 0))",
+          "with zipfile.ZipFile(work / 'signed.zip') as z:",
+          "    for n in z.namelist(): print('entry', n[len(d):])",
+          "    (work / 'pom').write_bytes(z.read(d + '.pom'))",
+          "    (work / 'pom.asc').write_bytes(z.read(d + '.pom.asc'))",
+          "for source, version in [(work / 'signed.zip', '9.9.9'), (unsigned, '9.9.8'),",
+          "                        (bundle('j.zip', {d + '.pom': b'', d + '.jar': b'PK'}), '9.9.9')]:",
+          "    try:",
+          "        m.sign_central_bundle(source, work / 'other.zip', version, signer, (2026, 11, 10, 0, 0, 0))",
+          "        print('accepted', source.name)",
+          "    except SystemExit as e:",
+          "        reason = [w for w in ('signed already', 'not a Central bundle', 'not the one') if w in str(e)]",
+          "        print('refused', source.name, reason)");
+
+  /**
+   * The release workflow's Central bundle: every file but the checksums gets a signature by the
+   * subkey, in a deterministic ZIP; a bundle signed already, of another version or with a JAR this
+   * build did not make is refused.
+   */
+  @Test
+  void theCentralBundleIsSignedFileByFile() throws Exception {
+    Path dir = Files.createTempDirectory(work, "central");
+    Map<String, String> env = new HashMap<>();
+    env.put("KEYTEND_SIGNING_HOME", ci.toString());
+    env.put("KEYTEND_SIGNING_PASSPHRASE_FILE", passphrase.toString());
+    env.put("GNUPGHOME", work.resolve("elsewhere").toString());
+    String out =
+        ok(
+            env,
+            "python3",
+            "-I",
+            "-c",
+            CENTRAL,
+            LicenseHeadersTest.root().resolve("tools/package-release.py").toString(),
+            dir.toString(),
+            subkey + "!");
+    assertEquals(
+        List.of(
+            "entry -cyclonedx.json",
+            "entry -cyclonedx.json.asc",
+            "entry -cyclonedx.json.md5",
+            "entry .pom",
+            "entry .pom.asc",
+            "entry .pom.sha1",
+            "refused signed.zip ['signed already']",
+            "refused b.zip ['not a Central bundle']",
+            "refused j.zip ['not the one']"),
+        out.lines().toList());
+    String status =
+        ok(
+            Map.of("GNUPGHOME", ci.toString()),
+            "gpg",
+            "--batch",
+            "--status-fd",
+            "1",
+            "--verify",
+            dir.resolve("pom.asc").toString(),
+            dir.resolve("pom").toString());
+    assertTrue(status.contains("[GNUPG:] VALIDSIG " + subkey + " "), status);
+  }
 }

@@ -24,8 +24,9 @@
 # It refuses (exit 1) unless the directory holds every asset tools/package-release.py writes. The
 # published files are the binary ZIP keytend-kmip-VERSION.zip, the source ZIP
 # keytend-kmip-VERSION-src.zip and, beside them (not in them), the in-memory test server's
-# keytend-kmip-testing-VERSION.jar, -sources.jar and -cyclonedx.json. Each has a .sha256 (one line,
-# naming that file with its SHA-256). SHA256SUMS must be the binary ZIP's own SHA256SUMS with each
+# keytend-kmip-testing-VERSION.jar, -sources.jar and -cyclonedx.json, and the signed Central bundle
+# keytend-kmip-VERSION-central-bundle.zip (required with --publish, checked whenever present). Each
+# has a .sha256 (one line, naming that file with its SHA-256). SHA256SUMS must be the binary ZIP's own SHA256SUMS with each
 # path under keytend-kmip-VERSION/, then that file's SHA-256, then each published file's. The
 # binary ZIP holds no source tree, and its release.json names VERSION, its commit and whether it is
 # a pre-release. Its validation/release-check.txt must be of that commit and say the release checks
@@ -104,9 +105,12 @@ dir=$(cd "$dir" && pwd)
 zip=keytend-kmip-$version.zip
 src=keytend-kmip-$version-src.zip
 testing=keytend-kmip-testing-$version
+bundle=keytend-kmip-$version-central-bundle.zip
 # The files a user downloads: the binary and source ZIPs, and the test-only module's JAR, sources
-# and SBOM beside them.
+# and SBOM beside them. Then the signed Central bundle that publish-central.yml uploads: a release
+# needs it (--publish), and a check without it (--unsigned, the release checks' packaging) is one.
 published=("$zip" "$src" "$testing.jar" "$testing-sources.jar" "$testing-cyclonedx.json")
+if [ -e "$dir/$bundle" ] || $publish; then published+=("$bundle"); fi
 assets=()
 for f in "${published[@]}"; do assets+=("$f" "$f.sha256"); done
 assets+=(SHA256SUMS)
@@ -329,6 +333,9 @@ PY
     echo "- \`$src\`: the source tree that builds the release."
     echo "- \`$testing.jar\`: the in-memory KMIP server (\`dev.keytend.kmip.testing\`), for tests only: add it in test scope. It is not in the ZIPs."
     echo "- \`$testing-sources.jar\` and \`$testing-cyclonedx.json\`: its sources and its CycloneDX SBOM."
+    if [ -e "$dir/$bundle" ]; then
+      echo "- \`$bundle\`: the signed bundle of the Maven artifacts, as it is uploaded to Maven Central (a release X.Y.Z only). Users do not need it."
+    fi
     echo "- \`.sha256\`: each of those files' SHA-256, for \`sha256sum -c\`."
     echo "- \`SHA256SUMS\`: the SHA-256 of each file the binary ZIP's own \`SHA256SUMS\` lists (under \`keytend-kmip-$version/\`), of that file, and of each file above. Run \`sha256sum -c --ignore-missing SHA256SUMS\` where the ZIP is unpacked: it skips the files you did not download."
     if $signed; then

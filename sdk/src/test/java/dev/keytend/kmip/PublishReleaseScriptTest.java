@@ -332,7 +332,7 @@ class PublishReleaseScriptTest {
 
   /**
    * The files a release publishes: the binary and source ZIPs and, beside them, the test-only
-   * module's assets.
+   * module's assets and the signed Central bundle.
    */
   static List<String> published(String version) {
     String testing = "keytend-kmip-testing-" + version;
@@ -341,7 +341,8 @@ class PublishReleaseScriptTest {
         "keytend-kmip-" + version + "-src.zip",
         testing + ".jar",
         testing + "-sources.jar",
-        testing + "-cyclonedx.json");
+        testing + "-cyclonedx.json",
+        "keytend-kmip-" + version + "-central-bundle.zip");
   }
 
   /** Every asset, in the order the command attaches them: each file and its .sha256, then the signatures. */
@@ -369,6 +370,7 @@ class PublishReleaseScriptTest {
           "keytend-kmip-testing-9.9.9.jar",
           "keytend-kmip-testing-9.9.9-sources.jar",
           "keytend-kmip-testing-9.9.9-cyclonedx.json",
+          "keytend-kmip-9.9.9-central-bundle.zip",
           "SHA256SUMS");
 
   @TempDir static Path gnupg;
@@ -661,6 +663,20 @@ class PublishReleaseScriptTest {
     for (String asset : ASSETS) attached.add(dir.resolve(asset).toString());
     assertEquals(attached, args.subList(10, args.size()));
     assertFalse(r.out().contains("Not published"), r.out());
+  }
+
+  /**
+   * A release is published with its signed Central bundle, which publish-central.yml uploads:
+   * {@code --publish} refuses a release without it, and runs nothing.
+   */
+  @Test
+  void aReleaseNeedsItsCentralBundle() throws Exception {
+    String bundle = "keytend-kmip-9.9.9-central-bundle.zip";
+    for (String suffix : List.of("", ".sha256", ".asc")) Files.delete(dir.resolve(bundle + suffix));
+    Run r = run99("--publish");
+    assertEquals(1, r.exit(), r.out());
+    assertTrue(r.out().contains("lacks " + bundle + " " + bundle + ".sha256"), r.out());
+    assertFalse(Files.exists(ghCalled), "nothing is published");
   }
 
   /**
@@ -1083,7 +1099,9 @@ class PublishReleaseScriptTest {
       Path p = dir.resolve(asset);
       byte[] kept = Files.readAllBytes(p);
       Files.delete(p);
-      Run r = run99();
+      // Without --publish, a release without its Central bundle is one without it: SHA256SUMS,
+      // which lists it, is refused instead.
+      Run r = asset.endsWith("-central-bundle.zip") ? run99("--publish") : run99();
       assertEquals(1, r.exit(), asset + ": " + r.out());
       assertTrue(r.out().contains("REFUSED") && r.out().contains(asset), r.out());
       assertFalse(r.out().contains("gh release create"), r.out());
