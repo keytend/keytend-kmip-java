@@ -84,7 +84,6 @@ Options, added to either command:
 | Property | Effect |
 |---|---|
 | `-Dkmip.catalog.strict=true` | Fail the build when a profile is not fully qualified. |
-| `-Dkmip.catalog.imagesFile=…` | Reuse the qualified local images ([Running the tests](validation.md#every-jdk)). |
 | `-Dkmip.catalog.p95Millis=…`, `-Dkmip.catalog.p99Millis=…` | Change the Get latency budget. |
 | `-Dkmip.catalog.soak=PT24H` | Run the 24-hour soak case (at least 24 hours). |
 | `-Dkmip.catalog.previousArtifact=…` | The previous release's SDK JAR, for the upgrade case. |
@@ -136,9 +135,8 @@ writes these to a directory, `target/validation/catalog` by default (`--out`):
 and `policy-coverage.html`. They are self-contained; download them and open them locally.
 
 The release checks run both into their run directory's `validation/catalog/`, which each
-release's binary ZIP carries ([Where the results are](validation.md#where-the-results-are)). The
-summary records the configuration hashes and image IDs the runs used. With
-`-Dkmip.catalog.imagesFile`, they are the ones in `integration/catalog/qualified-images.properties`.
+release's binary ZIP carries ([Where the results are](validation.md#where-the-results-are)). Each
+run's record file holds the fixture's configuration hash and the image ID the run used.
 
 ## Outcome rules
 

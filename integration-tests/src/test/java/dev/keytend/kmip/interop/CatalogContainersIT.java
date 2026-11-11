@@ -125,24 +125,8 @@ class CatalogContainersIT {
                                 .inspectImageCmd(container.getDockerImageName())
                                 .exec();
                         String imageId = inspected.getId();
-                        // The image's content identity, recorded with each result.
-                        String layers =
-                            inspected.getRootFS() == null
-                                    || inspected.getRootFS().getLayers() == null
-                                    || inspected.getRootFS().getLayers().isEmpty()
-                                ? "unverified"
-                                : Catalog.layerDigest(inspected.getRootFS().getLayers());
                         String config =
                             digestDirectory(ROOT.resolve("integration/" + profile.directory));
-                        String binarySha = "unverified";
-                        if (profile.id.equals("pqctoday")) {
-                          String binary = "/usr/local/bin/pqctoday-kmip";
-                          var checksum = container.execInContainer("sha256sum", binary);
-                          assertEquals(
-                              0, checksum.getExitCode(), "Native binary checksum unavailable");
-                          binarySha = checksum.getStdout().trim().substring(0, 64);
-                          assertTrue(binarySha.matches("[0-9a-f]{64}"));
-                        }
                         List<String> defects = new ArrayList<>();
                         for (ProtocolVersion version : versions(profile)) {
                           try (var fixture =
@@ -157,8 +141,6 @@ class CatalogContainersIT {
                                   imageId,
                                   commit,
                                   config)) {
-                            fixture.serverBinarySha256 = binarySha;
-                            fixture.imageLayersSha256 = layers;
                             if (profile.persistent)
                               fixture.restart = () -> restart(container, fixture);
                             fixture.serverIdentity =
@@ -213,23 +195,10 @@ class CatalogContainersIT {
                     }));
   }
 
-  /** Optionally reuse the exact local fixture images named in an evidence manifest. */
-  static Future<String> image(Profile profile) throws Exception {
-    String manifest = System.getProperty("kmip.catalog.imagesFile", "");
-    if (manifest.isBlank())
-      return new ImageFromDockerfile("localhost/keytend-" + profile.id + ":catalog", false)
-          .withFileFromPath(".", ROOT.resolve("integration/" + profile.directory));
-    var images = new Properties();
-    try (var input = Files.newInputStream(ROOT.resolve(manifest))) {
-      images.load(input);
-    }
-    String image = images.getProperty(profile.id + ".image", "");
-    assertTrue(image.matches("sha256:[0-9a-f]{64}"), "Missing immutable image for " + profile.id);
-    assertEquals(
-        images.getProperty(profile.id + ".configuration"),
-        digestDirectory(ROOT.resolve("integration/" + profile.directory)),
-        "Fixture sources differ from pinned image manifest for " + profile.id);
-    return CompletableFuture.completedFuture(image);
+  /** The fixture image, built from its directory. */
+  static ImageFromDockerfile image(Profile profile) {
+    return new ImageFromDockerfile("localhost/keytend-" + profile.id + ":catalog", false)
+        .withFileFromPath(".", ROOT.resolve("integration/" + profile.directory));
   }
 
   static List<ProtocolVersion> versions(Profile profile) {

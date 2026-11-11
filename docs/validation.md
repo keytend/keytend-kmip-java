@@ -234,16 +234,6 @@ containers. JSON reports go to `integration/reports`, which Git ignores.
 The script runs `verify` once per JDK. Set `JDK17_HOME`, `JDK21_HOME` and `JDK25_HOME`, or install
 the JDKs with SDKMAN. The release check runs this matrix too ([Releasing](releasing.md)).
 
-To reuse the exact server images the catalog was qualified on, add:
-
-```sh
-./tools/verify-jdks.sh -Pintegration \
-  -Dkmip.catalog.imagesFile=integration/catalog/qualified-images.properties
-```
-
-That file names immutable local image IDs, and nothing is downloaded. On a fresh machine, omit
-the property, and the images are built from the checked-in recipes.
-
 ### The catalog
 
 The catalog runs within the same integration build. [Catalog](catalog.md#running-the-catalog)

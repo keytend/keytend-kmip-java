@@ -69,4 +69,4 @@ for name in ['admin', 'node1', 'node1-renewed', 'node2']:
 (d / 'policy.json').write_text(json.dumps({'principals': principals}, indent=2) + '\n')
 PY
 "$helper" master-key "$dir/master.key"
-echo "pki in $dir: admin, node1 (and node1-renewed), node2; policy $(sha256sum "$dir/policy.json" | cut -d' ' -f1)"
+echo "pki in $dir: admin, node1 (and node1-renewed), node2"

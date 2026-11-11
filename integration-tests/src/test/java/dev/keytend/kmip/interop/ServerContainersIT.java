@@ -77,8 +77,6 @@ class ServerContainersIT {
                               .withCopyFileToContainer(MountableFile.forHostPath(CERTS), "/certs")
                               .withStartupTimeout(Duration.ofMinutes(2))) {
                         container.start();
-                        // The build the suites' pinned limitations are matched against.
-                        String identity = KmsSamplesIT.identity(server, container);
                         var ssl =
                             Tls.context(
                                 CERTS.resolve("client.p12"),
@@ -96,8 +94,8 @@ class ServerContainersIT {
                                   version)) {
                             var checks =
                                 version.legacyAttributes()
-                                    ? new InteropSuite(client, server, identity, CERTS).run()
-                                    : new ModernInteropSuite(client, server, identity, CERTS).run();
+                                    ? new InteropSuite(client, server, CERTS).run()
+                                    : new ModernInteropSuite(client, server, CERTS).run();
                             InteropSuite.writeReport(
                                 ROOT.resolve(
                                     "integration/reports/"
@@ -121,10 +119,7 @@ class ServerContainersIT {
                         }
                         assertTrue(
                             failures.isEmpty(),
-                            "build "
-                                + identity
-                                + "\n"
-                                + String.join("\n", failures)
+                            String.join("\n", failures)
                                 + "\nServer log:\n"
                                 + container
                                     .getLogs()

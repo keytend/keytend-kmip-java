@@ -93,7 +93,7 @@ esac
   echo "image_id  $image_id ($image_pin)"
   echo "version   $("$server" version)"
   echo "kmip_env  $(env | grep '^KMIP_' | sort | paste -sd' ' || true)"
-  for jar in ${classpath//:/ }; do echo "jar       $jar $(sha256sum "$jar" | cut -d' ' -f1)"; done
+  for jar in ${classpath//:/ }; do echo "jar       $jar"; done
   echo "java      $(java -version 2>&1 | head -1)"
   echo "setup     $setup"
   echo "programs  $programs"
@@ -169,7 +169,6 @@ PY
   chmod 600 "$pki"/*-key.pem "$pki/master.key" "$pki/renewal-store.p12"
   [ -f "$pki/admin-credential.properties" ] && chmod 600 "$pki/admin-credential.properties"
 fi
-sha256sum "$pki/policy.json" > "$work/policy.sha256"
 
 # The purpose program's provisioning CA shapes, each a directory of the CA (ca.pem, ca-key.pem) and
 # the server's --ca bundle (bundle.pem), and what the pinned keytend-kmip-server does with it:

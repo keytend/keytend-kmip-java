@@ -44,14 +44,6 @@ public final class CatalogFixture implements AutoCloseable {
   public final String server, host, build, image, commit, configurationHash;
   public final String clientSourceHash;
   public volatile Long clockOffsetMillis;
-  public String serverBinarySha256 = "unverified";
-
-  /**
-   * SHA-256 of the server image's {@code RootFS.Layers} ({@link Catalog#layerDigest}), the image's
-   * content identity; "unverified" when not inspected.
-   */
-  public String imageLayersSha256 = "unverified";
-
   public final int port;
   public final ProtocolVersion version;
   public final String namespace = "catalog-" + UUID.randomUUID();
@@ -325,8 +317,6 @@ public final class CatalogFixture implements AutoCloseable {
     m.put("server_id", server);
     m.put("server_version", build);
     m.put("image_digest", image);
-    m.put("server_binary_sha256", serverBinarySha256);
-    m.put("image_layers_sha256", imageLayersSha256);
     m.put("wire_version", version.toString());
     m.put("tls_version", tlsVersion);
     m.put("client_commit", commit);

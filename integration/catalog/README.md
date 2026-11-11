@@ -20,9 +20,9 @@ limitations under the License.
 > **Experimental: not for production use.** keytend-kmip is experimental in every release. Its
 > catalog is a test record. Passing it does not certify the SDK or any server.
 
-Data fixtures for the interoperability catalog: the case manifest, the target inventory and the
-pinned images. The Keytend project wrote the catalog and its tests. The runner records its
-results separately and never rewrites the manifest. To run the catalog and read its results, see
+Data fixtures for the interoperability catalog: the case manifest and the target inventory. The
+Keytend project wrote the catalog and its tests. The runner records its results separately and
+never rewrites the manifest. To run the catalog and read its results, see
 [Interoperability catalog](../../docs/catalog.md).
 
 ## Files
@@ -31,8 +31,6 @@ results separately and never rewrites the manifest. To run the catalog and read 
 | --- | --- |
 | `catalog.json` | the case manifest: 145 cases |
 | `server-inventory.json` | the servers the catalog runs against, and scope overlays |
-| `qualified-images.properties` | the exact local images the catalog and the samples were qualified on |
-| `pykmip-files.txt` | the installed files of the qualified PyKMIP build, behind its `files:` pin |
 | `reference.py` | an independent Python KMIP probe, with no SDK encoding or decoding |
 | `generate-pki.sh` | a throwaway test PKI for the container and peer tests |
 

@@ -59,7 +59,7 @@ mkdir -p "$work"
 work=$(cd "$work" && pwd)
 
 echo "server $("$server" version) image $image"
-echo "jar    $jar sha256 $(sha256sum "$jar" | cut -d' ' -f1)"
+echo "jar    $jar"
 echo "work   $work"
 env | grep '^KMIP_' | sed 's/^/env    /' || true
 

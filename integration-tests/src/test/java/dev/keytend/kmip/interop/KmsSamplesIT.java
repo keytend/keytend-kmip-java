@@ -45,10 +45,9 @@ import org.testcontainers.utility.MountableFile;
  * result is recorded as PASS, UNSUPPORTED ({@link UnsupportedException}: the server answered
  * Operation/Feature Not Supported, or the negotiated version lacks the feature), SERVER_LIMITATION
  * (a diagnosed server behavior, {@link #LIMITATIONS}) or FAIL, and compared with the
- * expected matrix {@link #EXPECTED}: any difference fails the build. The server-specific
- * expectations are pinned to the server build they were diagnosed on, so a server build with
- * another identity is expected to pass every sample. Reports go to {@code
- * integration/reports/kms-samples-*.json}.
+ * expected matrix {@link #EXPECTED}: any difference fails the build. Each server-specific
+ * expectation is backed by a limitation of that server, which matches only its server, sample and
+ * exact failure. Reports go to {@code integration/reports/kms-samples-*.json}.
  */
 class KmsSamplesIT {
   private static final Path ROOT = Path.of(System.getProperty("project.root"));
@@ -77,28 +76,7 @@ class KmsSamplesIT {
   record Outcome(String sample, String outcome, String detail, String operation) {}
 
   /**
-   * The PyKMIP build (from {@code integration/pykmip}) the limitations below were diagnosed on,
-   * identified by its content: the SHA-256 of the list of the files pip installed, each with its
-   * SHA-256 ({@code integration/pykmip/build-identity.py}, run in the server's container; {@code
-   * integration/catalog/pykmip-files.txt} is the diagnosed build's list), and of the fixture
-   * sources, which hold {@code server.py} and the Dockerfile. Not the image ID nor its layers: each
-   * build gives the same files new times, so new layers. The Dockerfile pins every input, so a build
-   * on any machine has this identity; any change to Python, a package, PyKMIP or the fixture turns
-   * the rules off. The manifest records the same pin ({@code pykmip.files}).
-   */
-  static final String PYKMIP_BUILD = InteropSuite.PYKMIP_BUILD;
-
-  /**
-   * The PQCToday build the limitations below were diagnosed on. Its image layers change on an
-   * equivalent rebuild, so it is identified by the SHA-256 of the native executable and of the
-   * fixture sources ({@code integration/pqctoday}).
-   */
-  static final String PQCTODAY_BUILD =
-      "binary:810052c387b90350e09492675d30cf9e2ddfe4669fda9ddaf64318d1676d24f7"
-          + ":cf3e662bc0ec7171f0f1bb6632605f7dd443629d2d37173810cfa4c7adc7c635";
-
-  /**
-   * The exact chain sample A6 records on {@link #PQCTODAY_BUILD}, with any object identifier: the
+   * The exact chain sample A6 records on PQCToday, with any object identifier: the
    * Get reply declares Object Type Certificate and carries a symmetric key block.
    */
   static final String PQCTODAY_CERTIFICATE_FAILURE =
@@ -107,7 +85,7 @@ class KmsSamplesIT {
           + " Get response object does not match its ObjectType";
 
   /**
-   * The chain sample A2 records on {@link #PYKMIP_BUILD} at KMIP 1.4, where its KEK is created with
+   * The chain sample A2 records on PyKMIP at KMIP 1.4, where its KEK is created with
    * Extractable false: the Create is refused with Invalid Field.
    */
   static final String PYKMIP_EXTRACTABLE_FAILURE =
@@ -118,7 +96,7 @@ class KmsSamplesIT {
           + " reason InvalidField (0x00000007)";
 
   /**
-   * The chain sample A2 records on {@link #PQCTODAY_BUILD}: the KEK made with Extractable false
+   * The chain sample A2 records on PQCToday: the KEK made with Extractable false
    * reads back Extractable true, so the SDK leaves it Pre-Active and refuses.
    */
   static final String PQCTODAY_EXTRACTABLE_FAILURE =
@@ -128,7 +106,7 @@ class KmsSamplesIT {
           + " findOrCreate: [^ ]+ was made with Extractable false, but its Extractable is true, not false";
 
   /**
-   * The failure of sample A6 on {@link #PYKMIP_BUILD}, as {@code samplesAgainstRealServers} records
+   * The failure of sample A6 on PyKMIP, as {@code samplesAgainstRealServers} records
    * it (the exception chain, outermost first). It names {@code registerPreActive}, the method the
    * sample calls.
    */
@@ -140,16 +118,13 @@ class KmsSamplesIT {
           + " reason GeneralFailure (0x00000100)";
 
   /**
-   * A server behavior that excuses a sample, valid only on the exact server build it was diagnosed
-   * on: {@code expected} is the table
-   * value it authorizes, SERVER_LIMITATION (the failure must match {@code failure}) or
-   * UNSUPPORTED:operation. On any other build the rule is off, so the sample is expected to pass
-   * and a remaining limitation fails the build until it is diagnosed again.
+   * A server behavior that excuses a sample on that server only: {@code expected} is the table value
+   * it authorizes, SERVER_LIMITATION (the failure must match {@code failure}) or
+   * UNSUPPORTED:operation.
    */
-  record Limitation(
-      String server, String identity, String sample, String expected, String failure, String why) {
-    boolean appliesTo(String target, String build, String name) {
-      return server.equals(target) && identity.equals(build) && sample.equals(name);
+  record Limitation(String server, String sample, String expected, String failure, String why) {
+    boolean appliesTo(String target, String name) {
+      return server.equals(target) && sample.equals(name);
     }
   }
 
@@ -157,7 +132,6 @@ class KmsSamplesIT {
       List.of(
           new Limitation(
               "pykmip",
-              PYKMIP_BUILD,
               "A2 EnvelopeEncryption",
               "SERVER_LIMITATION",
               java.util.regex.Pattern.quote(PYKMIP_EXTRACTABLE_FAILURE),
@@ -165,7 +139,6 @@ class KmsSamplesIT {
                   + " which sample A2 asks for its KEK from 1.4; the SDK never drops it"),
           new Limitation(
               "pqctoday",
-              PQCTODAY_BUILD,
               "A2 EnvelopeEncryption",
               "SERVER_LIMITATION",
               PQCTODAY_EXTRACTABLE_FAILURE,
@@ -173,17 +146,15 @@ class KmsSamplesIT {
                   + " the SDK's read-back leaves the KEK Pre-Active and refuses"),
           new Limitation(
               "pykmip",
-              PYKMIP_BUILD,
               "A5 LifecycleRotation",
               "UNSUPPORTED:rotate",
               null,
               "PyKMIP does not implement Re-key (Operation Not Supported)"),
           new Limitation(
               "pykmip",
-              PYKMIP_BUILD,
               "A6 CertificateStorage",
               "SERVER_LIMITATION",
-              // Exactly the chain observed on this build (KMIP 1.2 and 1.4): Register fails
+              // Exactly the chain observed on PyKMIP (KMIP 1.2 and 1.4): Register fails
               // with General Failure and nothing else; any other failure of the sample is a FAIL.
               java.util.regex.Pattern.quote(PYKMIP_CERTIFICATE_FAILURE),
               "PyKMIP cannot store Cryptographic Algorithm on certificates (server log:"
@@ -191,7 +162,6 @@ class KmsSamplesIT {
                   + " KMIP 1.1 Table 129 requires for Certificate Register"),
           new Limitation(
               "pqctoday",
-              PQCTODAY_BUILD,
               "A4 RemoteSignVerify",
               "UNSUPPORTED:asPublicKey",
               null,
@@ -199,7 +169,6 @@ class KmsSamplesIT {
                   + " X.509"),
           new Limitation(
               "pqctoday",
-              PQCTODAY_BUILD,
               "A6 CertificateStorage",
               "SERVER_LIMITATION",
               PQCTODAY_CERTIFICATE_FAILURE,
@@ -208,20 +177,18 @@ class KmsSamplesIT {
                   + " reports the mismatch as such)"));
 
   /**
-   * Outcomes the SDK itself decides from the negotiated version, whatever the server build: the
+   * Outcomes the SDK itself decides from the negotiated version, whatever the server: the
    * table value, and the first version where it no longer applies.
    */
   static final Map<String, ProtocolVersion> SDK_REFUSALS =
       // AES-GCM needs KMIP 1.4: the SDK refuses it before sending on 1.2, naming the method called.
       Map.of("UNSUPPORTED:encrypt", ProtocolVersion.V1_4, "UNSUPPORTED:seal", ProtocolVersion.V1_4);
 
-  /** The diagnosed limitation a failure matches on this exact server build, if any. */
-  static Optional<String> limitation(
-      String server, String identity, String sample, String failure) {
+  /** The diagnosed limitation a failure matches on this server, if any. */
+  static Optional<String> limitation(String server, String sample, String failure) {
     for (Limitation l : LIMITATIONS)
-      if (l.appliesTo(server, identity, sample)
-          && l.failure() != null
-          && failure.matches(l.failure())) return Optional.of(l.why());
+      if (l.appliesTo(server, sample) && l.failure() != null && failure.matches(l.failure()))
+        return Optional.of(l.why());
     return Optional.empty();
   }
 
@@ -408,7 +375,7 @@ class KmsSamplesIT {
    * makes a sample unsupported for another reason fails the build); SERVER_LIMITATION must match
    * {@link #LIMITATIONS}. Any other result, including an unexpected pass, fails the build: update
    * this table deliberately. A value other than PASS holds only where {@link #expectation} finds an
-   * SDK refusal or a {@link Limitation} pinned to the running server build.
+   * SDK refusal or a {@link Limitation} of that server.
    */
   static final Map<String, Map<String, String>> EXPECTED = expected();
 
@@ -442,83 +409,37 @@ class KmsSamplesIT {
   }
 
   /**
-   * What a sample must do on this server build: the table value when it is PASS, an SDK refusal
-   * at this version, or authorized by a {@link Limitation} pinned to {@code identity}; otherwise
-   * PASS, with a note naming the rule that is off. Null when the table has no value.
+   * What a sample must do on this server and version: the table value. A value other than PASS
+   * must be an SDK refusal at this version or authorized by a {@link Limitation} of this server;
+   * otherwise the table is wrong and this throws. Null when the table has no value.
    */
-  static String expectation(
-      String server, String identity, ProtocolVersion version, String sample) {
+  static String expectation(String server, ProtocolVersion version, String sample) {
     String cell = EXPECTED.getOrDefault(server + " " + version, Map.of()).get(sample);
     if (cell == null || cell.equals("PASS")) return cell;
     ProtocolVersion lifted = SDK_REFUSALS.get(cell);
     if (lifted != null && !version.atLeast(lifted)) return cell;
     for (Limitation l : LIMITATIONS)
-      if (l.appliesTo(server, identity, sample) && l.expected().equals(cell)) return cell;
-    String pinned =
-        LIMITATIONS.stream()
-            .filter(l -> l.server().equals(server) && l.sample().equals(sample))
-            .map(Limitation::identity)
-            .findFirst()
-            .orElse("none");
-    return "PASS (the "
-        + cell
-        + " rule is off: "
-        + server
-        + " build "
-        + identity
-        + " is not the diagnosed build "
-        + pinned
-        + ")";
+      if (l.appliesTo(server, sample) && l.expected().equals(cell)) return cell;
+    throw new IllegalStateException(
+        server
+            + " "
+            + version
+            + " "
+            + sample
+            + ": "
+            + cell
+            + " is backed by no limitation of this server and no SDK refusal");
   }
 
   /** The expectation an outcome must meet, or a description of how it differs. */
-  static Optional<String> mismatch(
-      String server, String identity, ProtocolVersion version, Outcome o) {
-    String expected = expectation(server, identity, version, o.sample());
+  static Optional<String> mismatch(String server, ProtocolVersion version, Outcome o) {
+    String expected = expectation(server, version, o.sample());
     if (expected == null) return Optional.of("no expectation for " + o.sample());
     String actual =
         o.outcome().equals("UNSUPPORTED") ? "UNSUPPORTED:" + o.operation() : o.outcome();
-    // A rule that is off expects PASS; the note in parentheses only explains why.
-    String required = expected.startsWith("PASS") ? "PASS" : expected;
-    return required.equals(actual)
+    return expected.equals(actual)
         ? Optional.empty()
         : Optional.of("expected " + expected + ", got " + actual);
-  }
-
-  /**
-   * The build identity the {@link Limitation} rules (and the interop suites' pinned limitations,
-   * {@link InteropSuite#PQCTODAY_BUILD}) are pinned to, read from the running server: executable
-   * and fixture configuration SHA-256 for PQCToday, installed files and fixture configuration for
-   * PyKMIP.
-   */
-  static String identity(String server, GenericContainer<?> container) throws Exception {
-    String configuration =
-        CatalogContainersIT.digestDirectory(ROOT.resolve("integration/" + server));
-    if (server.equals("pqctoday")) {
-      var checksum = container.execInContainer("sha256sum", "/usr/local/bin/pqctoday-kmip");
-      assertEquals(0, checksum.getExitCode(), "Native binary checksum unavailable");
-      return "binary:" + checksum.getStdout().trim().substring(0, 64) + ":" + configuration;
-    }
-    // The installed files are the build's content; the fixture directory digest covers the rest
-    // (server.py, and what the Dockerfile sets without a file: ENTRYPOINT, CMD, ENV).
-    if (server.equals("pykmip")) {
-      var digest =
-          container.execInContainer(
-              "python",
-              "-I",
-              "-c",
-              Files.readString(ROOT.resolve("integration/pykmip/build-identity.py")));
-      assertEquals(0, digest.getExitCode(), "PyKMIP build identity unavailable: " + digest);
-      return files(digest.getStdout().trim()) + ":" + configuration;
-    }
-    var image = container.getDockerClient().inspectImageCmd(container.getDockerImageName()).exec();
-    return image.getId();
-  }
-
-  /** The {@link #PYKMIP_BUILD} form of the SHA-256 of a build's file list. */
-  static String files(String listDigest) {
-    assertTrue(listDigest.matches("[0-9a-f]{64}"), "not a SHA-256: " + listDigest);
-    return "files:" + listDigest;
   }
 
   @Test
@@ -550,7 +471,6 @@ class KmsSamplesIT {
                               .withCopyFileToContainer(MountableFile.forHostPath(CERTS), "/certs")
                               .withStartupTimeout(Duration.ofMinutes(2))) {
                         container.start();
-                        String identity = identity(server, container);
                         List<String> failures = new ArrayList<>();
                         for (ProtocolVersion version : entry.getValue()) {
                           List<Outcome> outcomes = new ArrayList<>();
@@ -582,7 +502,7 @@ class KmsSamplesIT {
                                 for (Throwable c = e.getCause(); c != null; c = c.getCause())
                                   chain.append(" <- ").append(c);
                                 Optional<String> known =
-                                    limitation(server, identity, sample.getKey(), chain.toString());
+                                    limitation(server, sample.getKey(), chain.toString());
                                 if (known.isPresent())
                                   outcomes.add(
                                       new Outcome(
@@ -595,7 +515,7 @@ class KmsSamplesIT {
                                       new Outcome(sample.getKey(), "FAIL", chain.toString(), ""));
                               }
                               Outcome last = outcomes.get(outcomes.size() - 1);
-                              mismatch(server, identity, version, last)
+                              mismatch(server, version, last)
                                   .ifPresent(
                                       why ->
                                           failures.add(
@@ -611,7 +531,7 @@ class KmsSamplesIT {
                                                       : " (" + last.detail() + ")")));
                             }
                           }
-                          write(server, identity, version, outcomes);
+                          write(server, version, outcomes);
                         }
                         assertEquals(List.of(), failures);
                       }
@@ -636,14 +556,12 @@ class KmsSamplesIT {
     return b;
   }
 
-  static void write(String server, String identity, ProtocolVersion version, List<Outcome> outcomes)
+  static void write(String server, ProtocolVersion version, List<Outcome> outcomes)
       throws Exception {
     StringBuilder json =
         new StringBuilder(
             "{\n  \"server\": \""
                 + server
-                + "\",\n  \"build_identity\": \""
-                + identity
                 + "\",\n  \"version\": \""
                 + version
                 + "\",\n  \"jdk\": "

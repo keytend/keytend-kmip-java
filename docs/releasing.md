@@ -118,16 +118,14 @@ Two GitHub Actions workflows build and publish a release. They run in
    It downloads that build from the server's GitHub release and checks the
    release asset's and the archive's SHA-256 against
    `tools/kmip-server/pinned-image.properties`. The JDKs are Temurin 17, 21 and
-   25. The job keeps the reports, `summary.txt`, `run.txt` and the first
-   distribution build's `sha256.txt` as the artifact `release-check`, and the
-   logs as `release-check-logs` when a check fails. This job holds no secret.
-3. **release.** It needs the release checks to have passed on this commit. It
-   sets up the JDK 17 they ran on, to the patch release, because the Javadoc JARs
-   name it. Then it builds the distribution as they did (step 2), packages it
-   with their reports and signs it with the CI signing subkey. It refuses to go
-   on unless every JAR, SBOM, runtime library and the source ZIP are
-   byte-identical to the release checks' first build: what is signed is what was
-   tested. The signing keyring is removed before the next step. Then it
+   25. The job keeps the reports, `summary.txt` and `run.txt` as the artifact
+   `release-check`, the first distribution build's JARs and SBOMs as
+   `tested-build`, and the logs as `release-check-logs` when a check fails. This job holds no secret.
+3. **release.** It builds nothing. It puts the `tested-build` files back into
+   the checkout, packages them with the release checks' reports and signs them
+   with the CI signing subkey, so what is signed is what was tested.
+   `tools/package-release.py` refuses to unless the release checks passed on
+   this commit. The signing keyring is removed before the next step. Then it
    fetches the release key from keyserver.ubuntu.com, as users do, and runs
    `tools/publish-release.sh X.Y.Z --publish --draft`, which verifies every
    signature and creates a **draft** release. An `-rc.N` is marked a
@@ -513,8 +511,7 @@ Each value comes from the release's own files: the asset's SHA-256 from its
 source commit from `release/linux-amd64/image.json` in the signed tar.
 
 Give `--server` the archive or the loaded image. For the archive, its SHA-256 is
-checked, it is loaded, and the loaded ID is checked. For an image, its ID is
-checked. Every live check fails for any other image.
+checked, then it is loaded. For an image, its ID is checked. Every live check fails for any other image.
 `--server-unpinned` runs another, for experiments, and records the check as
 `UNPIN`, which is not a pass.
 

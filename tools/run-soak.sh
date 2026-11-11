@@ -34,12 +34,10 @@ cp integration-tests/target/lib/*.jar "$run_dir/lib/"
 ./integration/catalog/generate-pki.sh "$run_dir/certs" > "$run_dir/pki.log" 2>&1
 client_commit=$(git rev-parse HEAD)
 python3 - "$run_dir" "$duration" "$client_commit" <<'PYMETA'
-import datetime, hashlib, json, pathlib, sys
+import datetime, json, pathlib, sys
 folder = pathlib.Path(sys.argv[1])
 metadata = {'started_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            'requested_duration': sys.argv[2], 'client_commit': sys.argv[3],
-            'candidate_artifacts': {name: hashlib.sha256((folder/name).read_bytes()).hexdigest()
-                                    for name in ['sdk.jar', 'integration.jar']}}
+            'requested_duration': sys.argv[2], 'client_commit': sys.argv[3]}
 (folder/'candidate.json').write_text(json.dumps(metadata, indent=2) + '\n')
 PYMETA
 py_container="keytend-soak-$$-py"

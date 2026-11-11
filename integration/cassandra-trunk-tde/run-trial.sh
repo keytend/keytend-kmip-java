@@ -63,11 +63,11 @@ fi
 {
   echo "date_utc=$(date -u +%FT%TZ)"
   echo "keytend-kmip_checkout=$repo head=$(git -C "$repo" rev-parse HEAD) dirty_files=$(git -C "$repo" status --porcelain | wc -l)"
-  echo "sdk_jar=$sdk sha256=$(sha256sum "$sdk" | cut -d' ' -f1)"
+  echo "sdk_jar=$sdk"
   echo "cassandra=$cassandra head=$(git -C "$cassandra" rev-parse HEAD)"
   for p in "$here"/patches/000*.patch; do
     if git -C "$cassandra" apply --reverse --check "$p" 2>/dev/null; then s=applied; else s=NOT-APPLIED; fi
-    echo "patch $(basename "$p") sha256=$(sha256sum "$p" | cut -d' ' -f1) $s"
+    echo "patch $(basename "$p") $s"
   done
   [ -z "$image" ] || echo "server_image=$image id=$image_id $pin version=$server_version kmip=$versions lease_states=${lease_states:-default}"
   echo "java=$(${JAVA_HOME:+$JAVA_HOME/bin/}java -version 2>&1 | head -1)"

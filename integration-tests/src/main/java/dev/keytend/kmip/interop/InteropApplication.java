@@ -57,9 +57,7 @@ public final class InteropApplication {
         var checks =
             version.legacyAttributes()
                 ? new InteropSuite(client, args[0], certs).run()
-                : new ModernInteropSuite(
-                        client, args[0], InteropSuite.UNVERIFIED, certs, administrator)
-                    .run();
+                : new ModernInteropSuite(client, args[0], certs, administrator).run();
         for (var c : checks) {
           if (c.outcome().equals("FAIL")) failures++;
           System.out.println(

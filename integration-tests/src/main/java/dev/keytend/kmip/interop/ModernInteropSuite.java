@@ -38,7 +38,6 @@ public final class ModernInteropSuite {
   private final java.nio.file.Path certificates;
   private final KmipClient client;
   private final String server;
-  private final String identity;
   private final Ttlv administrator;
   private final List<InteropSuite.Check> checks = new ArrayList<>();
   private final Set<Operation> exercised = EnumSet.noneOf(Operation.class);
@@ -48,17 +47,11 @@ public final class ModernInteropSuite {
   private final String name = "keytend-" + UUID.randomUUID();
 
   /**
-   * A suite for a server whose build is not known: the limitations pinned to a build ({@link
-   * InteropSuite#PQCTODAY_BUILD}) do not apply, so those checks fail.
+   * A suite for one server. Its known limitations apply by the server's label, such as {@code
+   * pqctoday}.
    */
   public ModernInteropSuite(KmipClient client, String server, java.nio.file.Path certificates) {
-    this(client, server, InteropSuite.UNVERIFIED, certificates);
-  }
-
-  /** @param identity the running build, as for {@link InteropSuite} */
-  public ModernInteropSuite(
-      KmipClient client, String server, String identity, java.nio.file.Path certificates) {
-    this(client, server, identity, certificates, null);
+    this(client, server, certificates, null);
   }
 
   /**
@@ -67,27 +60,21 @@ public final class ModernInteropSuite {
    *     administrator), or null to send none
    */
   public ModernInteropSuite(
-      KmipClient client,
-      String server,
-      String identity,
-      java.nio.file.Path certificates,
-      Ttlv administrator) {
+      KmipClient client, String server, java.nio.file.Path certificates, Ttlv administrator) {
     this.client = client;
     this.server = server;
-    this.identity = identity;
     this.certificates = certificates;
     this.administrator = administrator;
   }
 
   /**
-   * PQC-EXPORT-OBJECT: the KMIP 3.0 Export response must carry the exported object, and the
-   * PQCToday build {@link InteropSuite#PQCTODAY_BUILD} can omit it. The SDK rejects such a reply
-   * with exactly this message. Only that build, version, check and message are excused.
+   * PQC-EXPORT-OBJECT: the KMIP 3.0 Export response must carry the exported object, and PQCToday
+   * can omit it. The SDK rejects such a reply with exactly this message. Only that server, version,
+   * check and message are excused.
    */
   static boolean pqctodayExportWithoutObject(
-      String server, String identity, ProtocolVersion version, String check, String message) {
+      String server, ProtocolVersion version, String check, String message) {
     return server.equals("pqctoday")
-        && InteropSuite.PQCTODAY_BUILD.equals(identity)
         && version == ProtocolVersion.V3_0
         // Import restores what an Export returned, so it meets the same reply.
         && (check.equals("Export") || check.equals("Import"))
@@ -95,21 +82,15 @@ public final class ModernInteropSuite {
   }
 
   /**
-   * PQC-ADJUST-INTERVAL, PQC-USAGE-LIMITS and PQC-CANCEL-UNKNOWN: the PQCToday build {@link
-   * InteropSuite#PQCTODAY_BUILD} refuses an Interval Adjustment Value for a date, does not keep the
-   * Usage Limits given at Create, and answers Cancel of an unknown correlation value with an error
-   * instead of the Cancellation Result Unavailable. Only that build, KMIP 3.0, the check, the
-   * reason and the server's exact message are excused; the label, or null.
+   * PQC-ADJUST-INTERVAL, PQC-USAGE-LIMITS and PQC-CANCEL-UNKNOWN: PQCToday refuses an Interval
+   * Adjustment Value for a date, does not keep the Usage Limits given at Create, and answers Cancel
+   * of an unknown correlation value with an error instead of the Cancellation Result Unavailable.
+   * Only that server, KMIP 3.0, the check, the reason and the server's exact message are excused;
+   * the label, or null.
    */
   static String pqctodayLimitation(
-      String server,
-      String identity,
-      ProtocolVersion version,
-      String check,
-      Integer reason,
-      String message) {
+      String server, ProtocolVersion version, String check, Integer reason, String message) {
     if (!server.equals("pqctoday")
-        || !InteropSuite.PQCTODAY_BUILD.equals(identity)
         || version != ProtocolVersion.V3_0
         || reason == null
         || message == null) return null;
@@ -832,9 +813,8 @@ public final class ModernInteropSuite {
     test(
         "Import test CA material",
         () -> {
-          // Fixed by the pinned pqctoday image (integration/pqctoday/Dockerfile, --ca-key and
-          // --ca-cert):
-          // that configuration is hashed into the catalog evidence, so these keep its spelling.
+          // Fixed by the pqctoday fixture (integration/pqctoday/Dockerfile, --ca-key and
+          // --ca-cert). The catalog evidence hashes that configuration, so these keep its spelling.
           String keyId = "urn:keytend:test-ca-key", certId = "urn:keytend:test-ca-cert";
           created(
               call(
@@ -1111,19 +1091,14 @@ public final class ModernInteropSuite {
                 "PQC-CA-SCOPE: the client can retrieve its imported CA, but the server"
                     + " infrastructure CA resolver cannot; native CA bootstrap is required"));
       else if (pqctodayLimitation(
-              server, identity, client.version(), name, e.result().reason(), e.result().message())
+              server, client.version(), name, e.result().reason(), e.result().message())
           != null)
         checks.add(
             new InteropSuite.Check(
                 name,
                 "SERVER_LIMITATION",
                 pqctodayLimitation(
-                    server,
-                    identity,
-                    client.version(),
-                    name,
-                    e.result().reason(),
-                    e.result().message())));
+                    server, client.version(), name, e.result().reason(), e.result().message())));
       else if (server.equals("pqctoday")
           && name.equals("Certify public key")
           && e.result().reason() != null
@@ -1136,7 +1111,7 @@ public final class ModernInteropSuite {
         checks.add(new InteropSuite.Check(name, "UNSUPPORTED", e.result().message()));
       else checks.add(new InteropSuite.Check(name, "FAIL", e + " " + e.result().message()));
     } catch (dev.keytend.kmip.client.ProtocolException e) {
-      if (pqctodayExportWithoutObject(server, identity, client.version(), name, e.getMessage()))
+      if (pqctodayExportWithoutObject(server, client.version(), name, e.getMessage()))
         checks.add(
             new InteropSuite.Check(
                 name,

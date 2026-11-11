@@ -90,7 +90,7 @@ fi
 mkdir -p "$work"
 work=$(cd "$work" && pwd)
 
-echo "jar    $jar sha256 $(sha256sum "$jar" | cut -d' ' -f1)"
+echo "jar    $jar"
 if [ -n "$live" ]; then
   echo "server $("$server" version), image $image_id ($image_pin)"
   echo "kmip_env $(env | grep '^KMIP_' | sort | paste -sd' ' || true)"

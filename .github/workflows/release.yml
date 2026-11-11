@@ -15,10 +15,10 @@
 # Build a release from a v<version> tag on main (docs/releasing.md, "The release workflow").
 #
 # A tag push runs the full release checks on the tagged commit, against the pinned
-# keytend-kmip-server build, on JDK 17, 21 and 25 (tools/release-check.sh). Then it builds the
-# distribution again, checks that every JAR, SBOM and the source ZIP are the bytes the release
-# checks built and tested, packages them with the checks' reports, signs them with this
-# repository's CI signing subkey and creates a draft GitHub release. Publishing the draft starts
+# keytend-kmip-server build, on JDK 17, 21 and 25 (tools/release-check.sh). Then a job without the
+# test containers packages the JARs and SBOMs those checks built and tested (the run's
+# dist-a/build/) with the checks' reports, signs them with this repository's CI signing subkey and
+# creates a draft GitHub release. Publishing the draft starts
 # publish-central.yml, which deploys a release X.Y.Z to Maven Central (never an X.Y.Z-rc.N).
 # A manual run runs the release checks on the commit it is given, and signs or releases nothing.
 #
@@ -112,7 +112,14 @@ jobs:
             ${{ runner.temp }}/run/validation/
             ${{ runner.temp }}/run/summary.txt
             ${{ runner.temp }}/run/run.txt
-            ${{ runner.temp }}/run/dist-a/sha256.txt
+          retention-days: 30
+          if-no-files-found: error
+      # The JARs and SBOMs the release checks built and tested, in the tree's layout.
+      - name: Keep the tested build
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: tested-build
+          path: ${{ runner.temp }}/run/dist-a/build/
           retention-days: 30
           if-no-files-found: error
       - name: Keep the logs
@@ -141,25 +148,11 @@ jobs:
         with:
           name: release-check
           path: ${{ runner.temp }}/run
-      # The release checks' JDK 17, to the patch release: the Javadoc JARs name it.
-      - id: jdk
-        name: The release checks' JDK 17
-        run: |
-          jdk=$(sed -n 's/^jdk17 openjdk version "\([0-9.]*\)".*/\1/p' "$RUNNER_TEMP/run/validation/release-check.txt")
-          [ -n "$jdk" ] || { echo "::error::validation/release-check.txt names no JDK 17"; exit 1; }
-          echo "version=$jdk" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+      # Into the checkout's */target/, where package-release.py reads them.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          distribution: temurin
-          java-version: ${{ steps.jdk.outputs.version }}
-      - name: Build the distribution as the release checks did
-        run: |
-          run=$RUNNER_TEMP/run
-          grep -q "^commit $GITHUB_SHA " "$run/run.txt" || { echo "::error::the release checks ran on another commit"; exit 1; }
-          tail -1 "$run/summary.txt" | grep -q '^RELEASE CHECK PASSED' || { echo "::error::the release checks did not pass"; exit 1; }
-          epoch=$(git show -s --format=%ct HEAD)
-          grep -qx "epoch $epoch" "$run/run.txt" || { echo "::error::the release checks built with another timestamp"; exit 1; }
-          ./mvnw -B -ntp clean -Pdistribution verify -DskipTests -Dproject.build.outputTimestamp="$epoch"
+          name: tested-build
+          path: .
       - name: Signing keyring
         env:
           SIGNING_KEY: ${{ secrets.KEYTEND_SIGNING_KEY }}
@@ -182,29 +175,6 @@ jobs:
         run: |
           gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
           rm -rf "$RUNNER_TEMP/gnupg" "$RUNNER_TEMP/signing-passphrase"
-      - name: The bytes the release checks tested
-        run: |
-          # Every JAR, SBOM, runtime library and the source ZIP must be the release checks' own.
-          # Only the binary ZIP, its .sha256 and SHA256SUMS differ: they carry this packaging.
-          built=$RUNNER_TEMP/built
-          mkdir -p "$built"
-          for f in */target/keytend-kmip*-"$VERSION"*.jar sdk/target/lib/*.jar \
-              */target/keytend-kmip*-"$VERSION"-cyclonedx.json target/releases/keytend-kmip-"$VERSION"-src.zip; do
-            cp "$f" "$built/"
-          done
-          (cd "$built" && sha256sum -- *) > "$RUNNER_TEMP/built.txt"
-          python3 -I - "$RUNNER_TEMP/run/dist-a/sha256.txt" "$RUNNER_TEMP/built.txt" <<'PY'
-          import sys
-          def read(path):
-              return {name: digest for digest, name in (line.rstrip('\n').split('  ', 1) for line in open(path))}
-          tested, built = read(sys.argv[1]), read(sys.argv[2])
-          wanted = {n for n in tested if n.endswith(('.jar', '.json')) or n.endswith('-src.zip')}
-          failed = sorted(n for n in wanted | set(built) if tested.get(n) != built.get(n))
-          for n in failed:
-              print(f'DIFFERENT {n}: tested {tested.get(n)}, built {built.get(n)}')
-          print(f'{len(built)} files, {len(failed)} different from the release checks\' build')
-          sys.exit(1 if failed or not built else 0)
-          PY
       - name: Draft release
         env:
           GH_TOKEN: ${{ github.token }}

@@ -359,7 +359,7 @@ class ReleaseReportsTest {
       Files.writeString(
           trial.resolve("PROVENANCE.txt"),
           "cassandra=/c head=275a3a5aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              + "patch 0001-a.patch sha256=0 applied\n"
+              + "patch 0001-a.patch applied\n"
               + "server_image=abc id=abc pinned version=keytend-kmip-server 9.9.9 kmip=1.4,2.1"
               + " lease_states="
               + leases

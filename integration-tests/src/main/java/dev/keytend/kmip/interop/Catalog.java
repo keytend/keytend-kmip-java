@@ -83,16 +83,6 @@ public final class Catalog {
     if (!condition) throw new AssertionError(reason);
   }
 
-  /**
-   * The content digest of an image: SHA-256 of its {@code RootFS.Layers} diff IDs, one per line.
-   * Equal for every build that produces the same filesystem layers, whatever its image ID.
-   */
-  static String layerDigest(List<String> diffIds) {
-    if (diffIds == null || diffIds.isEmpty())
-      throw new IllegalArgumentException("Image layers unavailable");
-    return digest(String.join("\n", diffIds).getBytes(StandardCharsets.UTF_8));
-  }
-
   public static String digest(byte[] bytes) {
     try {
       return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes));

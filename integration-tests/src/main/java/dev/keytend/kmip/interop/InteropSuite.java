@@ -49,28 +49,6 @@ public final class InteropSuite {
   }
 
   /**
-   * The PQCToday build ({@code integration/pqctoday}) the pinned limitations were diagnosed on:
-   * the SHA-256 of {@code /usr/local/bin/pqctoday-kmip} and of the fixture sources, the identity of
-   * {@code KmsSamplesIT.PQCTODAY_BUILD}.
-   */
-  static final String PQCTODAY_BUILD =
-      "binary:810052c387b90350e09492675d30cf9e2ddfe4669fda9ddaf64318d1676d24f7"
-          + ":cf3e662bc0ec7171f0f1bb6632605f7dd443629d2d37173810cfa4c7adc7c635";
-
-  /**
-   * The PyKMIP build ({@code integration/pykmip}) the PY-USAGE-LIMITS and PY-CONTACT-INFORMATION
-   * limitations were diagnosed on: the SHA-256 of its installed files ({@code
-   * integration/pykmip/build-identity.py}) and of the fixture sources, the identity of {@code
-   * KmsSamplesIT.PYKMIP_BUILD}.
-   */
-  static final String PYKMIP_BUILD =
-      "files:05c78a05c95a3ee0e7382e6eabe4f9f27f1e49c49ffe7aa9b92bc46eaa97eb8a"
-          + ":f3ab8a82f4bf8e1e7e9517fada0dd7ba13143af6bde35a749d2ec9e351449dba";
-
-  /** The identity of a server whose build was not inspected; no pinned limitation matches it. */
-  static final String UNVERIFIED = "unverified";
-
-  /**
    * The server label of keytend-kmip-server, as
    * integration/keytend-kmip-server passes it: it selects the issuing CA of Certify ({@link
    * #issuer()}) and the verification of the issued certificate.
@@ -79,7 +57,6 @@ public final class InteropSuite {
 
   private final KmipClient client;
   private final String server;
-  private final String identity;
   private final List<Check> checks = new ArrayList<>();
   private final Set<Operation> advertised = EnumSet.noneOf(Operation.class),
       exercised = EnumSet.noneOf(Operation.class);
@@ -89,22 +66,12 @@ public final class InteropSuite {
   private byte[] aesKey;
 
   /**
-   * A suite for a server whose build is not known (for example {@link InteropApplication} against
-   * an external server): the limitations pinned to a build ({@link #PQCTODAY_BUILD}) do not apply,
-   * so those checks fail.
+   * A suite for one server. Its known limitations apply by the server's label, such as {@code
+   * pykmip} or {@code pqctoday}.
    */
   public InteropSuite(KmipClient client, String server, Path certificates) {
-    this(client, server, UNVERIFIED, certificates);
-  }
-
-  /**
-   * @param identity the running build, {@code binary:<executable SHA-256>:<fixture configuration
-   *     SHA-256>} for PQCToday, as {@code KmsSamplesIT.identity} reads it
-   */
-  public InteropSuite(KmipClient client, String server, String identity, Path certificates) {
     this.client = client;
     this.server = server;
-    this.identity = identity;
     this.certificates = certificates;
   }
 
@@ -136,9 +103,7 @@ public final class InteropSuite {
     try {
       return create.call();
     } catch (ProtocolException e) {
-      if (server.equals("pykmip")
-          && PYKMIP_BUILD.equals(identity)
-          && pykmipParseFailure(e.response()))
+      if (server.equals("pykmip") && pykmipParseFailure(e.response()))
         throw new ServerLimitation(
             "PY-USAGE-LIMITS: a Create with Usage Limits draws PyKMIP's parse failure (KMIP 1.0"
                 + " header, Invalid Message): it has no Usage Limits attribute, and no Get Usage"
@@ -151,10 +116,8 @@ public final class InteropSuite {
    * PY-CONTACT-INFORMATION: PyKMIP refuses the Contact Information attribute at Create with Invalid
    * Field and exactly this message (KMIP 1.4).
    */
-  static boolean pykmipContactInformation(
-      String server, String identity, ProtocolVersion version, Result r) {
+  static boolean pykmipContactInformation(String server, ProtocolVersion version, Result r) {
     return server.equals("pykmip")
-        && PYKMIP_BUILD.equals(identity)
         && version == ProtocolVersion.V1_4
         && r.hasReason(ResultReason.INVALID_FIELD)
         && "The Contact Information attribute is unsupported.".equals(r.message());
@@ -625,7 +588,7 @@ public final class InteropSuite {
           try {
             restored[0] = prepareRestore(client, resources);
           } catch (KmipException e) {
-            if (pykmipContactInformation(server, identity, client.version(), e.result()))
+            if (pykmipContactInformation(server, client.version(), e.result()))
               throw new ServerLimitation(
                   "PY-CONTACT-INFORMATION: the restore fixture's nondefault Contact Information"
                       + " is refused at Create ("

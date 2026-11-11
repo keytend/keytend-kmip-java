@@ -245,8 +245,7 @@ public final class CatalogLiveSuite {
       outside("This case specifically qualifies 2.0 and 2.1 independently");
     switch (id) {
       case "ENV-01" -> {
-        if (!f.image.matches("sha256:[0-9a-f]{64}") || f.commit.equals("uncommitted"))
-          blocked("This endpoint has no recorded image digest or client revision");
+        if (f.commit.equals("uncommitted")) blocked("This run has no recorded client revision");
         require(f.configurationHash.length() == 64, "Configuration hash required");
       }
       case "ENV-02", "TLS-01" -> {

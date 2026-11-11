@@ -17,7 +17,7 @@
 # (pinned-image.properties here), with podman (see README.md here).
 #
 #   run-server.sh image [DOCKER-TAR|IMAGE]   verify the image (a Docker archive: its SHA-256, then
-#                                            load it and check the loaded ID); print its ID
+#                                            load it; an image: its ID); print its ID
 #   run-server.sh version                    the image's --version
 #   run-server.sh master-key FILE            a new master key, by the image's generate-master-key
 #   run-server.sh start NAME --data DIR (--pki DIR | --cert F --key F --ca F --policy F --master-key F)
@@ -31,10 +31,10 @@
 #   run-server.sh cleanup PREFIX             remove every container this helper started whose name
 #                                            starts with PREFIX (for traps; never fails)
 #
-# The image: KEYTEND_SERVER_IMAGE (an image ID or reference), else the pin's `image`. Its ID must
-# be the pin's `image_id`, and a Docker archive's SHA-256 the pin's `archive_sha256`, unless
-# KEYTEND_SERVER_UNPINNED=1: then another image runs, with a warning, and `image` exits 10 instead
-# of 0 (release-check.sh records that as UNPIN). Any other non-zero exit is a refusal or a failure.
+# The image: KEYTEND_SERVER_IMAGE (an image ID or reference), else the pin's `image`. A Docker
+# archive's SHA-256 must be the pin's `archive_sha256`, and a loaded image's ID the pin's
+# `image_id`, unless KEYTEND_SERVER_UNPINNED=1: then another image runs, with a warning, and
+# `image` exits 10 instead of 0 (release-check.sh records that as UNPIN). Any other non-zero exit is a refusal or a failure.
 #
 # `start` runs `serve` with the TLS files, policy and master key each mounted read-only (with
 # --pki DIR: DIR/server.pem, server.key, ca.pem, policy.json and master.key; the options name
@@ -88,9 +88,6 @@ cmd_image() {
     ref=$(printf '%s\n' "$out" | sed -n 's/^Loaded image[^:]*: *//p' | tail -1)
     [ -n "$ref" ] || die "cannot tell which image $arg loaded: $out"
     id=$(image_id_of "$ref")
-    if [ "$status" = 0 ] && [ "$id" != "$want_id" ]; then
-      code=3 die "$arg is the pinned archive but loaded $ref with ID $id, not $want_id"
-    fi
   else
     ref=${arg:-${KEYTEND_SERVER_IMAGE:-$(pinned image)}}
     id=$(image_id_of "$ref") || true

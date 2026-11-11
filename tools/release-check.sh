@@ -404,6 +404,13 @@ package_distribution() {
     cmp -s "$f" "$dest/$(basename "$f")" || { echo "$f differs from testing/target's" >&2; status=1; }
   done
   (cd "$dest" && sha256sum -- * >../sha256.txt 2>/dev/null)
+  # What package-release.py packages, in the tree's layout ($out/dist-NAME/build/MODULE/target/):
+  # the release workflow signs these tested files instead of building them again.
+  (cd "$tree" && for f in */target/keytend-kmip*-"$version"*.jar */target/lib/*.jar \
+      */target/keytend-kmip*-"$version"-cyclonedx.json; do
+    [ -f "$f" ] || continue
+    mkdir -p "$out/dist-$name/build/$(dirname "$f")" && cp "$f" "$out/dist-$name/build/$f"
+  done) || status=1
   return $status
 }
 
