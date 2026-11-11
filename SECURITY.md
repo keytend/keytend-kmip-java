@@ -33,7 +33,11 @@ A fix ships as a new release. Upgrading keeps the API and stored data compatible
 
 ## Reporting a vulnerability
 
-Email the report to <security@keytend.dev>.
+Report it privately on GitHub:
+[Report a vulnerability](https://github.com/keytend/keytend-kmip-java/security/advisories/new),
+also on the repository's Security tab. The report becomes a draft security
+advisory that only you and the maintainer can see. It is discussed and fixed
+there, and the advisory is published from it.
 
 Do not open a public issue, pull request or discussion for a suspected
 vulnerability.

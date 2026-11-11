@@ -208,9 +208,9 @@ one off in order:
    `keyserver.ubuntu.com` (step 3, "Signing key"). Its primary key
    fingerprint `3A84912AFBE7D2B04EBA2A8A51E65DD49C6F987F` is under "Release key
    fingerprint" in SECURITY.md, where `tools/publish-release.sh` reads it.
-2. [ ] Enable private vulnerability reporting (Settings, Code security). Then
-   link its form in SECURITY.md's "Reporting a vulnerability", beside the email
-   address: `https://github.com/keytend/keytend-kmip-java/security/advisories/new`.
+2. [x] Private vulnerability reporting is enabled (Settings, Code security),
+   and SECURITY.md's "Reporting a vulnerability" links its form,
+   `https://github.com/keytend/keytend-kmip-java/security/advisories/new`.
 3. [ ] For each pre-release `0.10.0-rc.N`, and then for 0.10.0: make the
    `Prepare version` commit (step 1) on `main`, and push its tag
    `v0.10.0-rc.N` (or `v0.10.0`). The release workflow runs the full release
