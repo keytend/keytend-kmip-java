@@ -79,7 +79,7 @@ limitations under the License.
     <!-- The OpenTelemetry API (keytend-kmip-opentelemetry); its SDK only in that module's tests. -->
     <opentelemetry.version>1.68.0</opentelemetry.version>
     <picocli.version>4.7.7</picocli.version>
-    <jackson.version>3.2.4</jackson.version>
+    <jackson.version>3.3.0</jackson.version>
     <bouncycastle.version>1.86</bouncycastle.version>
     <awaitility.version>4.3.0</awaitility.version>
     <jqwik.version>1.10.2</jqwik.version>
